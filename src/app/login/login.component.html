@@ -1,0 +1,54 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content" style="text-align: center;">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Авторизация</h5>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="row justify-content-center align-items-center">
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label for="email">Введите еmail</label>
+                  <input name="email" id="email" type="email" [(ngModel)]="email" class="form-control" placeholder="admin@mail.ru">
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label>Введите пароль</label>
+                  <input type="password" name="password" [(ngModel)]="password" class="form-control" placeholder="password">
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-center align-items-center" *ngIf=" !error ">
+              <div class="col-md-10">
+                <font size="3" color="red">Введены неверные данные</font>
+              </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+              <div class="col-md-6">
+                <div class="button-container justify-content-center align-items-center">
+                  <button (click)="Enter(email, password)" class="btn btn-neutral btn-icon btn-round btn-lg">
+                    Войти
+                  </button>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="button-container justify-content-center align-items-center">
+                  <button style="padding: 15px 20px;" (click)="router.navigateByUrl('/registration')" class="btn btn-neutral btn-lg">
+                    Зарегистрироваться
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

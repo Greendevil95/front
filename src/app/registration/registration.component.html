@@ -1,0 +1,80 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content" style="text-align: center;">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Регистрация</h5>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="row justify-content-center align-items-center">
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label for="email">Введите еmail</label>
+                  <input name="email" id="email" type="email" [(ngModel)]="email" class="form-control" placeholder="admin@mail.ru">
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label for="name">Введите ФИО</label>
+                  <input name="name" id="name" type="text" [(ngModel)]="name" class="form-control" placeholder="Иванов Иван Иванович">
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label for="phone">Введите телефон</label>
+                  <input name="phone" id="phone" type="text" [(ngModel)]="phone" class="form-control" placeholder="89004508677">
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label>Введите пароль</label>
+                  <input type="password" name="password" [(ngModel)]="password" class="form-control" placeholder="password">
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label>Повторите пароль</label>
+                  <input type="password" name="repeatPassword" [(ngModel)]="repeatPassword" class="form-control" placeholder="password">
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-center align-items-center" *ngIf=" password != repeatPassword ">
+              <div class="col-md-10">
+                <font size="3" color="red">Введеные пароли не совпадают</font>
+              </div>
+            </div>
+            <div class="row justify-content-center align-items-center" *ngIf=" password != repeatPassword || password == null || email == null || name == null || phone == null">
+              <div class="col-md-12">
+                <div class="button-container justify-content-center align-items-center">
+                  <button (click)="registration(email, password, name, phone)" class="btn btn-neutral btn-lg" disabled>
+                    Зарегистрироваться
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-center align-items-center" *ngIf=" password == repeatPassword && password != null && email != null && name != null && phone != null">
+              <div class="col-md-12">
+                <div class="button-container justify-content-center align-items-center">
+                  <button (click)="registration(email, password, name, phone)" class="btn btn-neutral btn-lg">
+                    Зарегистрироваться
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

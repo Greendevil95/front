@@ -1,0 +1,63 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content" style="text-align: center;">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Создать организацию</h5>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="row justify-content-center align-items-center">
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label for="name">Введите название организации</label>
+                  <input name="name" id="name" type="text" [(ngModel)]="name" class="form-control" placeholder="ОАО Организация">
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label for="address">Введите адрес</label>
+                  <input name="address" id="address" type="text" [(ngModel)]="address" class="form-control" placeholder="г.Москва ул.Ворошилова д.16">
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label for="phone">Введите контактный номер телефона</label>
+                  <input name="phone" id="phone" type="text" [(ngModel)]="phone" class="form-control" placeholder="89004508677">
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label for="description">Описание организации</label>
+                  <textarea rows="4" cols="80" name="description" id="description" [(ngModel)]="description" class="form-control" placeholder="Описание..."></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-center align-items-center" *ngIf="error">
+              <div class="col-md-10">
+                <font size="3" color="red">Не все поля были введены</font>
+              </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+              <div class="col-md-12">
+                <div class="button-container justify-content-center align-items-center">
+                  <button (click)="create(name, address, phone, description)" class="btn btn-neutral btn-lg">
+                    Создать
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

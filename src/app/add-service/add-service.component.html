@@ -1,0 +1,55 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content" style="text-align: center;">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Добавить услугу</h5>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="row justify-content-center align-items-center">
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label for="name">Введите название услуги</label>
+                  <input name="name" id="name" type="text" [(ngModel)]="name" class="form-control" placeholder="Услуга">
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label for="price">Введите цену (в рублях)</label>
+                  <input name="price" id="price" type="text" [(ngModel)]="price" class="form-control" placeholder="2500">
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label for="description">Введите описание услуги</label>
+                  <textarea rows="4" cols="80" name="description" id="description" [(ngModel)]="description" class="form-control" placeholder="Описание..."></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-center align-items-center" *ngIf="error">
+              <div class="col-md-10">
+                <font size="3" color="red">Не все поля были введены</font>
+              </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+              <div class="col-md-12">
+                <div class="button-container justify-content-center align-items-center">
+                  <button (click)="create(name, price, description)" class="btn btn-neutral btn-lg">
+                    Добавить
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

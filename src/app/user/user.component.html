@@ -1,0 +1,138 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Страница пользователя</h5>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>ФИО </label>
+                  <input type="text" class="form-control" placeholder="Username" value="{{user.name}}">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label for="email">Email </label>
+                  <input name="email" id="email" type="email" class="form-control" value="{{user.email}}">
+                </div>
+              </div>
+              <div class="col-md-6 pl-1">
+                <div class="form-group">
+                  <label>Номер телефона</label>
+                  <input type="text" class="form-control" placeholder="Last Name" value="{{user.phone}}">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card card-user">
+        <div class="image">
+          <img src="../assets/img/bg5.jpg" alt="...">
+        </div>
+        <div class="card-body">
+          <div class="author">
+            <a href="#">
+              <img class="avatar border-gray" src="../assets/img/mike.jpg" alt="...">
+              <h5 class="title">{{user.email}}</h5>
+            </a>
+            <p class="description">
+              Рейтинг: {{user.rating}}
+            </p>
+          </div>
+          <p class="description text-center">
+            "Lamborghini Mercy
+            <br> Your chick she so thirsty
+            <br> I'm in that two seat Lambo"
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Список моих организаций</h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table" *ngFor="let org of organizations">
+              <tr>
+                <td>
+                  <div (click)="navigate( org.id )">Название: {{org.name}}</div><br>
+                  <div>Рейтинг: {{org.rating}}</div><br>
+                  <div>Адрес: {{org.address}}</div><br>
+                  <div>Описание: {{org.description}}</div><br>
+                </td>
+              </tr>
+            </table>
+            <button class="btn btn-neutral btn-lg" (click)="navigate('-1')">Добавить организацию</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card  card-tasks">
+        <div class="card-header ">
+          <h4 class="card-title">Список моих записей</h4>
+        </div>
+        <div class="card-body ">
+          <div class="table-full-width table-responsive">
+            <table class="table" *ngFor="let res of reservations">
+              <tbody>
+              <tr *ngIf="res.rating == 0 && res.comment == ''">
+                <td>
+                  <div class="form-check">
+                    <input class="form-control" type="text" [(ngModel)]="rating" placeholder="5.0">
+                  </div>
+                </td>
+                <td class="text-left">
+
+                  <label>Название организации: {{res.service.organization.name}}</label>
+                  <label>Название услуги: {{res.service.name}}</label>
+                  <label>Цена: {{res.service.price}} р.</label>
+                  <label>Отзыв</label>
+                  <textarea rows="4" cols="60" class="form-control" [(ngModel)]="comment" placeholder="Мой отзыв...">{{res.comment}}</textarea>
+                </td>
+                <td class="td-actions text-right">
+                  <button type="button" rel="tooltip" title="" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
+                    <i class="now-ui-icons ui-2_settings-90"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="res.rating != 0 || res.comment != ''">
+                <td>
+                  <div class="form-check">
+                    <input class="form-control" type="text" value="{{res.rating}}">
+                  </div>
+                </td>
+                <td class="text-left">
+                  <div>
+                    <label>Название организации: {{res.service.organization.name}}</label>
+                    <label>Название услуги: {{res.service.name}}</label>
+                    <label>Цена: {{res.service.price}} р.</label>
+                    <label>Отзыв</label>
+                    <textarea rows="4" cols="60" class="form-control">{{res.comment}}</textarea>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

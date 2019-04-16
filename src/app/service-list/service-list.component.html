@@ -1,0 +1,32 @@
+
+<div class="card-body "><div class="table-full-width table-responsive">
+<table class="table">
+  <tbody>
+  <tr *ngFor="let serv of list" class="organization-body" border="4" color ="black">
+    <td class="text-left">
+      <div (click)="navigate( serv.id )">Название: {{serv.name}}
+      </div>
+      <br>
+      <div>Рейтинг: {{serv.rating}}
+      </div>
+      <br>
+      <div>Цена: {{serv.price}} p.
+      </div>
+      <br>
+      <div>Описание: {{serv.description}}</div>
+    </td>
+    <td class="td-actions text-right" *ngIf="userId == organization.user.id">
+      <button mat-button class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove" rel="tooltip" (click)="delete(serv.id)" title="" type="button">
+        <i class="nc-icon nc-simple-remove"></i>
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</div>
+<div>
+  <button mat-button (click)="changePage(-1)">prev</button>
+  <button mat-button (click)="changePage(1)">next</button>
+</div>
+</div>
+
