@@ -11,8 +11,6 @@ export class UserComponent implements OnInit {
   reservations: Array<any>;
   user: any;
   organizations: Array<any>;
-  organizations2: Array<any>;
-  organizations3: Array<any>;
 
   constructor(private httpService: HttpService, private router: Router) {
   }
@@ -23,32 +21,35 @@ export class UserComponent implements OnInit {
         this.user = data;
       });
 
-    this.httpService.getAll('/organizations', 0).subscribe(
+    this.httpService.getAll('/users/organizations', Number(localStorage.getItem('orgPage'))).subscribe(
       data => {
         console.log(data.content);
         this.organizations = data.content;
       });
-    this.httpService.getAll('/reservations', 0).subscribe(
+    this.httpService.getAll('/users/reservation', Number(localStorage.getItem('resPage'))).subscribe(
       data => {
         this.reservations = data.content;
       });
   }
 
+  changePage(page: number, key: string) {
+    if (localStorage.getItem(key) === '0' && page === -1) {
+      return;
+    } else {
+      localStorage.setItem(key, (Number(localStorage.getItem(key)) + page).toString());
+    }
+    this.ngOnInit();
+  }
+
   navigate(id: string): void {
-    localStorage.setItem('page', '0');
+    localStorage.setItem('orgPage', '0');
+    localStorage.setItem('resPage', '0');
     if (Number(id) > -1) {
       localStorage.setItem('orgId', id);
       this.router.navigateByUrl('/organization');
     } else {
-      localStorage.setItem('page', '0');
       this.router.navigateByUrl('/add-organization');
     }
-  }
-
-  goToOrg(id: string): void {
-    localStorage.setItem('orgId', id);
-    localStorage.setItem('page', '0');
-    this.router.navigateByUrl('/organization');
   }
 
   updateRez(id1: string, servId: string, comment1: string, rating1: string): void {

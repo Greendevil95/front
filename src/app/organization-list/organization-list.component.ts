@@ -14,7 +14,7 @@ export class OrganizationListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.httpService.getAll('/organizations', Number(localStorage.getItem('page'))).subscribe(
+    this.httpService.getAll('/organizations', Number(localStorage.getItem('orgPage'))).subscribe(
       data => {
         console.log(data.content);
         this.list = data.content;
@@ -22,17 +22,17 @@ export class OrganizationListComponent implements OnInit {
   }
 
   changePage(page: number) {
-    if (localStorage.getItem('page') === '0' && page === -1) {
+    if (localStorage.getItem('orgPage') === '0' && page === -1) {
       return;
     } else {
-      localStorage.setItem('page', (Number(localStorage.getItem('page')) + page).toString());
+      localStorage.setItem('orgPage', (Number(localStorage.getItem('orgPage')) + page).toString());
     }
     this.ngOnInit();
   }
 
   navigate(id: string): void {
     localStorage.setItem('orgId', id);
-    localStorage.setItem('page', '0');
+    localStorage.setItem('orgPage', '0');
     this.router.navigateByUrl('/organization');
   }
 

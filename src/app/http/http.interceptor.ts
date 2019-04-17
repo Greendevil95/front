@@ -11,7 +11,6 @@ export class MyInterceptor implements HttpInterceptor {
     } else {
       const email = localStorage.getItem('email');
       const password = localStorage.getItem('password');
-      console.log(email + password);
       const authReq = req.clone({
         headers: req.headers.append('Authorization', 'Basic ' + btoa(email.toString() + ':' + password.toString()))
       });

@@ -33,6 +33,12 @@ export class NavbarComponent implements OnInit {
       }
     }
 
+    exit(): void {
+      localStorage.setItem('email', 'Войти');
+      localStorage.setItem('password', '');
+      this.router.navigateByUrl('/log');
+    }
+
     ngOnInit() {
       this.account = localStorage.getItem('username');
       console.log(this.account);

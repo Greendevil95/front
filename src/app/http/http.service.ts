@@ -26,6 +26,7 @@ export class HttpService {
   }
 
   put(url: string, body: any): Observable<any> {
+    console.log(body);
     return this.http.put(url, body, {headers: this.myHeaders});
   }
 

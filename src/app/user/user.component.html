@@ -5,7 +5,7 @@
     <div class="col-md-8">
       <div class="card">
         <div class="card-header">
-          <h5 class="title">Страница пользователя</h5>
+          <h5 class="title">Моя страница</h5>
         </div>
         <div class="card-body">
           <form>
@@ -64,7 +64,7 @@
     <div class="col-md-6">
       <div class="card">
         <div class="card-header">
-          <h5 class="title">Список моих организаций</h5>
+          <h5 class="title">Мои организации</h5>
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -78,6 +78,8 @@
                 </td>
               </tr>
             </table>
+            <div><button mat-button (click)="changePage(-1, 'orgPage')">prev</button>
+              <button mat-button (click)="changePage(1, 'orgPage')">next</button></div>
             <button class="btn btn-neutral btn-lg" (click)="navigate('-1')">Добавить организацию</button>
           </div>
         </div>
@@ -86,7 +88,7 @@
     <div class="col-md-6">
       <div class="card  card-tasks">
         <div class="card-header ">
-          <h4 class="card-title">Список моих записей</h4>
+          <h4 class="card-title">Мои записи</h4>
         </div>
         <div class="card-body ">
           <div class="table-full-width table-responsive">
@@ -95,20 +97,20 @@
               <tr *ngIf="res.rating == 0 && res.comment == ''">
                 <td>
                   <div class="form-check">
-                    <input class="form-control" type="text" [(ngModel)]="rating" placeholder="5.0">
+                    <input class="form-control" name="{{res.id}}" type="text" [(ngModel)]="rating" placeholder="5.0">
                   </div>
                 </td>
                 <td class="text-left">
 
-                  <label>Название организации: {{res.service.organization.name}}</label>
-                  <label>Название услуги: {{res.service.name}}</label>
-                  <label>Цена: {{res.service.price}} р.</label>
+                  <label>Название организации: {{res.service.organization.name}}</label><br>
+                  <label>Название услуги: {{res.service.name}}</label><br>
+                  <label>Цена: {{res.service.price}} р.</label><br>
                   <label>Отзыв</label>
-                  <textarea rows="4" cols="60" class="form-control" [(ngModel)]="comment" placeholder="Мой отзыв...">{{res.comment}}</textarea>
+                  <textarea rows="4" cols="60" class="form-control" name="{{res.id}}" [(ngModel)]="comment" placeholder="Мой отзыв...{{res.id}}"></textarea>
                 </td>
                 <td class="td-actions text-right">
-                  <button type="button" rel="tooltip" title="" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Edit Task">
-                    <i class="now-ui-icons ui-2_settings-90"></i>
+                  <button type="button" rel="tooltip" title="Изменить" (click)="updateRez(res.id, res.service.id, comment, rating)" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
+                    <i class="now-ui-icons ui-1_check"></i>
                   </button>
                 </td>
               </tr>
@@ -120,9 +122,9 @@
                 </td>
                 <td class="text-left">
                   <div>
-                    <label>Название организации: {{res.service.organization.name}}</label>
-                    <label>Название услуги: {{res.service.name}}</label>
-                    <label>Цена: {{res.service.price}} р.</label>
+                    <label>Название организации: {{res.service.organization.name}}</label><br>
+                    <label>Название услуги: {{res.service.name}}</label><br>
+                    <label>Цена: {{res.service.price}} р.</label><br>
                     <label>Отзыв</label>
                     <textarea rows="4" cols="60" class="form-control">{{res.comment}}</textarea>
                   </div>
@@ -130,6 +132,8 @@
               </tr>
               </tbody>
             </table>
+            <div><button mat-button (click)="changePage(-1, 'resPage')">prev</button>
+              <button mat-button (click)="changePage(1, 'resPage')">next</button></div>
           </div>
         </div>
       </div>

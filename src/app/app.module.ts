@@ -31,6 +31,7 @@ import { ServiceComponent } from './service/service.component';
 import { UserComponent } from './user/user.component';
 import {HttpService} from './http/http.service';
 import {MyInterceptor} from './http/http.interceptor';
+import { OrgListComponent } from './org-list/org-list.component';
 
 @NgModule({
   imports: [
@@ -65,6 +66,7 @@ import {MyInterceptor} from './http/http.interceptor';
     ServiceListComponent,
     ServiceComponent,
     UserComponent,
+    OrgListComponent,
 
   ],
   providers: [

@@ -21,10 +21,30 @@ export class ServiceListComponent implements OnInit {
         this.organization = data;
       });
     this.userId = localStorage.getItem('id');
-    this.httpService.getAll('/service', Number(localStorage.getItem('page'))).subscribe( // ?page=' + localStorage.getItem('page')
+    this.httpService.getAll('/organizations/' + localStorage.getItem('orgId') + '/services', Number(localStorage.getItem('servPage'))).subscribe(
       data => {
         console.log(data);
         this.list = data.content;
+      });
+  }
+
+  createReservation(id1: string) {
+    this.httpService.post('/reservations', {
+      comment: '',
+      rating: -1,
+      service: {
+        id: id1
+      },
+      organization: {
+        id: localStorage.getItem('orgId')
+      }
+    }).subscribe(data => {},
+      error => {
+        if (error.status === 200) {
+          console.log(error);
+          localStorage.setItem('servPage', '0');
+          this.router.navigateByUrl('/organization');
+        }
       });
   }
 

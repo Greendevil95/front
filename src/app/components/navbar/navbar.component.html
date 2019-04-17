@@ -49,12 +49,16 @@
                 <a class="dropdown-item" href="/registration">Зарегистрироваться</a>
               </div>
             </li>
-            <li class="nav-item" *ngIf="isAuth() == false">
-              <div class="nav-link" (click)="router.navigateByUrl('/user')">
+            <li class="nav-item" *ngIf="isAuth() == false" ngbDropdown>
+              <a class="nav-link" id="dropdownBasic2" ngbDropdownToggle>
                 <i class="now-ui-icons users_single-02"></i>
                 <p>
                   <span class="d-lg-none d-md-block"> {{account}}</span>
                 </p>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu aria-labelledby="dropdownBasic2">
+                <a class="dropdown-item" href="/user">Моя страница</a>
+                <a class="dropdown-item" (click)="exit()">Выйти</a>
               </div>
             </li>
           </ul>
