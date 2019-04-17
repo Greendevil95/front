@@ -18,6 +18,7 @@ import {OrganizationComponent} from './organization/organization.component';
 import {AddServiceComponent} from './add-service/add-service.component';
 import {AddOrganizationComponent} from './add-organization/add-organization.component';
 import {OrganizationListComponent} from './organization-list/organization-list.component';
+import {OrgListComponent} from './org-list/org-list.component';
 
 
 export const routes: Routes = [
@@ -29,7 +30,8 @@ export const routes: Routes = [
   { path: 'icons',          component: IconsComponent },
   { path: 'notifications',  component: NotificationsComponent },
 
-  { path: '', component: OrganizationListComponent},
+  // { path: '', component: OrganizationListComponent},
+  { path: '', component: OrgListComponent},
   { path: 'registration', component: RegistrationComponent },
   { path: 'log', component: LoginComponent },
   { path: 'user', component: UserComponent },

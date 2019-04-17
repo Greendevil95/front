@@ -1,0 +1,29 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content" >
+  <div class="row">
+    <div class="col-md-6"  *ngFor="let org of list">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+              <tr>
+                <td>
+                  <div (click)="navigate( org.id )">Название: {{org.name}}</div><br>
+                  <div>Рейтинг: {{org.rating}}</div><br>
+                  <div>Адрес: {{org.address}}</div><br>
+                  <div>Описание: {{org.description}}</div><br>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div><button mat-button (click)="changePage(-1)">prev</button>
+    <button mat-button (click)="changePage(1)">next</button></div>
+</div>
+
