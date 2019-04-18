@@ -52,7 +52,7 @@ export class UserComponent implements OnInit {
     if (localStorage.getItem(key) === '0' && page === -1) {
       return;
     } else {
-      localStorage.setItem(key, (index - 1).toString());
+      localStorage.setItem(key, (page - 1).toString());
     }
     this.ngOnInit();
   }
