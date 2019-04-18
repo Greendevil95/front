@@ -9,6 +9,7 @@ import {HttpService} from '../http/http.service';
 })
 export class OrganizationListComponent implements OnInit {
   list: Array<any>;
+  pagesCount: number;
 
   constructor(private httpService: HttpService, private router: Router) {
   }
@@ -17,6 +18,7 @@ export class OrganizationListComponent implements OnInit {
     this.httpService.getAll('/organizations', Number(localStorage.getItem('orgPage'))).subscribe(
       data => {
         console.log(data.content);
+        this.pagesCount = data.totalPages;
         this.list = data.content;
       });
   }

@@ -78,8 +78,18 @@
                 </td>
               </tr>
             </table>
-            <div><button mat-button (click)="changePage(-1, 'orgPage')">prev</button>
-              <button mat-button (click)="changePage(1, 'orgPage')">next</button></div>
+            <div class="row">
+              <button type="button" rel="tooltip" title="На предыдущую" (click)="changePage(-1, 'orgPage')" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
+                <i class="now-ui-icons arrows-1_minimal-left"></i>
+              </button>
+              <div class="form-check btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" *ngFor="let index of createRange(orgPagesCount)">
+                <input class="form-control" type="button" value="{{index}}" (click)="doToPage(index, 'orgPage')">
+
+              </div>
+              <button type="button" rel="tooltip" title="На следующую" (click)="changePage(1, 'orgPage')" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
+                <i class="now-ui-icons arrows-1_minimal-right"></i>
+              </button>
+            </div>
             <button class="btn btn-neutral btn-lg" (click)="navigate('-1')">Добавить организацию</button>
           </div>
         </div>
@@ -132,8 +142,18 @@
               </tr>
               </tbody>
             </table>
-            <div><button mat-button (click)="changePage(-1, 'resPage')">prev</button>
-              <button mat-button (click)="changePage(1, 'resPage')">next</button></div>
+            <div class="row">
+              <button type="button" rel="tooltip" title="На предыдущую" (click)="changePage(-1, 'resPage')" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
+                <i class="now-ui-icons arrows-1_minimal-left"></i>
+              </button>
+              <div class="form-check btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" *ngFor="let index of createRange(resPagesCount)">
+                <input class="form-control" type="button" value="{{index}}" (click)="goToPage(index, 'resPage')">
+
+              </div>
+              <button type="button" rel="tooltip" title="На следующую" (click)="changePage(1, 'resPage')" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
+                <i class="now-ui-icons arrows-1_minimal-right"></i>
+              </button>
+            </div>
           </div>
         </div>
       </div>

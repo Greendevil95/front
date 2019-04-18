@@ -11,6 +11,8 @@ export class UserComponent implements OnInit {
   reservations: Array<any>;
   user: any;
   organizations: Array<any>;
+  orgPagesCount: number;
+  resPagesCount: number;
 
   constructor(private httpService: HttpService, private router: Router) {
   }
@@ -23,20 +25,34 @@ export class UserComponent implements OnInit {
 
     this.httpService.getAll('/users/organizations', Number(localStorage.getItem('orgPage'))).subscribe(
       data => {
-        console.log(data.content);
+        this.orgPagesCount = data.totalPages;
         this.organizations = data.content;
       });
     this.httpService.getAll('/users/reservation', Number(localStorage.getItem('resPage'))).subscribe(
       data => {
+        this.resPagesCount = data.totalPages;
         this.reservations = data.content;
       });
+  }
+
+  createRange(count: number): number[] {
+    var array: number[] = [];
+    for (var i = 1; i <= count; i++) {
+      array.push(i);
+    }
+    return array;
+  }
+
+  goToPage(index: number, key: string) {
+    localStorage.setItem(key, (Number(index.toString()) - 1).toString());
+    this.ngOnInit();
   }
 
   changePage(page: number, key: string) {
     if (localStorage.getItem(key) === '0' && page === -1) {
       return;
     } else {
-      localStorage.setItem(key, (Number(localStorage.getItem(key)) + page).toString());
+      localStorage.setItem(key, (index - 1).toString());
     }
     this.ngOnInit();
   }

@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
 })
 export class OrgListComponent implements OnInit {
   list: Array<any>;
+  pagesCount: number;
 
   constructor(private httpService: HttpService, private router: Router) {
   }
@@ -17,8 +18,22 @@ export class OrgListComponent implements OnInit {
     this.httpService.getAll('/organizations', Number(localStorage.getItem('orgPage'))).subscribe(
       data => {
         console.log(data.content);
+        this.pagesCount = data.totalPages;
         this.list = data.content;
       });
+  }
+
+  createRange(count: number): number[] {
+    var array: number[] = [];
+    for (var i = 1; i <= count; i++) {
+      array.push(i);
+    }
+    return array;
+  }
+
+  goToPage(index: number, key: string) {
+    localStorage.setItem(key, (index - 1).toString());
+    this.ngOnInit();
   }
 
   changePage(page: number) {
