@@ -27,6 +27,7 @@
         margin: 0;
     }
 
+
     small,.small{
       font-weight: 300;
     }
@@ -159,7 +160,7 @@
 }
 
 .table-responsive{
-  overflow: scroll;
+  overflow: hidden;
   padding-bottom: 10px;
 }
 

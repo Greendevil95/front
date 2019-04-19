@@ -10,8 +10,7 @@
         <div class="card-body">
           <div class="table-responsive">
             <table class="table">
-              <tbody *ngFor="let org of list">
-              <tr>
+              <tr *ngFor="let org of list">
                 <td>
                   <div (click)="navigate( org.id )">Название: {{org.name}}</div><br>
                   <div>Рейтинг: {{org.rating}}</div><br>
@@ -19,7 +18,6 @@
                   <div>Описание: {{org.description}}</div><br>
                 </td>
               </tr>
-              </tbody>
             </table>
           </div>
         </div>
