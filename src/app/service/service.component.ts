@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpService} from '../http/http.service';
 import {Router} from '@angular/router';
+import { CalendarEvent } from 'angular-calendar';
 
 @Component({
   selector: 'app-service',
@@ -38,4 +39,20 @@ export class ServiceComponent implements OnInit {
       });
   }
 
+viewDate: Date = new Date();
+
+events: CalendarEvent[] = [
+    {
+      title: 'Свободно',
+      start: new Date()
+    },
+    {
+      title: 'Занято',
+      start: new Date()
+    }
+  ];
+
+  eventClicked({ event }: { event: CalendarEvent }): void {
+      console.log('Event clicked', event);
+    }
 }

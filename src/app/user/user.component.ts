@@ -33,7 +33,10 @@ export class UserComponent implements OnInit {
         this.resPagesCount = data.totalPages;
         this.reservations = data.content;
       });
+
   }
+
+
 
   createRange(count: number): number[] {
     var array: number[] = [];
@@ -88,5 +91,4 @@ export class UserComponent implements OnInit {
         }
       });
   }
-
 }
