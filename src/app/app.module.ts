@@ -1,3 +1,4 @@
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -5,8 +6,11 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
-import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { CalendarModule, DateAdapter, CalendarNativeDateFormatter, DateFormatterParams } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+
+
+
 
 import {AppRoutingModule, routes} from './app.routing';
 import { ComponentsModule } from './components/components.module';
@@ -34,6 +38,12 @@ import { UserComponent } from './user/user.component';
 import {HttpService} from './http/http.service';
 import {MyInterceptor} from './http/http.interceptor';
 import { OrgListComponent } from './org-list/org-list.component';
+import { registerLocaleData } from '@angular/common';
+import localeRu from '@angular/common/locales/ru';
+import { CalendarComponent } from './calendar/calendar.component';
+
+registerLocaleData(localeRu);
+
 
 @NgModule({
   imports: [
@@ -70,6 +80,7 @@ import { OrgListComponent } from './org-list/org-list.component';
     ServiceComponent,
     UserComponent,
     OrgListComponent,
+    CalendarComponent,
 
   ],
   providers: [
@@ -78,6 +89,17 @@ import { OrgListComponent } from './org-list/org-list.component';
       useClass: MyInterceptor,
       multi: true
     }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+
 })
 export class AppModule { }
+
+
+class CustomDateFormatter extends CalendarNativeDateFormatter {
+
+  public dayViewHour({date, locale}: DateFormatterParams): string {
+    // change this to return a different date format
+    return new Intl.DateTimeFormat(locale, {hour: 'numeric'}).format(date);
+  }
+
+}

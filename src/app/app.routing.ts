@@ -19,7 +19,7 @@ import {AddServiceComponent} from './add-service/add-service.component';
 import {AddOrganizationComponent} from './add-organization/add-organization.component';
 import {OrganizationListComponent} from './organization-list/organization-list.component';
 import {OrgListComponent} from './org-list/org-list.component';
-
+import {CalendarComponent} from './calendar/calendar.component';
 
 export const routes: Routes = [
   // { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -38,7 +38,8 @@ export const routes: Routes = [
   { path: 'service', component: ServiceComponent },
   { path: 'organization', component: OrganizationComponent },
   { path: 'add-service', component: AddServiceComponent },
-  { path: 'add-organization', component: AddOrganizationComponent }
+  { path: 'add-organization', component: AddOrganizationComponent },
+  { path: 'calendar', component: CalendarComponent }
 ];
 /*const routes: Routes =[
   {
