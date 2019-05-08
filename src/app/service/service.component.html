@@ -1,23 +1,68 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-8  center-block">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Услуга</h5>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="row">
+              <div class="col-md-9">
+                <div class="form-group">
+                  <label>Название </label>
+                  <input type="text" class="form-control" placeholder="Username" value="{{service.name}}">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>Рейтинг </label>
+                  <input class="form-control" type="text" value="{{service.rating}}">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 pl-1">
+                <div class="form-group">
+                  <label>Цена:</label>
+                  <input type="text" class="form-control" value="{{service.price}} p.">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label>Описание</label>
+                  <textarea rows="4" cols="80" class="form-control">{{service.description}}</textarea>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row text_align-center">
+    <div class="col-md-10  center-block">
+      <div class="calendar" >
+        <mwl-calendar-month-view [viewDate]="viewDate">
+        </mwl-calendar-month-view>
+        <!-- <mwl-calendar-week-view
+      [viewDate]="viewDate"
+    >
+    </mwl-calendar-week-view>
+    <mwl-calendar-day-view
+      [viewDate]="viewDate"
+    >
+    </mwl-calendar-day-view>-->
+      </div>
+    </div>
+  </div>
+</div>
 
-<div class="calendar" >
-  <mwl-calendar-month-view
-    [viewDate]="viewDate"
-  >
-  </mwl-calendar-month-view>
- <!-- <mwl-calendar-week-view
-    [viewDate]="viewDate"
-  >
-  </mwl-calendar-week-view>
-  <mwl-calendar-day-view
-    [viewDate]="viewDate"
-  >
-  </mwl-calendar-day-view>-->
-</div>
-<div class="organization-body" border="4">
-  <div>Название: {{service.name}}</div>
-  <div>Рейтинг: {{service.rating}}</div>
-  <div>Цена: {{service.price}} p.</div>
-  <div>Описание: {{service.description}}</div>
-  <div><button mat-button (click)="reserve(service.id)">Записаться</button></div>
-</div>
+
+
+
 

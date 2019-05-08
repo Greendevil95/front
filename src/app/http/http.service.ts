@@ -18,7 +18,7 @@ export class HttpService {
   }
 
   getAll(url: string, page: number): Observable<any> {
-    return this.http.get(url + '?page=' + page.toString(), {headers: this.myHeaders});
+    return this.http.get(url + page.toString(), {headers: this.myHeaders});
   }
 
   post(url: string, body: any): Observable<any> {

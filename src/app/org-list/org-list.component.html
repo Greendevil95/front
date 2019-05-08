@@ -2,8 +2,12 @@
 </div>
 <div class="main-content" >
   <div class="row">
-  <div class="col-md-3" *ngFor="let org of list">
-    <div class="card card-user">
+  <div class="col-md-8">
+    <div class="card">
+    <form>
+      <div class="row">
+      <div class="col-md-4 pr-1"  *ngFor="let org of list">
+    <div class=" card-user">
       <div class="image">
         <img src="../assets/img/bg5.jpg" alt="...">
       </div>
@@ -26,22 +30,33 @@
       </div>
       <hr>
     </div>
+      </div>
+      </div>
+    </form>
+    </div>
   </div>
   </div>
- <!-- <div class="row">
-    <div class="col-md-3"  *ngFor="let org of list">
-      <div class="card">
-        <div class="image"><img src="./assets/img/bg5.jpg"></div>
-        <div class="card-body">
-                <div class="author"><img src="/assets/img/mike.jpg" class="avatar" ></div>
-                  <div (click)="navigate( org.id )">{{org.name}}</div><br>
-                  <div>Рейтинг: {{org.rating}}</div><br>
-                  <div>Адрес: {{org.address}}</div><br>
-                  <div>Описание: {{org.description}}</div><br>
+<div class="col-md-4">
+      <div class="list-group">
+        <div class="list-group-item">
+          <h3>Сортировать:</h3>
+          <div class="checkbox">
+            <div class="checkbox-radios">
+              <input type="radio" id="ratingCategory" (click)="sort('rating')" name="category">
+              <label for="ratingCategory">по рейтингу</label>
+            </div>
+            <div class="checkbox-radios">
+              <input type="radio" id="nameCategory" (click)="sort('name')" name="category">
+              <label for="ratingCategory">по алфавиту</label>
+            </div>
+            <div class="checkbox-radios">
+              <input type="radio" id="category" name="category">
+              <label for="category">ещё как-то</label>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>-->
+  </div>
   <div class="row">
     <button type="button" rel="tooltip" title="На предыдущую" (click)="changePage(-1, 'orgPage')" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
       <i class="now-ui-icons arrows-1_minimal-left"></i>

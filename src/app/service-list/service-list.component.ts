@@ -22,7 +22,7 @@ export class ServiceListComponent implements OnInit {
         this.organization = data;
       });
     this.userId = localStorage.getItem('id');
-    this.httpService.getAll('/organizations/' + localStorage.getItem('orgId') + '/services', Number(localStorage.getItem('servPage'))).subscribe(
+    this.httpService.getAll('/organizations/' + localStorage.getItem('orgId') + '/services' + '?page=', Number(localStorage.getItem('servPage'))).subscribe(
       data => {
         console.log(data);
         this.pagesCount = data.totalPages;
@@ -72,7 +72,7 @@ export class ServiceListComponent implements OnInit {
   navigate(id: string): void {
     localStorage.setItem('servId', id);
     localStorage.setItem('servPage', '0');
-    this.router.navigateByUrl('/service');
+    this.router.navigateByUrl('servicepage');
   }
 
 }

@@ -15,7 +15,11 @@ export class OrgListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.httpService.getAll('/organizations', Number(localStorage.getItem('orgPage'))).subscribe(
+    if (localStorage.getItem('category') === '0') {
+      localStorage.setItem('category', 'name');
+      console.log('tut');
+    }
+    this.httpService.getAll('/organizations?field=' + localStorage.getItem('category') + '&page=', Number(localStorage.getItem('orgPage'))).subscribe(
       data => {
         console.log(data.content);
         this.pagesCount = data.totalPages;
@@ -29,6 +33,11 @@ export class OrgListComponent implements OnInit {
       array.push(i);
     }
     return array;
+  }
+
+  sort(category: string): void {
+    localStorage.setItem('category', category);
+    this.ngOnInit();
   }
 
   goToPage(index: number, key: string) {

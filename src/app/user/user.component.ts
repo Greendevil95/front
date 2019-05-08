@@ -23,12 +23,12 @@ export class UserComponent implements OnInit {
         this.user = data;
       });
 
-    this.httpService.getAll('/users/organizations', Number(localStorage.getItem('orgPage'))).subscribe(
+    this.httpService.getAll('/users/organizations' + '?page=', Number(localStorage.getItem('orgPage'))).subscribe(
       data => {
         this.orgPagesCount = data.totalPages;
         this.organizations = data.content;
       });
-    this.httpService.getAll('/users/reservation', Number(localStorage.getItem('resPage'))).subscribe(
+    this.httpService.getAll('/users/reservation' + '?page=', Number(localStorage.getItem('resPage'))).subscribe(
       data => {
         this.resPagesCount = data.totalPages;
         this.reservations = data.content;

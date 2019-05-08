@@ -34,6 +34,10 @@ import { UserComponent } from './user/user.component';
 import {HttpService} from './http/http.service';
 import {MyInterceptor} from './http/http.interceptor';
 import { OrgListComponent } from './org-list/org-list.component';
+import { MyOrgListComponent } from './my-org-list/my-org-list.component';
+import { MyClientsComponent } from './my-clients/my-clients.component';
+import { CalendarComponent } from './calendar/calendar.component';
+import { SearchResultComponent } from './search-result/search-result.component';
 
 @NgModule({
   imports: [
@@ -42,7 +46,6 @@ import { OrgListComponent } from './org-list/org-list.component';
     FormsModule,
     ChartsModule,
     BrowserAnimationsModule,
-    FormsModule,
     HttpClientModule,
     ComponentsModule,
     RouterModule,
@@ -70,6 +73,10 @@ import { OrgListComponent } from './org-list/org-list.component';
     ServiceComponent,
     UserComponent,
     OrgListComponent,
+    MyOrgListComponent,
+    MyClientsComponent,
+    CalendarComponent,
+    SearchResultComponent,
 
   ],
   providers: [

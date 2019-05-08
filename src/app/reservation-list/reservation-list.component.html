@@ -1,3 +1,61 @@
-<div *ngFor="let reservation of reservations">
-  <div></div>
+<div class="panel-header panel-header-sm">
+  <h4 class="card-title">Мои записи</h4>
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-6" *ngFor="let res of reservations">
+      <div class="card  card-tasks">
+        <div class="card-body">
+          <table class="table">
+            <tbody>
+            <tr *ngIf="res.rating == 0 && res.comment == ''">
+              <td>
+                <div class="form-check">
+                  <input class="form-control" name="{{res.id}}" type="text"  [(ngModel)]="rating" placeholder="5.0">
+                </div>
+              </td>
+              <td class="text-left">
+                <label>Название организации: {{res.service.organization.name}}</label><br>
+                <label>Название услуги: {{res.service.name}}</label><br>
+                <label>Цена: {{res.service.price}} р.</label><br>
+                <label>Отзыв:</label>
+                <textarea rows="4" cols="60" class="form-control" name="{{res.id}}" [(ngModel)]="comment" placeholder="Мой отзыв...{{res.id}}"></textarea>
+              </td>
+              <td class="td-actions text-right">
+                <button type="button" rel="tooltip" title="Изменить" (click)="updateRez(res.id, res.service.id, comment, rating)" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
+                  <i class="now-ui-icons ui-1_check"></i>
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="res.rating != 0 && res.comment != ''">
+              <td>
+                <div class="form-check">
+                  <input class="form-control" type="text" value="{{res.rating}}">
+                </div>
+              </td>
+              <td class="text-left">
+                <label>Название организации: {{res.service.organization.name}}</label><br>
+                <label>Название услуги: {{res.service.name}}</label><br>
+                <label>Цена: {{res.service.price}} р.</label><br>
+                <label>Отзыв</label>
+                <textarea rows="4" cols="60" class="form-control">{{res.comment}}</textarea>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <button type="button" rel="tooltip" title="На предыдущую" (click)="changePage(-1, 'resPage')" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
+      <i class="now-ui-icons arrows-1_minimal-left"></i>
+    </button>
+    <div class="form-check btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" *ngFor="let index of createRange(resPagesCount)">
+      <input class="form-control" type="button" value="{{index}}" (click)="goToPage(index, 'resPage')">
+    </div>
+    <button type="button" rel="tooltip" title="На следующую" (click)="changePage(1, 'resPage')" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
+      <i class="now-ui-icons arrows-1_minimal-right"></i>
+    </button>
+  </div>
 </div>
