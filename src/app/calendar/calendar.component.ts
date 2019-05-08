@@ -112,10 +112,10 @@ export class CalendarComponent implements OnInit  {
       data => {
         this.service = data;
         console.log(data);
-        this.serv =<Service>this.service;
-        this.time=this.serv.time;
-        console.log(this.serv.time);
-        console.log(this.time)
+         this.serv =<Service>this.service;
+         this.time=this.serv.time;
+         console.log(this.serv.time);
+         console.log(this.time)
 
       });
 
@@ -127,7 +127,7 @@ export class CalendarComponent implements OnInit  {
       });
 
     //this.addEvent()
-    //this.fetchEvents()
+      //this.fetchEvents()
   }
 
   updateRez(id1: string, servId: string, comment1: string, rating1: string): void {
@@ -154,21 +154,21 @@ export class CalendarComponent implements OnInit  {
 
   activeDayIsOpen: boolean = false;
 
-  /* delete(id: string) {
-     console.log(id);
-     this.httpService.delete('/service' + id).subscribe(
-       data => {
-         localStorage.setItem('servPage', '0');
-         this.router.navigateByUrl('/organization');
-       }
-     );
-   }*/
+ /* delete(id: string) {
+    console.log(id);
+    this.httpService.delete('/service' + id).subscribe(
+      data => {
+        localStorage.setItem('servPage', '0');
+        this.router.navigateByUrl('/organization');
+      }
+    );
+  }*/
 
 
 
   refresh: Subject<any> = new Subject();
 
-  locale: string = 'ru';
+locale: string = 'ru';
 
 
   CalendarView = CalendarView;
@@ -185,19 +185,21 @@ export class CalendarComponent implements OnInit  {
   hourSegmentHeight=60/this.serviceDuration;
 
 
-  /* events1: CalendarEvent[] = [];
-   events3 = this.createEvents(this.eventsCount);
-   createEvents(eventsCount: number){
-     for(let i = 0;i <= eventsCount;i++)
-       this.events1.push({
-         title: 'Свободно',
-         color: colors.green,
-         start: new Date("2019-05-03 9:00:00"),
-         end: new Date("2019-05-03 10:00:00")
-         //         //free: true
-       });
-     return this.events1
-   }*/
+ /* events1: CalendarEvent[] = [];
+
+  events3 = this.createEvents(this.eventsCount);
+
+  createEvents(eventsCount: number){
+    for(let i = 0;i <= eventsCount;i++)
+      this.events1.push({
+        title: 'Свободно',
+        color: colors.green,
+        start: new Date("2019-05-03 9:00:00"),
+        end: new Date("2019-05-03 10:00:00")
+        //         //free: true
+      });
+    return this.events1
+  }*/
 
   /*fetchEvents(): void {
     const getStart: any = {
@@ -205,11 +207,15 @@ export class CalendarComponent implements OnInit  {
       week: startOfWeek,
       day: startOfDay
     }[this.view];
+
     const getEnd: any = {
       month: endOfMonth,
       week: endOfWeek,
       day: endOfDay
     }[this.view];
+
+
+
     const params = new HttpParams()
       .set(
         'primary_release_date.gte',
@@ -220,6 +226,7 @@ export class CalendarComponent implements OnInit  {
         format(getEnd(this.viewDate), 'YYYY-MM-DD')
       )
       .set('api_key', '0ec33936a68018857d727958dca1424f');
+
     this.events$ = this.http
       .get('https://api.themoviedb.org/3/discover/movie', { params })
       .pipe(
@@ -242,35 +249,35 @@ export class CalendarComponent implements OnInit  {
       );
   }*/
 
-  events: CalendarEvent[] = [
-    /*{
-      title: 'Свободно',
-      color: colors.green,
-      start: new Date("2019-05-03 11:30:00"),
-      end: new Date("2019-05-03 12:30:00")
-      //free: true
+events: CalendarEvent[] = [
+      /*{
+        title: 'Свободно',
+        color: colors.green,
+        start: new Date("2019-05-03 11:30:00"),
+        end: new Date("2019-05-03 12:30:00")
+        //free: true
+      },
+      {
+      title: 'Занято',
+      color: colors.red,
+      start: new Date("2019-05-03 12:30:00"),
+      end: new Date("2019-05-03 13:30:00")
+      //free: false
     },
     {
-    title: 'Занято',
-    color: colors.red,
-    start: new Date("2019-05-03 12:30:00"),
-    end: new Date("2019-05-03 13:30:00")
-    //free: false
-  },
-  {
-    title: 'Занято',
-    color: colors.red,
-    start: new Date("2019-05-04 13:30:00"),
-    end: new Date("2019-05-04 14:30:00")
-    //free: false
-  },
-  {
-    title: 'Подтверждается',
-    color: this.setColor('Подтверждается'),
-    start: new Date("2019-05-04 12:30:00"),
-    end: new Date("2019-05-04 13:30:00")
-    //free: false
-  }*/
+      title: 'Занято',
+      color: colors.red,
+      start: new Date("2019-05-04 13:30:00"),
+      end: new Date("2019-05-04 14:30:00")
+      //free: false
+    },
+    {
+      title: 'Подтверждается',
+      color: this.setColor('Подтверждается'),
+      start: new Date("2019-05-04 12:30:00"),
+      end: new Date("2019-05-04 13:30:00")
+      //free: false
+    }*/
   ];
 
 
@@ -299,8 +306,8 @@ export class CalendarComponent implements OnInit  {
   /*activeDayIsOpen: boolean = true;*/
 
   eventClicked({ event }: { event: CalendarEvent }): void {
-    console.log('Event clicked', event);
-  }
+      console.log('Event clicked', event);
+    }
 
   setView(view: CalendarView) {
     this.view = view;
