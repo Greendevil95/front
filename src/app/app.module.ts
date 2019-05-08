@@ -42,7 +42,6 @@ registerLocaleData(localeRu);
 
 import { MyOrgListComponent } from './my-org-list/my-org-list.component';
 import { MyClientsComponent } from './my-clients/my-clients.component';
-import { CalendarComponent } from './calendar/calendar.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 
 @NgModule({
