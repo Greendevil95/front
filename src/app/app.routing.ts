@@ -38,7 +38,7 @@ export const routes: Routes = [
   { path: 'registration', component: RegistrationComponent },
   { path: 'log', component: LoginComponent },
   { path: 'user', component: UserComponent },
-  { path: 'servicepage', component: ServiceComponent },
+  { path: 'service', component: ServiceComponent },
   { path: 'organization', component: OrganizationComponent },
   { path: 'add-service', component: AddServiceComponent },
   { path: 'add-organization', component: AddOrganizationComponent },
