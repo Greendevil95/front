@@ -22,6 +22,7 @@ import {OrgListComponent} from './org-list/org-list.component';
 import {ReservationListComponent} from './reservation-list/reservation-list.component';
 import {SearchResultComponent} from './search-result/search-result.component';
 import {CalendarComponent} from './calendar/calendar.component';
+import { AboutUsComponent } from './about-us/about-us.component';
 
 
 export const routes: Routes = [
@@ -44,6 +45,7 @@ export const routes: Routes = [
   { path: 'add-organization', component: AddOrganizationComponent },
   { path: 'reservations', component: ReservationListComponent },
   { path: 'search_result', component: SearchResultComponent},
+  { path: 'about-us', component: AboutUsComponent },
   { path: 'calendar', component: CalendarComponent}
 ];
 /*const routes: Routes =[
