@@ -15,11 +15,13 @@ export class UserComponent implements OnInit {
   selectedOrgPage: string;
   resPagesCount: number;
   selectedResPage: string;
+  changedPass: boolean;
 
   constructor(private httpService: HttpService, private router: Router) {
   }
 
   ngOnInit(): void {
+    this.changedPass = false;
     this.httpService.get('/users/auth').subscribe(
       data => {
         this.user = data;
@@ -38,6 +40,10 @@ export class UserComponent implements OnInit {
         this.reservations = data.content;
       });
 
+  }
+
+  getPass(): string {
+    return localStorage.getItem('password');
   }
 
   changeProfile(name1: string, email1: string, phone1: string): void {
@@ -67,6 +73,15 @@ export class UserComponent implements OnInit {
           this.ngOnInit();
         }
       });
+  }
+
+  changePassword(newPass: string): void {
+    if (newPass == null) {
+      this.changedPass = true;
+    } else {
+      this.changedPass = false;
+      // смени пароль тут
+    }
   }
 
   createRange(count: number): number[] {
