@@ -12,6 +12,7 @@ export class ServiceListComponent implements OnInit {
   userId: string;
   list: Array<any>;
   pagesCount: number;
+  selectedPage: string;
 
   constructor(private httpService: HttpService, private router: Router) {
   }
@@ -26,6 +27,7 @@ export class ServiceListComponent implements OnInit {
       data => {
         console.log(data);
         this.pagesCount = data.totalPages;
+        this.selectedPage = data.number;
         this.list = data.content;
       });
   }
@@ -58,6 +60,14 @@ export class ServiceListComponent implements OnInit {
         this.router.navigateByUrl('/organization');
       }
     );
+  }
+
+  createRange(count: number): number[] {
+    var array: number[] = [];
+    for (var i = 1; i <= count; i++) {
+      array.push(i);
+    }
+    return array;
   }
 
   changePage(page: number) {

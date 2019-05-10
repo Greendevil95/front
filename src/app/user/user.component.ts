@@ -12,7 +12,9 @@ export class UserComponent implements OnInit {
   user: any;
   organizations: Array<any>;
   orgPagesCount: number;
+  selectedOrgPage: string;
   resPagesCount: number;
+  selectedResPage: string;
 
   constructor(private httpService: HttpService, private router: Router) {
   }
@@ -26,17 +28,46 @@ export class UserComponent implements OnInit {
     this.httpService.getAll('/users/organizations' + '?page=', Number(localStorage.getItem('orgPage'))).subscribe(
       data => {
         this.orgPagesCount = data.totalPages;
+        this.selectedOrgPage = data.number;
         this.organizations = data.content;
       });
     this.httpService.getAll('/users/reservation' + '?page=', Number(localStorage.getItem('resPage'))).subscribe(
       data => {
         this.resPagesCount = data.totalPages;
+        this.selectedResPage = data.number;
         this.reservations = data.content;
       });
 
   }
 
-
+  changeProfile(name1: string, email1: string, phone1: string): void {
+    console.log(name1 + ' ' + email1 + ' ' + phone1);
+    if (email1 != null) {
+      localStorage.setItem('email', email1);
+    } else {
+      email1 = this.user.email;
+    }
+    if (name1 == null) {
+      name1 = this.user.name;
+    }
+    if (phone1 == null) {
+      phone1 = this.user.phone;
+    }
+    this.httpService.put('/users', {
+      id: localStorage.getItem('id'),
+      email: email1,
+      name: name1,
+      phone: phone1,
+      password: localStorage.getItem('password')
+    }).subscribe(
+      data => {},
+      error => {
+        if (error.status === 200) {
+          console.log(error);
+          this.ngOnInit();
+        }
+      });
+  }
 
   createRange(count: number): number[] {
     var array: number[] = [];

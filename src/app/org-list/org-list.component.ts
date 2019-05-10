@@ -10,18 +10,22 @@ import {Router} from '@angular/router';
 export class OrgListComponent implements OnInit {
   list: Array<any>;
   pagesCount: number;
+  selectedPage: string;
 
   constructor(private httpService: HttpService, private router: Router) {
   }
 
   ngOnInit(): void {
     if (localStorage.getItem('category') === '0') {
-      localStorage.setItem('category', 'name');
+      localStorage.setItem('category', 'name.asc');
       console.log('tut');
     }
-    this.httpService.getAll('/organizations?field=' + localStorage.getItem('category') + '&page=', Number(localStorage.getItem('orgPage'))).subscribe(
+    this.httpService.getAll('/organizations?field='
+      + localStorage.getItem('category')
+      + '&page=', Number(localStorage.getItem('orgPage'))).subscribe(
       data => {
         console.log(data.content);
+        this.selectedPage = data.number;
         this.pagesCount = data.totalPages;
         this.list = data.content;
       });
@@ -36,7 +40,11 @@ export class OrgListComponent implements OnInit {
   }
 
   sort(category: string): void {
-    localStorage.setItem('category', category);
+    if (category == 'name') {
+      localStorage.setItem('category', category + '.asc');
+    } else {
+      localStorage.setItem('category', category + '.desc');
+    }
     this.ngOnInit();
   }
 

@@ -1,42 +1,35 @@
 <div class="panel-header panel-header-sm">
 </div>
-<div class="main-content" >
+<div class="main-content">
   <div class="row">
-  <div class="col-md-8">
-    <div class="card">
-    <form>
-      <div class="row">
-      <div class="col-md-4 pr-1"  *ngFor="let org of list">
-    <div class=" card-user">
-      <div class="image">
-        <img src="../assets/img/bg5.jpg" alt="...">
-      </div>
-      <div class="card-body">
-        <div class="author">
-          <a (click)="navigate( org.id )">
-            <img class="avatar border-gray" src="../assets/img/mike.jpg" alt="...">
-            <div>
-            <h5 class="title text-center text-danger">{{org.name}}</h5>
+    <div class="col-md-3 pr-1" style="padding-bottom: 50px; max-height: 487px;" *ngFor="let org of list">
+      <div class="card" style="background: gold; height: 100%;">
+        <div class="card-user" style="margin: 4px; background: white;">
+          <div class="image">
+            <img src="../assets/img/bg5.jpg" alt="...">
+          </div>
+          <div class="card-body" style="height: 300px;">
+            <div class="author">
+              <a (click)="navigate( org.id )">
+                <img class="avatar border-gray" src="../assets/img/mike.jpg" alt="...">
+                <div>
+                  <h5 class="title text-center text-danger">{{org.name}}</h5>
+                </div>
+              </a>
+              <p class="text-left">
+                Адрес: {{org.address}}
+              </p>
             </div>
-          </a>
-          <p class="text-left">
-            Адрес: {{org.address}}
-          </p>
+            <div><p>Рейтинг: {{org.rating}}</p></div>
+            <p class="text-left">
+              {{org.description}}
+            </p>
+          </div>
+          <hr>
         </div>
-        <div><p>Рейтинг: {{org.rating}}</p></div>
-        <p class="text-left">
-          {{org.description}}
-        </p>
       </div>
-      <hr>
     </div>
-      </div>
-      </div>
-    </form>
-    </div>
-  </div>
-  </div>
-<div class="col-md-4">
+    <div class="col-md-3" style="padding-bottom: 50px;">
       <div class="list-group">
         <div class="list-group-item">
           <h3>Сортировать:</h3>
@@ -56,17 +49,47 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 pr-1" style="padding-bottom: 50px;" *ngFor="let org of list">
+      <div class="card" style="height:100%;">
+        <div class="card-user">
+          <div class="image">
+            <img src="../assets/img/bg5.jpg" alt="...">
+          </div>
+          <div class="card-body"  style="height: 300px;">
+            <div class="author">
+              <a (click)="navigate( org.id )">
+                <img class="avatar border-gray" src="../assets/img/mike.jpg" alt="...">
+                <div>
+                  <h5 class="title text-center text-danger">{{org.name}}</h5>
+                </div>
+              </a>
+              <p class="text-left">
+                Адрес: {{org.address}}
+              </p>
+            </div>
+            <div><p>Рейтинг: {{org.rating}}</p></div>
+            <p class="text-left">
+              {{org.description}}
+            </p>
+          </div>
+          <hr>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="row">
     <button type="button" rel="tooltip" title="На предыдущую" (click)="changePage(-1, 'orgPage')" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
       <i class="now-ui-icons arrows-1_minimal-left"></i>
     </button>
     <div class="form-check btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" *ngFor="let index of createRange(pagesCount)">
-      <input class="form-control" type="button" value="{{index}}" (click)="goToPage(index, 'orgPage')">
+      <input *ngIf="index - 1 == selectedPage" class="form-control" type="button" value="{{index}}" (click)="goToPage(index, 'orgPage')" style="border-color:#fd7e14">
+      <input *ngIf="index - 1 != selectedPage" class="form-control" type="button" value="{{index}}" (click)="goToPage(index, 'orgPage')">
     </div>
     <button type="button" rel="tooltip" title="На следующую" (click)="changePage(1, 'orgPage')" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
       <i class="now-ui-icons arrows-1_minimal-right"></i>
     </button>
   </div>
 </div>
-

@@ -13,7 +13,7 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label>ФИО </label>
-                  <input type="text" class="form-control" placeholder="Username" value="{{user.name}}">
+                  <input type="text" class="form-control" placeholder="Иванов Иван Иванович" name="name1" [(ngModel)]="name1" value="{{user.name}}">
                 </div>
               </div>
             </div>
@@ -21,14 +21,19 @@
               <div class="col-md-6 pr-1">
                 <div class="form-group">
                   <label for="email">Email </label>
-                  <input name="email" id="email" type="email" class="form-control" value="{{user.email}}">
+                  <input name="email" id="email" type="email" class="form-control" placeholder="name@mail.ru" name="email1" [(ngModel)]="email1" value="{{user.email}}">
                 </div>
               </div>
               <div class="col-md-6 pl-1">
                 <div class="form-group">
                   <label>Номер телефона</label>
-                  <input type="text" class="form-control" placeholder="Last Name" value="{{user.phone}}">
+                  <input type="text" class="form-control" placeholder="88005553535" name="phone" [(ngModel)]="phone" value="{{user.phone}}">
                 </div>
+              </div>
+            </div>
+            <div class="row" style="text-align: center">
+              <div class="col-md-6 pl-1">
+                <button class="btn btn-neutral btn-lg" (click)="changeProfile(name1, email1, phone)">Изменить данные</button>
               </div>
             </div>
           </form>
@@ -80,8 +85,8 @@
                 <i class="now-ui-icons arrows-1_minimal-left"></i>
               </button>
               <div class="form-check btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" *ngFor="let index of createRange(orgPagesCount)">
-                <input class="form-control" type="button" value="{{index}}" (click)="doToPage(index, 'orgPage')">
-
+                <input *ngIf="index - 1 == selectedOrgPage" class="form-control" type="button" value="{{index}}" (click)="goToPage(index, 'orgPage')" style="border-color:#fd7e14">
+                <input *ngIf="index - 1 != selectedOrgPage" class="form-control" type="button" value="{{index}}" (click)="goToPage(index, 'orgPage')">
               </div>
               <button type="button" rel="tooltip" title="На следующую" (click)="changePage(1, 'orgPage')" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
                 <i class="now-ui-icons arrows-1_minimal-right"></i>
@@ -143,7 +148,8 @@
                 <i class="now-ui-icons arrows-1_minimal-left"></i>
               </button>
               <div class="form-check btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" *ngFor="let index of createRange(resPagesCount)">
-                <input class="form-control" type="button" value="{{index}}" (click)="goToPage(index, 'resPage')">
+                <input *ngIf="index - 1 == selectedResPage" class="form-control" type="button" value="{{index}}" (click)="goToPage(index, 'resPage')" style="border-color:#fd7e14">
+                <input *ngIf="index - 1 != selectedResPage" class="form-control" type="button" value="{{index}}" (click)="goToPage(index, 'resPage')">
               </div>
               <button type="button" rel="tooltip" title="На следующую" (click)="changePage(1, 'resPage')" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
                 <i class="now-ui-icons arrows-1_minimal-right"></i>

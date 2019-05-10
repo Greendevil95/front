@@ -10,6 +10,7 @@ import {Router} from '@angular/router';
 export class ReservationListComponent implements OnInit {
   reservations: any;
   resPagesCount: number;
+  selectedPage: string;
 
   constructor(private httpService: HttpService, private router: Router) { }
 
@@ -18,6 +19,7 @@ export class ReservationListComponent implements OnInit {
       data => {
         this.resPagesCount = data.totalPages;
         this.reservations = data.content;
+        this.selectedPage = data.number;
       });
   }
 
