@@ -67,7 +67,8 @@ export class UserComponent implements OnInit {
       rating: this.user.rating,
       password: localStorage.getItem('password')
     }).subscribe(
-      data => {},
+      data => {
+      },
       error => {
         if (error.status === 200) {
           if (email1 != localStorage.getItem('email')) {
@@ -91,11 +92,13 @@ export class UserComponent implements OnInit {
         rating: this.user.rating,
         password: newPass
       }).subscribe(
-        data => {},
+        data => {
+        },
         error => {
           if (error.status === 200) {
             localStorage.setItem('password', newPass);
             this.ngOnInit();
+            newPass = null;
           }
         });
     }
@@ -146,7 +149,8 @@ export class UserComponent implements OnInit {
       rating: rating1,
       comment: comment1
     }).subscribe(
-      data => {},
+      data => {
+      },
       error => {
         if (error.status === 200) {
           console.log(error);
