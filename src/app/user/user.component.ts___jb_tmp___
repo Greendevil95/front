@@ -96,6 +96,7 @@ export class UserComponent implements OnInit {
           if (error.status === 200) {
             localStorage.setItem('password', newPass);
             this.ngOnInit();
+            newPass = null;
           }
         });
     }
