@@ -20,7 +20,7 @@ import {HttpService} from "../http/http.service";
 import {Router} from "@angular/router";
 import {Observable, Subject} from "rxjs";
 import {HttpParams,HttpClient} from "@angular/common/http";
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 import {Config} from "codelyzer";
 import {formatDate} from "@angular/common";
 import {log} from "util";
@@ -50,8 +50,9 @@ interface Reservation {
 interface Organization {
   id: number;
   startTime: Date;
-
 }
+
+
 
 @Component({
   selector: 'app-calendar',
@@ -85,10 +86,11 @@ export class CalendarComponent implements OnInit  {
   serv:Service;
   res:Reservation[];
   time:number;
-  events$: Observable<Array<CalendarEvent<{ reservation:Reservation }>>>;
-  //startOfDay:number;
+  //events$: Observable<Array<CalendarEvent<{ reservation:Reservation }>>>;
+  startOfDay:number;
   organiz:Organization;
   hours: Date;
+  user: any;
 
 
   constructor(private httpService: HttpService, private router: Router, private http: HttpClient) { }
@@ -96,39 +98,38 @@ export class CalendarComponent implements OnInit  {
 
 
   ngOnInit():void {
-    this.httpService.get('/service/' + localStorage.getItem('servId') + '/reservations').subscribe(
+    this.httpService.get('/service/' + localStorage.getItem('servId') + '/reservations' + '?pagesize=999').subscribe(
       data => {
         this.reservations = data.content;
         this.res=<Reservation[]>this.reservations;
-        for(let i = 0;i<this.res.length;i++){
-          this.addEvent2(new Date(this.res[i].dateTime),this.res[i].status);
-          console.log(this.res[i].status);
-          console.log(this.res[i].dateTime);
+        for(let i = 0;i<this.res.length;i++) {
+          this.addEvent2(new Date(this.res[i].dateTime), this.res[i].status, this.res[i].id);
         }
-        console.log(data);
-
       });
+
     this.httpService.get('/service/' + localStorage.getItem('servId')).subscribe(
       data => {
         this.service = data;
-        console.log(data);
          this.serv =<Service>this.service;
          this.time=this.serv.time;
-         console.log(this.serv.time);
-         console.log(this.time)
-
       });
 
     this.httpService.get('organizations/' + localStorage.getItem('orgId')).subscribe(
       data => {
         this.org = data;
         this.organiz = <Organization>this.org;
-
+        this.setStartOfDay(this.organiz.startTime);
       });
 
-    //this.addEvent()
-      //this.fetchEvents()
+    this.httpService.get('/users/auth').subscribe(
+      data => {
+        this.user = data;
+      });
+
   }
+
+
+
 
   updateRez(id1: string, servId: string, comment1: string, rating1: string): void {
     this.httpService.put('/reservations', {
@@ -173,7 +174,7 @@ locale: string = 'ru';
 
   CalendarView = CalendarView;
 
-  startOfDay = 9;
+
 
   endOfDay = 18;
 
@@ -183,6 +184,12 @@ locale: string = 'ru';
   serviceDuration = 1;
 
   hourSegmentHeight=60/this.serviceDuration;
+
+    setStartOfDay(date:Date): void{
+      console.log(date);
+    let date2 = new Date('08:00:00');
+    this.startOfDay=10;
+  }
 
 
  /* events1: CalendarEvent[] = [];
@@ -250,25 +257,28 @@ locale: string = 'ru';
   }*/
 
 events: CalendarEvent[] = [
-      /*{
+      {
         title: 'Свободно',
         color: colors.green,
         start: new Date("2019-05-03 11:30:00"),
-        end: new Date("2019-05-03 12:30:00")
+        end: new Date("2019-05-03 12:30:00"),
+        id:3
         //free: true
       },
       {
       title: 'Занято',
       color: colors.red,
       start: new Date("2019-05-03 12:30:00"),
-      end: new Date("2019-05-03 13:30:00")
+      end: new Date("2019-05-03 13:30:00"),
+        id: 1
       //free: false
     },
     {
       title: 'Занято',
       color: colors.red,
       start: new Date("2019-05-04 13:30:00"),
-      end: new Date("2019-05-04 14:30:00")
+      end: new Date("2019-05-04 14:30:00"),
+      id: 2
       //free: false
     },
     {
@@ -277,8 +287,9 @@ events: CalendarEvent[] = [
       start: new Date("2019-05-04 12:30:00"),
       end: new Date("2019-05-04 13:30:00")
       //free: false
-    }*/
+    }
   ];
+
 
 
   /*dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -295,6 +306,17 @@ events: CalendarEvent[] = [
     }
   }*/
 
+   getTimezoneOffsetString(date: Date): string {
+    const timezoneOffset = date.getTimezoneOffset();
+    const hoursOffset = String(
+      Math.floor(Math.abs(timezoneOffset / 60))
+    ).padStart(2, '0');
+    const minutesOffset = String(Math.abs(timezoneOffset % 60)).padEnd(2, '0');
+    const direction = timezoneOffset > 0 ? '-' : '+';
+
+    return `T00:00:00${direction}${hoursOffset}:${minutesOffset}`;
+  }
+
   setColor(title: String){
     if (title == 'Свободно')
       return colors.green;
@@ -306,6 +328,7 @@ events: CalendarEvent[] = [
   /*activeDayIsOpen: boolean = true;*/
 
   eventClicked({ event }: { event: CalendarEvent }): void {
+
       console.log('Event clicked', event);
     }
 
@@ -325,7 +348,7 @@ events: CalendarEvent[] = [
     ];
   }
 
-  addEvent2(hourDate: Date,status:string): void {
+  addEvent2(hourDate: Date,status:string, id:number): void {
     if (status == 'INPROCESS'){
       this.events = [
         ...this.events,
@@ -333,7 +356,9 @@ events: CalendarEvent[] = [
           title: "Подтверждается",
           start: startOfHour(hourDate),
           end: endOfHour(hourDate),
-          color: colors.yellow
+          color: colors.yellow,
+          id:id
+
         }
       ];
     }
@@ -344,14 +369,19 @@ events: CalendarEvent[] = [
           title: "Забронировано",
           start: startOfHour(hourDate),
           end: endOfHour(hourDate),
-          color: colors.red
+          color: colors.red,
+          id:id
         }
       ];
     }
   }
 
+  refreshView(): void {
+    this.refresh.next();
+  }
 
   reserve(id1: string,eventDate: Date) {
+    eventDate.setUTCHours(eventDate.getHours());
     this.httpService.post('/reservations', {
       comment: "",
       rating: -1,
@@ -369,8 +399,21 @@ events: CalendarEvent[] = [
           //this.router.navigateByUrl('/organization');
         }
       });
+    eventDate.setHours(eventDate.getHours()-3);
+    this.addEvent(eventDate);
   }
 
+
+  deleteReservation(eventId: number,eventToDelete: CalendarEvent): void {
+    this.events = this.events.filter(event => event !== eventToDelete);
+      this.httpService.delete('/reservations/' + eventId).subscribe(
+      data => { },
+      error => {
+        if (error.status === 200) {
+          console.log(error);
+        }
+      });
+  }
   /*closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }*/

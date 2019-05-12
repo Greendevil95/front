@@ -31,7 +31,7 @@
     </div>
   </div>
   <div class="col-md-4">
-    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en'}}</h3>
   </div>
   <div class="col-md-4">
     <div class="btn-group">
@@ -83,10 +83,10 @@
   <mwl-calendar-week-view
     *ngSwitchCase="CalendarView.Week"
     [viewDate]="viewDate"
-    (eventClicked)="eventClicked($event)"
+    (eventClicked)="deleteReservation($event.event.id,$event.event)"
     [locale]="locale"
     [events]="events"
-    (hourSegmentClicked)="reserve(service.id,$event.date); addEvent($event.date)"
+    (hourSegmentClicked)="reserve(service.id,$event.date)"
     [weekStartsOn]="weekStartsOn"
     [dayStartHour]="startOfDay"
     [dayEndHour]="endOfDay"
@@ -99,9 +99,9 @@
   <mwl-calendar-day-view
     *ngSwitchCase="CalendarView.Day"
     [viewDate]="viewDate"
-    (eventClicked)="eventClicked($event)"
-    [locale]="locale"
     [events]="events"
+    (eventClicked)="deleteReservation($event.event.id,$event.event)"
+    [locale]="locale"
     [dayStartHour]="startOfDay"
     [dayEndHour]="endOfDay"
     [hourSegments]="serviceDuration"
@@ -113,3 +113,5 @@
   </div>
 </div>
 </div>
+
+<div *ngFor="let res of reservations">{{res.id}}</div>
