@@ -33,6 +33,11 @@ export class NavbarComponent implements OnInit {
       }
     }
 
+    search(findString: string): void {
+      localStorage.setItem('searchString', findString);
+      this.router.navigateByUrl('search_result');
+    }
+
     exit(): void {
       localStorage.setItem('email', 'Войти');
       localStorage.setItem('password', '');

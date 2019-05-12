@@ -1,4 +1,3 @@
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -8,9 +7,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { CalendarModule, DateAdapter, CalendarNativeDateFormatter, DateFormatterParams } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-
-
-
 
 import {AppRoutingModule, routes} from './app.routing';
 import { ComponentsModule } from './components/components.module';
@@ -44,6 +40,10 @@ import { CalendarComponent } from './calendar/calendar.component';
 
 registerLocaleData(localeRu);
 
+import { MyOrgListComponent } from './my-org-list/my-org-list.component';
+import { MyClientsComponent } from './my-clients/my-clients.component';
+import { SearchResultComponent } from './search-result/search-result.component';
+import { AboutUsComponent } from './about-us/about-us.component';
 
 @NgModule({
   imports: [
@@ -80,7 +80,11 @@ registerLocaleData(localeRu);
     ServiceComponent,
     UserComponent,
     OrgListComponent,
+    MyOrgListComponent,
+    MyClientsComponent,
     CalendarComponent,
+    SearchResultComponent,
+    AboutUsComponent
 
   ],
   providers: [

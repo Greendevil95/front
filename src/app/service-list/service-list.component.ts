@@ -12,6 +12,7 @@ export class ServiceListComponent implements OnInit {
   userId: string;
   list: Array<any>;
   pagesCount: number;
+  selectedPage: string;
 
   constructor(private httpService: HttpService, private router: Router) {
   }
@@ -22,10 +23,11 @@ export class ServiceListComponent implements OnInit {
         this.organization = data;
       });
     this.userId = localStorage.getItem('id');
-    this.httpService.getAll('/organizations/' + localStorage.getItem('orgId') + '/services', Number(localStorage.getItem('servPage'))).subscribe(
+    this.httpService.getAll('/organizations/' + localStorage.getItem('orgId') + '/services' + '?page=', Number(localStorage.getItem('servPage'))).subscribe(
       data => {
         console.log(data);
         this.pagesCount = data.totalPages;
+        this.selectedPage = data.number;
         this.list = data.content;
       });
   }
@@ -60,6 +62,14 @@ export class ServiceListComponent implements OnInit {
     );
   }
 
+  createRange(count: number): number[] {
+    var array: number[] = [];
+    for (var i = 1; i <= count; i++) {
+      array.push(i);
+    }
+    return array;
+  }
+
   changePage(page: number) {
     if (localStorage.getItem('servPage') === '0' && page === -1) {
       return;
@@ -72,7 +82,7 @@ export class ServiceListComponent implements OnInit {
   navigate(id: string): void {
     localStorage.setItem('servId', id);
     localStorage.setItem('servPage', '0');
-    this.router.navigateByUrl('/service');
+    this.router.navigateByUrl('servicepage');
   }
 
 }

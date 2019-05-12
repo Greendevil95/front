@@ -19,7 +19,11 @@ import {AddServiceComponent} from './add-service/add-service.component';
 import {AddOrganizationComponent} from './add-organization/add-organization.component';
 import {OrganizationListComponent} from './organization-list/organization-list.component';
 import {OrgListComponent} from './org-list/org-list.component';
+import {ReservationListComponent} from './reservation-list/reservation-list.component';
+import {SearchResultComponent} from './search-result/search-result.component';
 import {CalendarComponent} from './calendar/calendar.component';
+import { AboutUsComponent } from './about-us/about-us.component';
+
 
 export const routes: Routes = [
   // { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -35,11 +39,14 @@ export const routes: Routes = [
   { path: 'registration', component: RegistrationComponent },
   { path: 'log', component: LoginComponent },
   { path: 'user', component: UserComponent },
-  { path: 'service', component: ServiceComponent },
+  { path: 'servicepage', component: ServiceComponent },
   { path: 'organization', component: OrganizationComponent },
   { path: 'add-service', component: AddServiceComponent },
   { path: 'add-organization', component: AddOrganizationComponent },
-  { path: 'calendar', component: CalendarComponent }
+  { path: 'reservations', component: ReservationListComponent },
+  { path: 'search_result', component: SearchResultComponent},
+  { path: 'about-us', component: AboutUsComponent },
+  { path: 'calendar', component: CalendarComponent}
 ];
 /*const routes: Routes =[
   {
