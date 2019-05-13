@@ -23,7 +23,7 @@
     <td class="td-actions text-right" *ngIf="userId != organization.user.id">
       <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6 btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
         <div class="font-icon-detail" (click)="createReservation(serv.id)">
-          <i class="now-ui-icons ui-1_calendar-60"></i>
+          <i class="now-ui-icons ui-1_calendar-60" (click)="navigate1(serv.id)"></i>
         </div>
       </div>
     </td>

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
 
 import {CalendarDateFormatter,
   CalendarEvent,
@@ -20,11 +20,8 @@ import {HttpService} from "../http/http.service";
 import {Router} from "@angular/router";
 import {Observable, Subject} from "rxjs";
 import {HttpParams,HttpClient} from "@angular/common/http";
-import {catchError, map} from "rxjs/operators";
-import {Config} from "codelyzer";
-import {formatDate} from "@angular/common";
-import {log} from "util";
-import DateTimeFormat = Intl.DateTimeFormat;
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+
 
 interface Film {
   id: number;
@@ -50,6 +47,7 @@ interface Reservation {
 interface Organization {
   id: number;
   startTime: Date;
+  finishTime:Date;
 }
 
 
@@ -88,12 +86,18 @@ export class CalendarComponent implements OnInit  {
   time:number;
   //events$: Observable<Array<CalendarEvent<{ reservation:Reservation }>>>;
   startOfDay:number;
+  endOfDay:number;
+  hourSegmentHeight: number;
+  serviceDuration: number;
   organiz:Organization;
   hours: Date;
   user: any;
+  events: CalendarEvent[] = [];
+  activeDayIsOpen: boolean = true;
 
 
-  constructor(private httpService: HttpService, private router: Router, private http: HttpClient) { }
+
+  constructor(private httpService: HttpService, private router: Router, public dialog: MatDialog) { }
   //constructor(private http: HttpClient) {}
 
 
@@ -111,14 +115,16 @@ export class CalendarComponent implements OnInit  {
       data => {
         this.service = data;
          this.serv =<Service>this.service;
-         this.time=this.serv.time;
+         this.serviceDuration = this.serv.time/60;
+        this.hourSegmentHeight=60/this.serviceDuration;
       });
 
     this.httpService.get('organizations/' + localStorage.getItem('orgId')).subscribe(
       data => {
         this.org = data;
         this.organiz = <Organization>this.org;
-        this.setStartOfDay(this.organiz.startTime);
+        this.startOfDay = parseInt(this.organiz.startTime.toString(),10);
+        this.endOfDay = parseInt(this.organiz.finishTime.toString(),10);
       });
 
     this.httpService.get('/users/auth').subscribe(
@@ -127,8 +133,6 @@ export class CalendarComponent implements OnInit  {
       });
 
   }
-
-
 
 
   updateRez(id1: string, servId: string, comment1: string, rating1: string): void {
@@ -153,9 +157,8 @@ export class CalendarComponent implements OnInit  {
       });
   }
 
-  activeDayIsOpen: boolean = false;
 
- /* delete(id: string) {
+  delete(id: string) {
     console.log(id);
     this.httpService.delete('/service' + id).subscribe(
       data => {
@@ -163,169 +166,33 @@ export class CalendarComponent implements OnInit  {
         this.router.navigateByUrl('/organization');
       }
     );
-  }*/
+  }
 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DeleteReservation, {
+      width: '250px',
+      data: {}
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+
+    });
+  }
 
   refresh: Subject<any> = new Subject();
 
-locale: string = 'ru';
+  locale: string = 'ru';
 
 
   CalendarView = CalendarView;
 
 
 
-  endOfDay = 18;
-
-
   weekStartsOn = 1;
 
-  serviceDuration = 1;
-
-  hourSegmentHeight=60/this.serviceDuration;
-
-    setStartOfDay(date:Date): void{
-      console.log(date);
-    let date2 = new Date('08:00:00');
-    this.startOfDay=10;
-  }
 
 
- /* events1: CalendarEvent[] = [];
-
-  events3 = this.createEvents(this.eventsCount);
-
-  createEvents(eventsCount: number){
-    for(let i = 0;i <= eventsCount;i++)
-      this.events1.push({
-        title: 'Свободно',
-        color: colors.green,
-        start: new Date("2019-05-03 9:00:00"),
-        end: new Date("2019-05-03 10:00:00")
-        //         //free: true
-      });
-    return this.events1
-  }*/
-
-  /*fetchEvents(): void {
-    const getStart: any = {
-      month: startOfMonth,
-      week: startOfWeek,
-      day: startOfDay
-    }[this.view];
-
-    const getEnd: any = {
-      month: endOfMonth,
-      week: endOfWeek,
-      day: endOfDay
-    }[this.view];
-
-
-
-    const params = new HttpParams()
-      .set(
-        'primary_release_date.gte',
-        format(getStart(this.viewDate), 'YYYY-MM-DD')
-      )
-      .set(
-        'primary_release_date.lte',
-        format(getEnd(this.viewDate), 'YYYY-MM-DD')
-      )
-      .set('api_key', '0ec33936a68018857d727958dca1424f');
-
-    this.events$ = this.http
-      .get('https://api.themoviedb.org/3/discover/movie', { params })
-      .pipe(
-        map(({ results }: { results: Film[] }) => { console.log(results);
-          return results.map((film: Film) => {
-            console.log(film.title);
-            return {
-              title: film.title,
-              start: new Date(
-                film.release_date + getTimezoneOffsetString(this.viewDate)
-              ),
-              color: colors.yellow,
-              allDay: true,
-              meta: {
-                film
-              }
-            };
-          });
-        })
-      );
-  }*/
-
-events: CalendarEvent[] = [
-      {
-        title: 'Свободно',
-        color: colors.green,
-        start: new Date("2019-05-03 11:30:00"),
-        end: new Date("2019-05-03 12:30:00"),
-        id:3
-        //free: true
-      },
-      {
-      title: 'Занято',
-      color: colors.red,
-      start: new Date("2019-05-03 12:30:00"),
-      end: new Date("2019-05-03 13:30:00"),
-        id: 1
-      //free: false
-    },
-    {
-      title: 'Занято',
-      color: colors.red,
-      start: new Date("2019-05-04 13:30:00"),
-      end: new Date("2019-05-04 14:30:00"),
-      id: 2
-      //free: false
-    },
-    {
-      title: 'Подтверждается',
-      color: this.setColor('Подтверждается'),
-      start: new Date("2019-05-04 12:30:00"),
-      end: new Date("2019-05-04 13:30:00")
-      //free: false
-    }
-  ];
-
-
-
-  /*dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.viewDate)) {
-      this.viewDate = date;
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
-        this.activeDayIsOpen = false;
-      } else {
-        this.activeDayIsOpen = true;
-      }
-    }
-  }*/
-
-   getTimezoneOffsetString(date: Date): string {
-    const timezoneOffset = date.getTimezoneOffset();
-    const hoursOffset = String(
-      Math.floor(Math.abs(timezoneOffset / 60))
-    ).padStart(2, '0');
-    const minutesOffset = String(Math.abs(timezoneOffset % 60)).padEnd(2, '0');
-    const direction = timezoneOffset > 0 ? '-' : '+';
-
-    return `T00:00:00${direction}${hoursOffset}:${minutesOffset}`;
-  }
-
-  setColor(title: String){
-    if (title == 'Свободно')
-      return colors.green;
-    if (title == 'Занято')
-      return colors.red;
-    else return colors.yellow
-  }
-
-  /*activeDayIsOpen: boolean = true;*/
 
   eventClicked({ event }: { event: CalendarEvent }): void {
 
@@ -357,7 +224,16 @@ events: CalendarEvent[] = [
           start: startOfHour(hourDate),
           end: endOfHour(hourDate),
           color: colors.yellow,
-          id:id
+          id:id,
+         /* actions: [
+            {
+              label: '<i class="fa fa-fw fa-times"></i>',
+              onClick: ({ event }: { event: CalendarEvent }): void => {
+                this.events = this.events.filter(iEvent => iEvent !== event);
+                console.log('Event deleted', event);
+              }
+            }
+          ]*/
 
         }
       ];
@@ -439,3 +315,19 @@ export const colors: any = {
   }
 
 };
+
+@Component({
+  selector: 'DeleteReservation',
+  templateUrl: 'DeleteReservation.html',
+})
+export class DeleteReservation {
+
+  constructor(
+    public dialogRef: MatDialogRef<DeleteReservation>,
+    @Inject(MAT_DIALOG_DATA) public data: Reservation) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+}

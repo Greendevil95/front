@@ -7,6 +7,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { CalendarModule, DateAdapter, CalendarNativeDateFormatter, DateFormatterParams } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import {MatDialogModule} from '@angular/material';
+
 
 import {AppRoutingModule, routes} from './app.routing';
 import { ComponentsModule } from './components/components.module';
@@ -37,11 +39,13 @@ import { OrgListComponent } from './org-list/org-list.component';
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
 import { CalendarComponent } from './calendar/calendar.component';
+import {DeleteReservation} from "./calendar/calendar.component";
+
 
 registerLocaleData(localeRu);
 
 import { MyOrgListComponent } from './my-org-list/my-org-list.component';
-import { MyClientsComponent } from './my-clients/my-clients.component';
+/*import { MyClientsComponent } from './my-clients/my-clients.component';*/
 import { SearchResultComponent } from './search-result/search-result.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 
@@ -57,9 +61,11 @@ import { AboutUsComponent } from './about-us/about-us.component';
     ComponentsModule,
     RouterModule,
     AppRoutingModule,
+    MatDialogModule,
     NgbModule,
     ToastrModule.forRoot(),
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+
   ],
   declarations: [
     AppComponent,
@@ -81,10 +87,11 @@ import { AboutUsComponent } from './about-us/about-us.component';
     UserComponent,
     OrgListComponent,
     MyOrgListComponent,
-    MyClientsComponent,
+    /*MyClientsComponent*/
     CalendarComponent,
     SearchResultComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    DeleteReservation
 
   ],
   providers: [
@@ -99,11 +106,4 @@ import { AboutUsComponent } from './about-us/about-us.component';
 export class AppModule { }
 
 
-class CustomDateFormatter extends CalendarNativeDateFormatter {
 
-  public dayViewHour({date, locale}: DateFormatterParams): string {
-    // change this to return a different date format
-    return new Intl.DateTimeFormat(locale, {hour: 'numeric'}).format(date);
-  }
-
-}

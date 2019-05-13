@@ -33,7 +33,7 @@ export class UserComponent implements OnInit {
         this.selectedOrgPage = data.number;
         this.organizations = data.content;
       });
-    this.httpService.getAll('/users/reservation' + '?page=', Number(localStorage.getItem('resPage'))).subscribe(
+    this.httpService.getAll('/users/reservations' + '?page=', Number(localStorage.getItem('resPage'))).subscribe(
       data => {
         this.resPagesCount = data.totalPages;
         this.selectedResPage = data.number;

@@ -85,4 +85,10 @@ export class ServiceListComponent implements OnInit {
     this.router.navigateByUrl('servicepage');
   }
 
+  navigate1(id: string): void {
+    localStorage.setItem('servId', id);
+    localStorage.setItem('servPage', '0');
+    this.router.navigateByUrl('calendar');
+  }
+
 }
