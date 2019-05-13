@@ -1,0 +1,11 @@
+
+<div mat-dialog-content>
+  <p>Записаться на выбранное время?</p>
+  <div>
+    <input matInput [(ngModel)]="data.id">
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.id" cdkFocusInitial>Ok</button>
+</div>
