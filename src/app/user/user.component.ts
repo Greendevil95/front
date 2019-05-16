@@ -46,6 +46,8 @@ export class UserComponent implements OnInit {
     return localStorage.getItem('password');
   }
 
+
+
   changeProfile(name1: string, email1: string, phone1: string): void {
     console.log(name1 + ' ' + email1 + ' ' + phone1);
     if (email1 != null) {
@@ -135,6 +137,10 @@ export class UserComponent implements OnInit {
     } else {
       this.router.navigateByUrl('/add-organization');
     }
+  }
+
+  navigate1(): void {
+    this.router.navigateByUrl('/user-calendar');
   }
 
   updateRez(id1: string, servId: string, comment1: string, rating1: string): void {

@@ -88,7 +88,7 @@ export class ServiceListComponent implements OnInit {
   navigate1(id: string): void {
     localStorage.setItem('servId', id);
     localStorage.setItem('servPage', '0');
-    this.router.navigateByUrl('calendar');
+    this.router.navigateByUrl('/calendar');
   }
 
 }

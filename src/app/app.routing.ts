@@ -23,6 +23,8 @@ import {ReservationListComponent} from './reservation-list/reservation-list.comp
 import {SearchResultComponent} from './search-result/search-result.component';
 import {CalendarComponent} from './calendar/calendar.component';
 import { AboutUsComponent } from './about-us/about-us.component';
+import {UserCalendarComponent} from "./user-calendar/user-calendar.component";
+
 
 
 export const routes: Routes = [
@@ -46,7 +48,9 @@ export const routes: Routes = [
   { path: 'reservations', component: ReservationListComponent },
   { path: 'search_result', component: SearchResultComponent},
   { path: 'about-us', component: AboutUsComponent },
-  { path: 'calendar', component: CalendarComponent}
+  { path: 'calendar', component: CalendarComponent},
+  { path: 'user-calendar', component: UserCalendarComponent},
+
 ];
 /*const routes: Routes =[
   {

@@ -15,7 +15,7 @@ export class ReservationListComponent implements OnInit {
   constructor(private httpService: HttpService, private router: Router) { }
 
   ngOnInit() {
-    this.httpService.getAll('/users/reservation' + '?page=', Number(localStorage.getItem('resPage'))).subscribe(
+    this.httpService.getAll('/users/reservations' + '?page=', Number(localStorage.getItem('resPage'))).subscribe(
       data => {
         this.resPagesCount = data.totalPages;
         this.reservations = data.content;

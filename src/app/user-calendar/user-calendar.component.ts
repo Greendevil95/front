@@ -1,32 +1,16 @@
-import {AfterContentInit, ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
+import {CustomDateFormatter} from "../calendar/custom-date-formatter.provider";
+import {HttpService} from "../http/http.service";
+import {Router} from "@angular/router";
+import {MatDialog} from "@angular/material";
+import {Subject} from "rxjs";
+import {endOfHour, startOfHour} from "date-fns";
+import {DeleteReservation} from "../calendar/calendar.component";
 import {CalendarDateFormatter,
   CalendarEvent,
   CalendarEventAction,
   CalendarEventTimesChangedEvent,
   CalendarView} from 'angular-calendar';
-import { CustomDateFormatter } from './custom-date-formatter.provider';
-import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours, startOfWeek, startOfMonth, endOfWeek, format, startOfHour, endOfHour
-} from 'date-fns';
-import {HttpService} from "../http/http.service";
-import {Router} from "@angular/router";
-import {Observable, of, Subject} from "rxjs";
-import {HttpParams,HttpClient} from "@angular/common/http";
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import {AboutUsComponent} from "../about-us/about-us.component";
-import {LoginComponent} from "../login/login.component";
-import {OrgListComponent} from "../org-list/org-list.component";
-import {UserComponent} from "../user/user.component";
-import {map} from "rxjs/operators";
-
 
 interface User{
   id: number;
@@ -46,6 +30,9 @@ interface Reservation {
   dateTime: Date;
   comment:string;
   status:string;
+  service:[
+    {name:string}
+    ]
   user:[
     {id:number}
     ]
@@ -57,26 +44,21 @@ interface Organization {
   finishTime:Date;
   user:[
     {id:number}
-  ]
+    ]
 }
 
-
-
 @Component({
-  selector: 'app-calendar',
-  templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss'],
+  selector: 'app-user-calendar',
+  templateUrl: './user-calendar.component.html',
+  styleUrls: ['./user-calendar.component.scss'],
   providers: [
     {
       provide: CalendarDateFormatter,
       useClass: CustomDateFormatter
     }
-  ]
+    ]
 })
-
-
-export class CalendarComponent implements OnInit{
-
+export class UserCalendarComponent implements OnInit {
 
   organization: any;
   userId: string;
@@ -111,11 +93,12 @@ export class CalendarComponent implements OnInit{
     this.httpService.get('/users/auth').subscribe(
       data => {
         this.user = <User>data;
-        this.httpService.get('/services/' + localStorage.getItem('servId') + '/reservations' + '?pagesize=999').subscribe(
+        this.httpService.get('/users/' + '440'+ '/reservations' + '?pagesize=999').subscribe(
           data => {
             this.reservations=<Reservation[]>data.content;
+            console.log(this.reservations);
             for(let i = 0;i<this.reservations.length;i++) {
-              this.addEvent2(new Date(this.reservations[i].dateTime), this.reservations[i].status, this.reservations[i].id,this.reservations[i].user.id);
+              this.addEvent2(new Date(this.reservations[i].dateTime), this.reservations[i].status, this.reservations[i].id,this.reservations[i].user.id,this.reservations[i].service.name);
             }
           });
       });
@@ -124,7 +107,7 @@ export class CalendarComponent implements OnInit{
     this.httpService.get('/services/' + localStorage.getItem('servId')).subscribe(
       data => {
         this.service = <Service>data;
-         this.serviceDuration = this.service.time/60;
+        this.serviceDuration = this.service.time/60;
         this.hourSegmentHeight=60/this.serviceDuration;
 
       });
@@ -193,8 +176,8 @@ export class CalendarComponent implements OnInit{
 
   eventClicked({ event }: { event: CalendarEvent }): void {
 
-      console.log('Event clicked', event);
-    }
+    console.log('Event clicked', event);
+  }
 
   setView(view: CalendarView) {
     this.view = view;
@@ -208,17 +191,19 @@ export class CalendarComponent implements OnInit{
         start: startOfHour(hourDate),
         end: endOfHour(hourDate),
         color: colors.blue,
+        id: null
       }
     ];
   }
 
-  addEvent2(hourDate: Date,status:string, id:number, userId?: any): void {
+  addEvent2(hourDate: Date,status:string, id:number, userId?: any, servName?: any): void {
+    console.log(servName);
     if (status == 'INPROCESS'){
       if (this.user.id == userId) {
         this.events = [
           ...this.events,
           {
-            title: "Ожидает подтверждения...",
+            title: servName,
             start: startOfHour(hourDate),
             end: endOfHour(hourDate),
             color: colors.blue,
@@ -227,23 +212,23 @@ export class CalendarComponent implements OnInit{
         ];
       } else {
         this.events = [
-        ...this.events,
-        {
-          title: "Подтверждается",
-          start: startOfHour(hourDate),
-          end: endOfHour(hourDate),
-          color: colors.yellow,
-          id: id,
+          ...this.events,
+          {
+            title: "Подтверждается",
+            start: startOfHour(hourDate),
+            end: endOfHour(hourDate),
+            color: colors.yellow,
+            id: id,
 
-        }
-      ];}
+          }
+        ];}
     }
     else if (status == 'ASSEPTED'){
       if (this.user.id == userId) {
         this.events = [
           ...this.events,
           {
-            title: "Запись подтверждена!",
+            title: servName,
             start: startOfHour(hourDate),
             end: endOfHour(hourDate),
             color: colors.green,
@@ -259,7 +244,6 @@ export class CalendarComponent implements OnInit{
             end: endOfHour(hourDate),
             color: colors.red,
             id: id,
-
           }
         ];}
     }
@@ -291,7 +275,7 @@ export class CalendarComponent implements OnInit{
           }
         });
       eventDate.setHours(eventDate.getHours() - 3);
-     this.addEvent(eventDate);
+      this.addEvent(eventDate);
     } else console.log('Try reserv in own organisation!')
   }
 
@@ -308,20 +292,17 @@ export class CalendarComponent implements OnInit{
 
   deleteReservation(eventId: number,eventToDelete: CalendarEvent): void {
     let res = this.reservations.find(Reservation => Reservation.id  == eventId);
-    if (res != undefined) {
-      if (this.org.user.id == this.user.id || res.user.id == this.user.id) {
-        this.events = this.events.filter(event => event !== eventToDelete);
-        this.httpService.delete('/reservations/' + eventId).subscribe(
-          data => {
-          },
-          error => {
-            if (error.status === 200) {
-              console.log(error);
-            }
-          });
-      }
-    } else  this.events = this.events.filter(event => event !== eventToDelete);
-
+    if (this.org.user.id == this.user.id || res.user.id == this.user.id || res.id == null){
+      this.events = this.events.filter(event => event !== eventToDelete);
+      this.httpService.delete('/reservations/' + eventId).subscribe(
+        data => {
+        },
+        error => {
+          if (error.status === 200) {
+            console.log(error);
+          }
+        });
+    }
   }
 
 }
@@ -350,18 +331,4 @@ export const colors: any = {
 
 };
 
-@Component({
-  selector: 'DeleteReservation',
-  templateUrl: 'DeleteReservation.html',
-})
-export class DeleteReservation {
 
-  /*constructor(
-    public dialogRef: MatDialogRef<DeleteReservation>,
-    @Inject(MAT_DIALOG_DATA) public data: Reservation) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }*/
-
-}
