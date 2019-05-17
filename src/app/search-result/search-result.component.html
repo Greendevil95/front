@@ -25,7 +25,7 @@
                 <td>
                   <div (click)="navigate( result.id )">Название: {{result.name}}</div><br>
                   <div>Название организации: {{result.organization.name}}</div><br>
-                  <div>Рейтинг: {{result.rating}}</div><br>
+                  <app-rating currentRate = {{result.rating}} readFlag="true"></app-rating>
                   <div>Цена: {{result.price}} p.</div><br>
                   <div>Описание: {{result.description}}</div><br>
                 </td>
@@ -57,8 +57,15 @@
             <h3>Критерии поиска:</h3>
             <div class="checkbox">
               <div class="checkbox-radios">
-                <label for="ratingCategory">Минимальный рейтинг</label>
-                <input type="text" class="form-control" style="width: 100%;" id="ratingCategory" [(ngModel)]="rating" placeholder="1" name="rating">
+                <label>Минимальный рейтинг</label>
+                <ng-template #star let-fill="fill">
+                    <span class="star" [class.full]="fill === 100">
+                      <span class="half" [style.width.%]="fill">&#9733;</span>
+                      &#9733;
+                    </span>
+                </ng-template>
+                <ngb-rating [(rate)]="rating" [starTemplate]="star" [readonly]="false" max="5"></ngb-rating>
+                <!--<input type="text" class="form-control" style="width: 100%;" id="ratingCategory" [(ngModel)]="rating" placeholder="1" name="rating">-->
               </div>
               <div class="checkbox-radios">
                 <label for="priceCategory">Цена</label>

@@ -7,8 +7,7 @@
       <div (click)="navigate( serv.id )">Название: {{serv.name}}
       </div>
       <br>
-      <div>Рейтинг: {{serv.rating}}
-      </div>
+      <app-rating  currentRate={{serv.rating}} readFlag="true"></app-rating>
       <br>
       <div>Цена: {{serv.price}} p.
       </div>

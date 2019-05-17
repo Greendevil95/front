@@ -1,6 +1,6 @@
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -76,9 +76,8 @@ import localeRu from '@angular/common/locales/ru';
 import {CalendarComponent, DeleteReservation} from './calendar/calendar.component';
 import {MyOrgListComponent} from './my-org-list/my-org-list.component';
 /*import { MyClientsComponent } from './my-clients/my-clients.component';*/
-import {SearchResultComponent} from './search-result/search-result.component';
-import {AboutUsComponent} from './about-us/about-us.component';
-import {BrowserModule} from "@angular/platform-browser";
+import { RatingComponent } from './rating/rating.component';
+import {BrowserModule} from '@angular/platform-browser';
 import {A11yModule} from '@angular/cdk/a11y';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {PortalModule} from '@angular/cdk/portal';
@@ -87,6 +86,9 @@ import {CdkStepperModule} from '@angular/cdk/stepper';
 import {CdkTableModule} from '@angular/cdk/table';
 import {CdkTreeModule} from '@angular/cdk/tree';
 import { UserCalendarComponent } from './user-calendar/user-calendar.component';
+import { AcceptStatusComponent } from './accept-status/accept-status.component';
+import {SearchResultComponent} from './search-result/search-result.component';
+import {AboutUsComponent} from './about-us/about-us.component';
 
 
 registerLocaleData(localeRu);
@@ -184,7 +186,10 @@ registerLocaleData(localeRu);
     SearchResultComponent,
     AboutUsComponent,
     DeleteReservation,
-    UserCalendarComponent
+    RatingComponent,
+    DeleteReservation,
+    UserCalendarComponent,
+    AcceptStatusComponent
 
 
   ],

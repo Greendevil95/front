@@ -91,12 +91,10 @@
               <h5 class="title">{{user.email}}</h5>
             </a>
             <p class="description">
-              Рейтинг: {{user.rating}}
+              <app-rating currentRate = {{user.rating}} readFlag="true"></app-rating>
             </p>
           </div>
-          <p class="description text-center">
-            "Что-то"
-          </p>
+
         </div>
       </div>
     </div>
@@ -113,7 +111,7 @@
               <tr *ngFor="let org of organizations">
                 <td>
                   <div (click)="navigate( org.id )">Название: {{org.name}}</div><br>
-                  <div>Рейтинг: {{org.rating}}</div><br>
+                  <app-rating currentRate = {{org.rating}} readFlag="true"></app-rating><br>
                   <div>Адрес: {{org.address}}</div><br>
                   <div>Описание: {{org.description}}</div><br>
                 </td>
@@ -151,39 +149,43 @@
             <table class="table">
               <tbody>
               <tr *ngFor="let res of reservations">
-                <ng-container *ngIf="res.rating == 0 && res.comment == ''">
-                <td>
-                  <div class="form-check">
-                    <input  class="form-control" name="{{res.id}}" type="text"  [(ngModel)]="rating" placeholder="5.0">
-                  </div>
-                </td>
-                <td class="text-left">
+                <td *ngIf="res.rating == 0 && (res.comment == '' || res.comment == null)">
                   <label>Название организации: {{res.service.organization.name}}</label><br>
                   <label>Название услуги: {{res.service.name}}</label><br>
+                  <ng-template #star let-fill="fill">
+                    <span class="star" [class.full]="fill === 100">
+                      <span class="half" [style.width.%]="fill">&#9733;</span>
+                      &#9733;
+                    </span>
+                  </ng-template>
+
+                  <label>Оценка: </label><ngb-rating [(rate)]="rating" [starTemplate]="star" [readonly]="false" max="5"></ngb-rating><br>
                   <label>Цена: {{res.service.price}} р.</label><br>
+
+                    <!---<div class="form-check">
+                      <input  class="form-control" name="{{res.id}}" type="text"  [(ngModel)]="rating" placeholder="5.0">
+                    </div>--->
                   <label>Отзыв:</label>
-                  <textarea rows="4" cols="60" class="form-control" name="{{res.id}}" [(ngModel)]="comment" placeholder="Мой отзыв...{{res.id}}"></textarea>
+                  <textarea rows="4" cols="60" class="form-control" name="comment" id="res.id" [(ngModel)]="comment" placeholder="Мой отзыв..."></textarea>
                 </td>
-                <td class="td-actions text-right">
+                <td class="td-actions text-right" *ngIf="res.rating == 0 && (res.comment == '' || res.comment == null)">
                   <button type="button" rel="tooltip" title="Изменить" (click)="updateRez(res.id, res.service.id, comment, rating)" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
                     <i class="now-ui-icons ui-1_check"></i>
                   </button>
                 </td>
-                </ng-container>
-                <ng-container *ngIf="res.rating != 0 && res.comment != ''">
-                  <td>
-                    <div class="form-check">
+                <td *ngIf="res.rating != 0 && res.comment != ''">
+
+                    <!--<div class="form-check">
                       <input class="form-control" type="text" value="{{res.rating}}">
-                    </div>
-                  </td>
-                  <td class="text-left">
-                      <label>Название организации: {{res.service.organization.name}}</label><br>
-                      <label>Название услуги: {{res.service.name}}</label><br>
-                      <label>Цена: {{res.service.price}} р.</label><br>
-                      <label>Отзыв</label>
-                      <textarea rows="4" cols="60" class="form-control">{{res.comment}}</textarea>
-                  </td>
-                </ng-container>
+                    </div>-->
+
+                  <label>Название организации: {{res.service.organization.name}}</label><br>
+                  <label>Название услуги: {{res.service.name}}</label><br>
+                  <label>Оценка: </label><app-rating  currentRate={{res.rating}} readFlag="true"></app-rating><br>
+                  <label>Цена: {{res.service.price}} р.</label><br>
+                  <label>Отзыв</label>
+                  <textarea rows="4" cols="60" class="form-control">{{res.comment}}</textarea>
+                </td>
               </tr>
               </tbody>
             </table>
