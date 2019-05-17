@@ -16,11 +16,13 @@ export class UserComponent implements OnInit {
   resPagesCount: number;
   selectedResPage: string;
   changedPass: boolean;
+  public rating: number;
 
   constructor(private httpService: HttpService, private router: Router) {
   }
 
   ngOnInit(): void {
+    this.rating = 0;
     this.changedPass = false;
     this.httpService.get('/users/auth').subscribe(
       data => {
@@ -73,7 +75,7 @@ export class UserComponent implements OnInit {
       },
       error => {
         if (error.status === 200) {
-          if (email1 != localStorage.getItem('email')) {
+          if (email1 !== localStorage.getItem('email')) {
             localStorage.setItem('email', email1);
           }
           this.ngOnInit();
@@ -107,8 +109,8 @@ export class UserComponent implements OnInit {
   }
 
   createRange(count: number): number[] {
-    var array: number[] = [];
-    for (var i = 1; i <= count; i++) {
+    let array: number[] = [];
+    for (let i = 1; i <= count; i++) {
       array.push(i);
     }
     return array;

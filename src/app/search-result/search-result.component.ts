@@ -12,15 +12,16 @@ export class SearchResultComponent implements OnInit {
   results: any;
   searchString: string;
   resCount: number;
+  rating: number;
 
   constructor(private router: Router, private httpService: HttpService) { }
 
   ngOnInit() {
     this.pages = 0;
     this.searchString = localStorage.getItem('searchString');
-    this.httpService.getAll('/service?search=name:' + this.searchString
-      /*+ ',organization.name:' + this.searchString
-      + ',description:' + this.searchString*/
+    this.httpService.getAll('/services?search=name:' + this.searchString
+      + ',ororganization.name:' + this.searchString
+      + ',ordescription:' + this.searchString
       + localStorage.getItem('params')
       + '&page=', Number(localStorage.getItem('resPage'))).subscribe(
       data => {
@@ -66,10 +67,10 @@ export class SearchResultComponent implements OnInit {
     str = '';
     console.log(rating + ' ' + price1);
     if (rating != null) {
-      str += ',rating:' + rating;
+      str += ',andrating:' + rating;
     }
     if (price1 != null && price2 != null) {
-      str += ',price>' + price1 + ',price<' + price2;
+      str += ',andprice>' + price1 + ',andprice<' + price2;
     }
     localStorage.setItem('params', str);
     this.ngOnInit();

@@ -11,6 +11,7 @@ export class ReservationListComponent implements OnInit {
   reservations: any;
   resPagesCount: number;
   selectedPage: string;
+  rating: number;
 
   constructor(private httpService: HttpService, private router: Router) { }
 

@@ -3,6 +3,7 @@ import { ROUTES } from '../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { Router } from '@angular/router';
 import Chart from 'chart.js';
+import {HttpService} from '../../http/http.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,64 +11,70 @@ import Chart from 'chart.js';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-    private account: string;
-    private listTitles: any[];
-    location: Location;
-      mobile_menu_visible: any = 0;
-    private toggleButton: any;
-    private sidebarVisible: boolean;
+  private account: string;
+  private listTitles: any[];
+  location: Location;
+  mobile_menu_visible: any = 0;
+  private toggleButton: any;
+  private sidebarVisible: boolean;
+  count: number;
 
-    public isCollapsed = true;
+  public isCollapsed = true;
 
-    constructor(location: Location,  private element: ElementRef, private router: Router) {
-      this.location = location;
-          this.sidebarVisible = false;
+  constructor(location: Location, private element: ElementRef, private router: Router, private httpService: HttpService) {
+    this.location = location;
+    this.sidebarVisible = false;
+  }
+
+  isAuth(): boolean {
+    this.account = localStorage.getItem('email');
+    if (this.account === 'Войти') {
+      return true;
+    } else {
+      return false;
     }
+  }
 
-    isAuth(): boolean {
-      this.account = localStorage.getItem('email');
-      if (this.account === 'Войти') {
-        return true;
-      } else {
-        return false;
-      }
-    }
+  search(findString: string): void {
+    localStorage.setItem('searchString', findString);
+    this.router.navigateByUrl('search_result');
+  }
 
-    search(findString: string): void {
-      localStorage.setItem('searchString', findString);
-      this.router.navigateByUrl('search_result');
-    }
+  exit(): void {
+    localStorage.setItem('email', 'Войти');
+    localStorage.setItem('password', '');
+    this.router.navigateByUrl('/log');
+  }
 
-    exit(): void {
-      localStorage.setItem('email', 'Войти');
-      localStorage.setItem('password', '');
-      this.router.navigateByUrl('/log');
-    }
-
-    ngOnInit() {
-      this.account = localStorage.getItem('username');
-      console.log(this.account);
-      this.listTitles = ROUTES.filter(listTitle => listTitle);
-      const navbar: HTMLElement = this.element.nativeElement;
-      this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
-      this.router.events.subscribe((event) => {
-        this.sidebarClose();
-        var $layer: any = document.getElementsByClassName('close-layer')[0];
-        if ($layer) {
-          $layer.remove();
-          this.mobile_menu_visible = 0;
-        }
+  ngOnInit() {
+    this.httpService.get('organizations/' + localStorage.getItem('orgId') + 'services/statuscount').subscribe(
+      data => {
+        this.count = Number(data);
+        console.log(this.count);
       });
-    }
 
-  collapse(){
+    this.account = localStorage.getItem('username');
+    this.listTitles = ROUTES.filter(listTitle => listTitle);
+    const navbar: HTMLElement = this.element.nativeElement;
+    this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
+    this.router.events.subscribe((event) => {
+      this.sidebarClose();
+      var $layer: any = document.getElementsByClassName('close-layer')[0];
+      if ($layer) {
+        $layer.remove();
+        this.mobile_menu_visible = 0;
+      }
+    });
+  }
+
+  collapse() {
     this.isCollapsed = !this.isCollapsed;
     const navbar = document.getElementsByTagName('nav')[0];
     console.log(navbar);
     if (!this.isCollapsed) {
       navbar.classList.remove('navbar-transparent');
       navbar.classList.add('bg-white');
-    }else{
+    } else {
       navbar.classList.add('navbar-transparent');
       navbar.classList.remove('bg-white');
     }
@@ -76,13 +83,13 @@ export class NavbarComponent implements OnInit {
 
   sidebarOpen() {
     const toggleButton = this.toggleButton;
-    const mainPanel =  <HTMLElement>document.getElementsByClassName('main-panel')[0];
+    const mainPanel = <HTMLElement>document.getElementsByClassName('main-panel')[0];
     const html = document.getElementsByTagName('html')[0];
     if (window.innerWidth < 991) {
       mainPanel.style.position = 'fixed';
     }
 
-    setTimeout(function(){
+    setTimeout(function () {
       toggleButton.classList.add('toggled');
     }, 500);
 
@@ -90,19 +97,21 @@ export class NavbarComponent implements OnInit {
 
     this.sidebarVisible = true;
   };
+
   sidebarClose() {
     const html = document.getElementsByTagName('html')[0];
     this.toggleButton.classList.remove('toggled');
-    const mainPanel =  <HTMLElement>document.getElementsByClassName('main-panel')[0];
+    const mainPanel = <HTMLElement>document.getElementsByClassName('main-panel')[0];
 
     if (window.innerWidth < 991) {
-      setTimeout(function(){
+      setTimeout(function () {
         mainPanel.style.position = '';
       }, 500);
     }
     this.sidebarVisible = false;
     html.classList.remove('nav-open');
   };
+
   sidebarToggle() {
     // const toggleButton = this.toggleButton;
     // const html = document.getElementsByTagName('html')[0];
@@ -115,19 +124,19 @@ export class NavbarComponent implements OnInit {
     }
     const html = document.getElementsByTagName('html')[0];
 
-    if (this.mobile_menu_visible == 1) {
+    if (this.mobile_menu_visible === 1) {
       // $('html').removeClass('nav-open');
       html.classList.remove('nav-open');
       if ($layer) {
         $layer.remove();
       }
-      setTimeout(function() {
+      setTimeout(function () {
         $toggle.classList.remove('toggled');
       }, 400);
 
       this.mobile_menu_visible = 0;
     } else {
-      setTimeout(function() {
+      setTimeout(function () {
         $toggle.classList.add('toggled');
       }, 430);
 
@@ -137,19 +146,19 @@ export class NavbarComponent implements OnInit {
 
       if (html.querySelectorAll('.main-panel')) {
         document.getElementsByClassName('main-panel')[0].appendChild($layer);
-      }else if (html.classList.contains('off-canvas-sidebar')) {
+      } else if (html.classList.contains('off-canvas-sidebar')) {
         document.getElementsByClassName('wrapper-full-page')[0].appendChild($layer);
       }
 
-      setTimeout(function() {
+      setTimeout(function () {
         $layer.classList.add('visible');
       }, 100);
 
-      $layer.onclick = function() { //asign a function
+      $layer.onclick = function () { // asign a function
         html.classList.remove('nav-open');
         this.mobile_menu_visible = 0;
         $layer.classList.remove('visible');
-        setTimeout(function() {
+        setTimeout(function () {
           $layer.remove();
           $toggle.classList.remove('toggled');
         }, 400);
@@ -159,9 +168,9 @@ export class NavbarComponent implements OnInit {
       this.mobile_menu_visible = 1;
 
     }
-  };
+  }
 
-  getTitle(){
+  getTitle() {
     /*var titlee = this.location.prepareExternalUrl(this.location.path());
     if(titlee.charAt(0) === '#'){
       titlee = titlee.slice( 2 );
@@ -173,6 +182,6 @@ export class NavbarComponent implements OnInit {
         return this.listTitles[item].title;
       }
     }*/
-      return 'Что-нибудь';
-    }
+    return 'BizzyCat';
+  }
 }
