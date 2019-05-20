@@ -145,6 +145,12 @@ export class UserComponent implements OnInit {
     this.router.navigateByUrl('/user-calendar');
   }
 
+  navigate2(id: string): void {
+    localStorage.setItem('orgId', id);
+    localStorage.setItem('servPage', '0');
+    this.router.navigateByUrl('/organization');
+  }
+
   updateRez(id1: string, servId: string, comment1: string, rating1: string): void {
     this.httpService.put('/reservations', {
       id: id1,

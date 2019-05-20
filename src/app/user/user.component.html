@@ -82,7 +82,7 @@
     <div class="col-md-4">
       <div class="card card-user">
         <div class="image">
-          <img src="../assets/img/bg5.jpg" alt="...">
+          <img src="../assets/img/header.jpg" alt="...">
         </div>
         <div class="card-body">
           <div class="author">
@@ -103,7 +103,7 @@
     <div class="col-md-6" style="padding-bottom:20px;">
       <div class="card" style="height:100%;">
         <div class="card-header">
-          <h5 class="title">Мои организации</h5>
+          <h5 class="card-title">Мои организации</h5>
         </div>
         <div class="card-body">
           <div class="table-responsive no-scroll">
@@ -140,7 +140,7 @@
           <div class="col-md-11">
           <h4 class="card-title">Мои записи</h4>
           </div>
-          <div class="col btn btn-neutral">
+          <div class="col btn btn-neutral" style="padding: 0;">
           <i class="now-ui-icons ui-1_calendar-60 text-primary cal" (click)="navigate1()"></i>
         </div>
         </div>
@@ -150,8 +150,8 @@
               <tbody>
               <tr *ngFor="let res of reservations">
                 <td *ngIf="res.rating == 0 && (res.comment == '' || res.comment == null)">
-                  <label>Название организации: {{res.service.organization.name}}</label><br>
-                  <label>Название услуги: {{res.service.name}}</label><br>
+                  <span style="font-size: 16px;"class="text-primary "> {{res.service.organization.name}}</span><br>
+                  <label>Услуга: {{res.service.name}}</label><br>
                   <ng-template #star let-fill="fill">
                     <span class="star" [class.full]="fill === 100">
                       <span class="half" [style.width.%]="fill">&#9733;</span>
@@ -179,8 +179,8 @@
                       <input class="form-control" type="text" value="{{res.rating}}">
                     </div>-->
 
-                  <label>Название организации: {{res.service.organization.name}}</label><br>
-                  <label>Название услуги: {{res.service.name}}</label><br>
+                  <label style="font-size: 16px;"class="text-primary ">{{res.service.organization.name}}</label><br>
+                  <label>Услуга: {{res.service.name}}</label><br>
                   <label>Оценка: </label><app-rating  currentRate={{res.rating}} readFlag="true"></app-rating><br>
                   <label>Цена: {{res.service.price}} р.</label><br>
                   <label>Отзыв</label>

@@ -10,8 +10,8 @@
             <tbody>
             <tr>
               <td *ngIf="res.rating == 0 && (res.comment == '' || res.comment == null)">
-                <label>Название организации: {{res.service.organization.name}}</label><br>
-                <label>Название услуги: {{res.service.name}}</label><br>
+                <label style="font-size: 16px;"class="text-primary">{{res.service.organization.name}}</label><br>
+                <label>Услуга: {{res.service.name}}</label><br>
                 <ng-template #star let-fill="fill">
                     <span class="star" [class.full]="fill === 100">
                       <span class="half" [style.width.%]="fill">&#9733;</span>
@@ -39,8 +39,8 @@
                   <input class="form-control" type="text" value="{{res.rating}}">
                 </div>-->
 
-                <label>Название организации: {{res.service.organization.name}}</label><br>
-                <label>Название услуги: {{res.service.name}}</label><br>
+                <label style="font-size: 16px;"class="text-primary">{{res.service.organization.name}}</label><br>
+                <label>Услуга:{{res.service.name}}</label><br>
                 <label>Оценка: </label><app-rating  currentRate={{res.rating}} readFlag="true"></app-rating><br>
                 <label>Цена: {{res.service.price}} р.</label><br>
                 <label>Отзыв</label>
