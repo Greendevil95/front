@@ -17,7 +17,7 @@ export class AddServiceComponent implements OnInit {
 
   create(name1, price1, description1): void {
     this.error = false;
-    this.httpService.post('/service', {
+    this.httpService.post('/services', {
       name: name1,
       price: price1,
       description: description1,

@@ -26,7 +26,7 @@
                   <input  class="form-control" name="{{res.id}}" type="text"  [(ngModel)]="rating" placeholder="5.0">
                 </div>--->
                 <label>Отзыв:</label>
-                <textarea rows="4" cols="60" class="form-control" name="comment" id="res.id" [(ngModel)]="comment" placeholder="Мой отзыв..."></textarea>
+                <textarea rows="4" cols="60" class="form-control" id="res.id" name="comment"  [(ngModel)]="comment" placeholder="Мой отзыв..."></textarea>
               </td>
               <td class="td-actions text-right" *ngIf="res.rating == 0 && (res.comment == '' || res.comment == null)">
                 <button type="button" rel="tooltip" title="Изменить" (click)="updateRez(res.id, res.service.id, comment, rating)" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">

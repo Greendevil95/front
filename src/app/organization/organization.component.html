@@ -2,8 +2,7 @@
 </div>
 <div class="main-content">
   <div class="row">
-    <div class="col-md-8">
-      <div class="card">
+      <div class=" col-md-8 card">
         <div class="card-header">
           <h5 class="title">Организация</h5>
         </div>
@@ -48,20 +47,19 @@
           </form>
         </div>
       </div>
-    </div>
     <div class="col-md-4">
       <div class="card card-user">
         <div class="image">
-          <img src="../assets/img/bg5.jpg" alt="...">
+          <img src="../assets/img/123.jpg" alt="...">
         </div>
         <div class="card-body">
           <div class="author">
-            <a href="#">
-              <img class="avatar border-gray" src="../assets/img/Drake1.png" alt="...">
+            <a class="text-primary">
+              <img class="avatar border-gray" src="../assets/img/avatar1.png" alt="...">
               <h5 class="title">{{organization.user.email}}</h5>
             </a>
             <p class="description">
-              Рейтинг: {{organization.user.rating}}
+              Телефон: {{organization.user.phone}}
             </p>
           </div>
           <p class="description text-center">
@@ -72,9 +70,9 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6">
-      <div class="card  card-tasks">
-        <div class="card-header ">
+    <div class="col" style="padding-left: 0;">
+      <div class="card">
+        <div class="card-header">
           <h4 class="card-title">Услуга</h4>
         </div>
         <app-service-list></app-service-list>

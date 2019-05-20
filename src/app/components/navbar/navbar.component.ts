@@ -40,6 +40,8 @@ export class NavbarComponent implements OnInit {
     this.router.navigateByUrl('search_result');
   }
 
+
+
   exit(): void {
     localStorage.setItem('email', 'Войти');
     localStorage.setItem('password', '');
@@ -47,12 +49,11 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.httpService.get('organizations/' + localStorage.getItem('orgId') + 'services/statuscount').subscribe(
+    this.httpService.get('organizations/' + localStorage.getItem('orgId') + '/services/statuscount').subscribe(
       data => {
         this.count = Number(data);
         console.log(this.count);
       });
-
     this.account = localStorage.getItem('username');
     this.listTitles = ROUTES.filter(listTitle => listTitle);
     const navbar: HTMLElement = this.element.nativeElement;

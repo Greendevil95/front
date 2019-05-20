@@ -110,7 +110,7 @@
             <table class="table">
               <tr *ngFor="let org of organizations">
                 <td>
-                  <div (click)="navigate( org.id )">Название: {{org.name}}</div><br>
+                  <div class="btn btn-neutral" style="font-size: medium;    padding: 0;"(click)="navigate( org.id )">{{org.name}}</div><br>
                   <app-rating currentRate = {{org.rating}} readFlag="true"></app-rating><br>
                   <div>Адрес: {{org.address}}</div><br>
                   <div>Описание: {{org.description}}</div><br>
@@ -141,7 +141,7 @@
           <h4 class="card-title">Мои записи</h4>
           </div>
           <div class="col btn btn-neutral">
-          <i class="now-ui-icons ui-1_calendar-60 text-primary" (click)="navigate1()"></i>
+          <i class="now-ui-icons ui-1_calendar-60 text-primary cal" (click)="navigate1()"></i>
         </div>
         </div>
         <div class="card-body ">

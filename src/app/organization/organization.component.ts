@@ -27,4 +27,9 @@ export class OrganizationComponent implements OnInit {
     this.router.navigateByUrl('/add-service');
   }
 
+  routing(id: string): void {
+    console.log(id);
+    this.router.navigateByUrl('/user');
+  }
+
 }

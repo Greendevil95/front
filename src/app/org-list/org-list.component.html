@@ -2,20 +2,22 @@
 </div>
 <div class="main-content">
   <div class="row">
-    <div class="col-md-3 pr-1" style="padding-bottom: 50px; max-height: 487px;" *ngFor="let org of list">
-      <div class="card" style="background: gold; height: 100%;">
-        <div class="card-user" style="margin: 4px; background: white;">
+    <div class="col-md-3 pr-1" style="padding-bottom: 50px;" *ngFor="let org of list">
+      <div class="card" style="border: solid gold 4px; height: 100%;">
+        <div class="card-user" style=" background: white;">
           <div class="image">
             <img src="../assets/img/123.jpg" alt="...">
           </div>
-          <div class="card-body" style="height: 300px;">
+          <div class="card-body" style="height: 300px;" >
             <div class="author">
+              <div class="btn btn-neutral">
               <a (click)="navigate( org.id )">
-                <img class="avatar border-gray" src="../assets/img/avatar1.png" alt="...">
+                <img class="avatar " src="../assets/img/avatar1.png" alt="..." style="border: solid gold 3px;">
                 <div>
                   <h5 class="title text-center text-danger">{{org.name}}</h5>
                 </div>
               </a>
+              </div>
               <p class="text-left">
                 Адрес: {{org.address}}
               </p>
@@ -60,12 +62,14 @@
           </div>
           <div class="card-body"  style="height: 300px;">
             <div class="author">
+              <div class="btn btn-neutral">
               <a (click)="navigate( org.id )">
                 <img class="avatar border-gray" src="../assets/img/avatar1.png" alt="...">
                 <div>
                   <h5 class="title text-center text-danger">{{org.name}}</h5>
                 </div>
               </a>
+              </div>
               <p class="text-left">
                 Адрес: {{org.address}}
               </p>
