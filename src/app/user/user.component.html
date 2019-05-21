@@ -172,7 +172,7 @@
                   <textarea rows="4" cols="60" class="form-control" name="comment" id="res.id" [(ngModel)]="comment" placeholder="Мой отзыв..."></textarea>
                 </td>
                 <td class="td-actions text-right" *ngIf="res.rating == 0 && (res.comment == '' || res.comment == null)">
-                  <button type="button" rel="tooltip" title="Изменить" (click)="updateRez(res.id, res.service.id, comment, rating)" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
+                  <button type="button" rel="tooltip" title="Изменить" (click)="updateRez(res.id, res.service.id, comment, rating,res.dateTime)" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
                     <i class="now-ui-icons ui-1_check"></i>
                   </button>
                 </td>

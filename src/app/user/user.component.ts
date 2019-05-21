@@ -151,7 +151,7 @@ export class UserComponent implements OnInit {
     this.router.navigateByUrl('/organization');
   }
 
-  updateRez(id1: string, servId: string, comment1: string, rating1: string): void {
+  updateRez(id1: string, servId: string, comment1: string, rating1: string, date1: any): void {
     this.httpService.put('/reservations', {
       id: id1,
       service: {
@@ -160,6 +160,7 @@ export class UserComponent implements OnInit {
       user: {
         id: localStorage.getItem('id')
       },
+      dateTime: date1,
       rating: rating1,
       comment: comment1
     }).subscribe(

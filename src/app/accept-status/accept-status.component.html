@@ -15,6 +15,7 @@
                   <label>Заказчик: {{res.user.name}}</label><br>
                   <label>Статус: {{res.status}} </label><br>
                   <label>Цена: {{res.service.price}} р.</label><br>
+                  <label>Время: {{res.dateTime}}</label>
                   <div *ngIf="res.status == 'ASSEPTED' && (res.rating > 0 || res.comment != null)">
                     <label>Оценка: </label><app-rating  currentRate={{res.rating}} readFlag="true"></app-rating><br>
                     <label>Отзыв</label>
