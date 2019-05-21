@@ -10,16 +10,15 @@
               <tbody>
               <tr *ngFor="let res of reservations">
                 <td style="padding-bottom: inherit">
-                  <label>Название услуги: {{res.service.name}}</label><br>
-                  <label>Название организации: {{res.service.organization.name}}</label><br>
-                  <label>Заказчик: {{res.user.name}}</label><br>
-                  <label>Статус: {{res.status}} </label><br>
-                  <label>Цена: {{res.service.price}} р.</label><br>
-                  <label>Время: {{res.dateTime}}</label>
+                  <h5 class="text-primary">{{res.service.name}}</h5>
+                  <p>Организация: {{res.service.organization.name}}</p>
+                  <p>Заказчик: {{res.user.name}}</p>
+                  <p>Статус: {{res.status}} </p>
+                  <p>Цена: {{res.service.price}} р.</p>
+                  <p>Время: {{res.dateTime}}</p>
                   <div *ngIf="res.status == 'ASSEPTED' && (res.rating > 0 || res.comment != null)">
-                    <label>Оценка: </label><app-rating  currentRate={{res.rating}} readFlag="true"></app-rating><br>
-                    <label>Отзыв</label>
-                    <textarea rows="4" cols="60" class="form-control">{{res.comment}}</textarea>
+                    <span>Оценка: </span><app-rating  currentRate={{res.rating}} readFlag="true"></app-rating><br>
+                    <span>Отзыв: {{res.comment}}</span>
                   </div>
                 </td>
 				        <td style="padding-bottom: inherit" class="td-actions text-right" *ngIf="res.status == 'INPROCESS'">
