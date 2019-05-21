@@ -66,9 +66,9 @@ export class SearchResultComponent implements OnInit {
   wideSearch(rating: string, price1: string, price2: string): void {
     var str;
     str = '';
-    console.log(rating + ' ' + price1);
-    if (rating != null) {
-      str += ',andrating:' + rating;
+    console.log(rating + ' ' + price1 + '' + price2);
+    if (Number(rating) != 0) {
+      str += ',andrating>' + rating;
     }
     if (price1 != null && price2 != null) {
       str += ',andprice>' + price1 + ',andprice<' + price2;
