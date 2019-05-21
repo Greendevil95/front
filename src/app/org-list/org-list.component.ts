@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./org-list.component.scss']
 })
 export class OrgListComponent implements OnInit {
+  primaryList: Array<any>;
   list: Array<any>;
   pagesCount: number;
   selectedPage: string;
@@ -20,6 +21,15 @@ export class OrgListComponent implements OnInit {
       localStorage.setItem('category', 'name.asc');
       console.log('tut');
     }
+    this.httpService.getAll('users/interests/services?field=organization.' + localStorage.getItem('category')
+      + '&page=', Number(localStorage.getItem('orgPage'))).subscribe(
+      data => {
+        console.log(data.content);
+        this.selectedPage = data.number;
+        this.pagesCount = data.totalPages;
+        this.primaryList = data.content;
+      }
+    );
     this.httpService.getAll('/organizations?field='
       + localStorage.getItem('category')
       + '&page=', Number(localStorage.getItem('orgPage'))).subscribe(

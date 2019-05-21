@@ -1,3 +1,52 @@
-<p>
-  accept-status works!
-</p>
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12" style="padding-bottom:20px;">
+      <div class="card"style="height:100%;">
+        <div class="card-body ">
+          <div class="table-full-width table-responsive">
+            <table class="table">
+              <tbody>
+              <tr *ngFor="let res of reservations">
+                <td style="padding-bottom: inherit">
+                  <label>Название услуги: {{res.service.name}}</label><br>
+                  <label>Название организации: {{res.service.organization.name}}</label><br>
+                  <label>Заказчик: {{res.user.name}}</label><br>
+                  <label>Статус: {{res.status}} </label><br>
+                  <label>Цена: {{res.service.price}} р.</label><br>
+                  <div *ngIf="res.status == 'ASSEPTED' && (res.rating > 0 || res.comment != null)">
+                    <label>Оценка: </label><app-rating  currentRate={{res.rating}} readFlag="true"></app-rating><br>
+                    <label>Отзыв</label>
+                    <textarea rows="4" cols="60" class="form-control">{{res.comment}}</textarea>
+                  </div>
+                </td>
+				        <td style="padding-bottom: inherit" class="td-actions text-right" *ngIf="res.status == 'INPROCESS'">
+                  <button type="button" rel="tooltip" title="Одобрить" (click)="assept(res.id)" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
+                    <i class="now-ui-icons ui-1_check"></i>
+                  </button>
+                  <button type="button" rel="tooltip" title="Отказать" (click)="deny(res.id)" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
+                    <i class="now-ui-icons ui-1_simple-remove"></i>
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <div class="row">
+              <button type="button" rel="tooltip" title="На предыдущую" (click)="changePage(-1, 'orgPage')" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
+      <i class="now-ui-icons arrows-1_minimal-left"></i>
+    </button>
+    <div class="form-check btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" *ngFor="let index of createRange(pagesCount)">
+      <input *ngIf="index - 1 == selectedPage" class="form-control" type="button" value="{{index}}" (click)="goToPage(index, 'orgPage')" style="border-color:#fd7e14">
+      <input *ngIf="index - 1 != selectedPage" class="form-control" type="button" value="{{index}}" (click)="goToPage(index, 'orgPage')">
+    </div>
+    <button type="button" rel="tooltip" title="На следующую" (click)="changePage(1, 'orgPage')" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
+      <i class="now-ui-icons arrows-1_minimal-right"></i>
+    </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

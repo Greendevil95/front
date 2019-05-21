@@ -24,6 +24,7 @@ import {SearchResultComponent} from './search-result/search-result.component';
 import {CalendarComponent} from './calendar/calendar.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import {UserCalendarComponent} from "./user-calendar/user-calendar.component";
+import {AcceptStatusComponent} from './accept-status/accept-status.component';
 
 
 
@@ -50,6 +51,7 @@ export const routes: Routes = [
   { path: 'about-us', component: AboutUsComponent },
   { path: 'calendar', component: CalendarComponent},
   { path: 'user-calendar', component: UserCalendarComponent},
+  { path: 'status', component: AcceptStatusComponent}
 
 ];
 /*const routes: Routes =[
