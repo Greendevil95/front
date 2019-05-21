@@ -93,7 +93,8 @@ export class UserCalendarComponent implements OnInit {
     this.httpService.get('/users/auth').subscribe(
       data => {
         this.user = <User>data;
-        this.httpService.get('/users/' + '440'+ '/reservations' + '?pagesize=999').subscribe(
+        console.log(this.user.id);
+        this.httpService.get('/users/' + this.user.id + '/reservations' + '?pagesize=999').subscribe(
           data => {
             this.reservations=<Reservation[]>data.content;
             console.log(this.reservations);
