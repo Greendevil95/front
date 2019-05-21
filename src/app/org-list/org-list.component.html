@@ -1,8 +1,8 @@
 <div class="panel-header panel-header-sm">
 </div>
 <div class="main-content">
-  <div class="row">
-    <div class="col-md-3 pr-1" style="padding-bottom: 50px;" *ngFor="let org of list">
+  <div class="row" *ngIf="primaryList != null">
+    <div class="col-md-3 pr-1" style="padding-bottom: 50px;" *ngFor="let org of primaryList">
       <div class="card" style="border: solid gold 4px; height: 100%;">
         <div class="card-user" style=" background: white;">
           <div class="image">
@@ -11,16 +11,14 @@
           <div class="card-body" style="height: 300px;" >
             <div class="author">
               <div class="btn btn-neutral">
-              <a (click)="navigate( org.id )">
-                <img class="avatar " src="../assets/img/avatar1.png" alt="..." style="border: solid gold 3px;">
-                <div>
-                  <h5 class="title text-center text-danger">{{org.name}}</h5>
-                </div>
-              </a>
+                <a (click)="navigate(org.organization.id)">
+                  <img class="avatar " src="../assets/img/avatar1.png" alt="..." style="border: solid gold 3px;">
+                  <div>
+                    <h5 class="title text-center text-danger">{{org.name}}</h5>
+                  </div>
+                </a>
               </div>
-              <p class="text-left">
-                Адрес: {{org.address}}
-              </p>
+              <p class="text-left">Организация: {{org.organization.name}}</p>
             </div>
             <app-rating currentRate = {{org.rating}} readFlag="true"></app-rating>
             <p class="text-left">
@@ -53,6 +51,60 @@
       </div>
     </div>
   </div>
+
+    <div class="row" *ngIf="primaryList == null">
+      <div class="col-md-3 pr-1" style="padding-bottom: 50px;" *ngFor="let org of list">
+        <div class="card" style="border: solid gold 4px; height: 100%;">
+          <div class="card-user" style=" background: white;">
+            <div class="image">
+              <img src="../assets/img/123.jpg" alt="...">
+            </div>
+            <div class="card-body" style="height: 300px;" >
+              <div class="author">
+                <div class="btn btn-neutral">
+                  <a (click)="navigate( org.id )">
+                    <img class="avatar " src="../assets/img/avatar1.png" alt="..." style="border: solid gold 3px;">
+                    <div>
+                      <h5 class="title text-center text-danger">{{org.name}}</h5>
+                    </div>
+                  </a>
+                </div>
+                <p class="text-left">
+                  Адрес: {{org.address}}
+                </p>
+              </div>
+              <app-rating currentRate = {{org.rating}} readFlag="true"></app-rating>
+              <p class="text-left">
+                {{org.description}}
+              </p>
+            </div>
+            <hr>
+          </div>
+        </div>
+        </div>
+        <div class="col-md-3" style="padding-bottom: 50px;">
+          <div class="list-group">
+            <div class="list-group-item">
+              <h3>Сортировать:</h3>
+              <div class="checkbox">
+                <div class="checkbox-radios">
+                  <input type="radio" id="ratingCategory" (click)="sort('rating')" name="category">
+                  <label for="ratingCategory">по рейтингу</label>
+                </div>
+                <div class="checkbox-radios">
+                  <input type="radio" id="nameCategory" (click)="sort('name')" name="category">
+                  <label for="ratingCategory">по алфавиту</label>
+                </div>
+                <div class="checkbox-radios">
+                  <input type="radio" id="category" name="category">
+                  <label for="category">ещё как-то</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
   <div class="row">
     <div class="col-md-3 pr-1" style="padding-bottom: 50px;" *ngFor="let org of list">
       <div class="card" style="height:100%;">

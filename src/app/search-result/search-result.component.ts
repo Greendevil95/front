@@ -17,6 +17,7 @@ export class SearchResultComponent implements OnInit {
   constructor(private router: Router, private httpService: HttpService) { }
 
   ngOnInit() {
+    this.rating = 0;
     this.pages = 0;
     this.searchString = localStorage.getItem('searchString');
     this.httpService.getAll('/services?search=name:' + this.searchString
