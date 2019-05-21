@@ -4,7 +4,7 @@
   <tbody>
   <tr *ngFor="let serv of list" class="organization-body" border="4" color ="black">
     <td class="text-left">
-      <div (click)="navigate( serv.id )">Название: {{serv.name}}
+      <div class="btn btn-neutral" style="padding: 0; font-size: 16px" (click)="navigate( serv.id )">{{serv.name}}
       </div>
       <br>
       <app-rating  currentRate={{serv.rating}} readFlag="true"></app-rating>
@@ -16,13 +16,13 @@
     </td>
     <td class="td-actions text-right" *ngIf="userId == organization.user.id">
       <button mat-button class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove" rel="tooltip" (click)="delete(serv.id)" title="" type="button">
-        <i class="nc-icon nc-simple-remove"></i>
+        <i class="nc-icon nc-simple-remove" ></i>
       </button>
     </td>
     <td class="td-actions text-right" *ngIf="userId != organization.user.id">
       <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6 btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
         <div class="font-icon-detail" (click)="createReservation(serv.id)">
-          <i class="now-ui-icons ui-1_calendar-60" (click)="navigate1(serv.id)"></i>
+          <i class="now-ui-icons ui-1_calendar-60 text-primary" (click)="navigate1(serv.id)"></i>
         </div>
       </div>
     </td>
