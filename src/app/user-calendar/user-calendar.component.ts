@@ -11,6 +11,7 @@ import {CalendarDateFormatter,
   CalendarEventAction,
   CalendarEventTimesChangedEvent,
   CalendarView} from 'angular-calendar';
+import {ViewEncapsulation} from "@angular/cli/lib/config/schema";
 
 interface User{
   id: number;
@@ -56,7 +57,16 @@ interface Organization {
       provide: CalendarDateFormatter,
       useClass: CustomDateFormatter
     }
-    ]
+    ],
+  encapsulation: ViewEncapsulation.None,
+  styles: [
+    `
+      .my-custom-class span {
+        color: #000000 !important;
+        font-size: 10.5pt;
+      }
+    `
+  ]
 })
 export class UserCalendarComponent implements OnInit {
 
@@ -192,7 +202,8 @@ export class UserCalendarComponent implements OnInit {
         start: startOfHour(hourDate),
         end: endOfHour(hourDate),
         color: colors.blue,
-        id: null
+        id: null,
+        cssClass: 'my-custom-class'
       }
     ];
   }
@@ -209,6 +220,7 @@ export class UserCalendarComponent implements OnInit {
             end: endOfHour(hourDate),
             color: colors.blue,
             id: id,
+            cssClass: 'my-custom-class'
           }
         ];
       } else {
@@ -220,6 +232,7 @@ export class UserCalendarComponent implements OnInit {
             end: endOfHour(hourDate),
             color: colors.yellow,
             id: id,
+            cssClass: 'my-custom-class'
 
           }
         ];}
@@ -234,6 +247,7 @@ export class UserCalendarComponent implements OnInit {
             end: endOfHour(hourDate),
             color: colors.green,
             id: id,
+            cssClass: 'my-custom-class'
           }
         ];
       } else {
@@ -245,6 +259,7 @@ export class UserCalendarComponent implements OnInit {
             end: endOfHour(hourDate),
             color: colors.red,
             id: id,
+            cssClass: 'my-custom-class'
           }
         ];}
     }

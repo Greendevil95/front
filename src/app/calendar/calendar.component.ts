@@ -26,6 +26,7 @@ import {LoginComponent} from "../login/login.component";
 import {OrgListComponent} from "../org-list/org-list.component";
 import {UserComponent} from "../user/user.component";
 import {map} from "rxjs/operators";
+import {ViewEncapsulation} from "@angular/cli/lib/config/schema";
 
 
 interface User{
@@ -71,6 +72,15 @@ interface Organization {
       provide: CalendarDateFormatter,
       useClass: CustomDateFormatter
     }
+  ],
+  encapsulation: ViewEncapsulation.None,
+  styles: [
+    `
+      .my-custom-class span {
+        color: #000000 !important;
+        font-size: 10.5pt;
+      }
+    `
   ]
 })
 
@@ -103,8 +113,12 @@ export class CalendarComponent implements OnInit{
 
 
 
+
+
   constructor(private httpService: HttpService, private router: Router, public dialog: MatDialog) { }
   //constructor(private http: HttpClient) {}
+
+
 
 
   ngOnInit():void {
@@ -208,6 +222,7 @@ export class CalendarComponent implements OnInit{
         start: startOfHour(hourDate),
         end: endOfHour(hourDate),
         color: colors.blue,
+        cssClass: 'my-custom-class'
       }
     ];
   }
@@ -222,6 +237,7 @@ export class CalendarComponent implements OnInit{
             start: startOfHour(hourDate),
             end: endOfHour(hourDate),
             color: colors.blue,
+            cssClass: 'my-custom-class',
             id: id,
           }
         ];
@@ -233,6 +249,7 @@ export class CalendarComponent implements OnInit{
           start: startOfHour(hourDate),
           end: endOfHour(hourDate),
           color: colors.yellow,
+          cssClass: 'my-custom-class',
           id: id,
 
         }
@@ -248,6 +265,7 @@ export class CalendarComponent implements OnInit{
             end: endOfHour(hourDate),
             color: colors.green,
             id: id,
+            cssClass: 'my-custom-class'
           }
         ];
       } else {
@@ -259,6 +277,7 @@ export class CalendarComponent implements OnInit{
             end: endOfHour(hourDate),
             color: colors.red,
             id: id,
+            cssClass: 'my-custom-class'
 
           }
         ];}
@@ -330,6 +349,7 @@ export const colors: any = {
   red: {
     primary: '#ad2121',
     secondary: '#FAE3E3'
+
   },
   blue: {
     primary: '#1e90ff',

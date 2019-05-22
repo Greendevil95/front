@@ -65,7 +65,7 @@
     p{
         display: inline-block;
         margin: 0;
-        line-height: 1.8em;
+        /*line-height: 1.8em;*/
         font-size: 1em;
         font-weight: 400;
     }
@@ -112,6 +112,7 @@
 
 
     .navbar-nav{
+      align-items: center;
         &.navbar-logo{
             position: absolute;
             left: 0;
@@ -279,3 +280,4 @@
 .bg-white{
     background-color: $white-color !important;
 }
+

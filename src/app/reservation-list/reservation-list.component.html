@@ -10,8 +10,8 @@
             <tbody>
             <tr>
               <td *ngIf="res.rating == 0 && (res.comment == '' || res.comment == null)">
-                <label style="font-size: 16px;"class="text-primary">{{res.service.organization.name}}</label><br>
-                <label>Услуга: {{res.service.name}}</label><br>
+                <span style="font-size: 16px;"class="text-primary">{{res.service.organization.name}}</span><br>
+                <span>Услуга: {{res.service.name}}</span><br>
                 <ng-template #star let-fill="fill">
                     <span class="star" [class.full]="fill === 100">
                       <span class="half" [style.width.%]="fill">&#9733;</span>
@@ -19,13 +19,13 @@
                     </span>
                 </ng-template>
 
-                <label>Оценка: </label><ngb-rating [(rate)]="rating" [starTemplate]="star" [readonly]="false" max="5"></ngb-rating><br>
-                <label>Цена: {{res.service.price}} р.</label><br>
+                <span>Оценка: </span><ngb-rating [(rate)]="rating" [starTemplate]="star" [readonly]="false" max="5"></ngb-rating><br>
+                <span>Цена: {{res.service.price}} р.</span><br>
 
                 <!---<div class="form-check">
                   <input  class="form-control" name="{{res.id}}" type="text"  [(ngModel)]="rating" placeholder="5.0">
                 </div>--->
-                <label>Отзыв:</label>
+                <span>Отзыв:</span>
                 <textarea rows="4" cols="60" class="form-control" id="res.id" name="comment"  [(ngModel)]="comment" placeholder="Мой отзыв..."></textarea>
               </td>
               <td class="td-actions text-right" *ngIf="res.rating == 0 && (res.comment == '' || res.comment == null)">
@@ -39,11 +39,11 @@
                   <input class="form-control" type="text" value="{{res.rating}}">
                 </div>-->
 
-                <label style="font-size: 16px;"class="text-primary">{{res.service.organization.name}}</label><br>
-                <label>Услуга:{{res.service.name}}</label><br>
-                <label>Оценка: </label><app-rating  currentRate={{res.rating}} readFlag="true"></app-rating><br>
-                <label>Цена: {{res.service.price}} р.</label><br>
-                <label>Отзыв</label>
+                <span style="font-size: 16px;"class="text-primary">{{res.service.organization.name}}</span><br>
+                <span>Услуга:{{res.service.name}}</span><br>
+                <span>Оценка: </span><app-rating  currentRate={{res.rating}} readFlag="true"></app-rating><br>
+                <span>Цена: {{res.service.price}} р.</span><br>
+                <span>Отзыв</span>
                 <textarea rows="4" cols="60" class="form-control">{{res.comment}}</textarea>
               </td>
             </tr>
