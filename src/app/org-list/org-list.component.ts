@@ -10,8 +10,9 @@ import {Router} from '@angular/router';
 export class OrgListComponent implements OnInit {
   primaryList: Array<any>;
   list: Array<any>;
+  userId: number;
   pagesCount: number;
-  selectedPage: string;
+  selectedPage: string = '1';
 
   constructor(private httpService: HttpService, private router: Router) {
   }
@@ -20,7 +21,9 @@ export class OrgListComponent implements OnInit {
     if (localStorage.getItem('category') === '0') {
       localStorage.setItem('category', 'name.asc');
     }
-    this.httpService.getAll('/organizations?field='
+	if (localStorage.getItem('id') !== '0') {
+	this.userId = Number(localStorage.getItem('id'));
+    this.httpService.getAll('/organizations?search=user.vip:true&field=' 
       + localStorage.getItem('category')
       + '&page=', Number(localStorage.getItem('orgPage'))).subscribe(
       data => {
@@ -33,6 +36,30 @@ export class OrgListComponent implements OnInit {
           this.pagesCount = data.totalPages;
           this.list = data.content;
         });
+	}
+	else {
+		this.userId = 0;
+		if (Number(localStorage.getItem('orgPage')) % 2 !== 0 && this.selectedPage !== '1'){
+			localStorage.setItem('orgPage', (Number(localStorage.getItem('orgPage')) + 1).toString());
+		}
+		this.httpService.getAll('/organizations/guest?field='
+		  + localStorage.getItem('category')
+		  + '&page=', Number(localStorage.getItem('orgPage'))).subscribe(
+		  data => {
+			this.primaryList = data.content;
+		});
+		this.httpService.getAll('organizations/guest?field=' + localStorage.getItem('category')
+			+ '&page=', Number(localStorage.getItem('orgPage')) + 1).subscribe(
+			data => {
+			  this.selectedPage = (Number(data.number) -1).toString();
+			  if (Number(data.totalPages)%2 !== 0) {
+				this.pagesCount = Number(data.totalPages)/2 + 1;
+			  } else {
+				this.pagesCount = Number(data.totalPages)/2;  
+			  }
+			  this.list = data.content;
+        });
+	}
   }
 
   createRange(count: number): number[] {

@@ -50,7 +50,7 @@
       </div>
     </div>
 
-  <div class="row">
+  <div class="row" *ngIf="userId != 0">
     <div class="col-md-3 pr-1" style="padding-bottom: 50px;" *ngFor="let org of list">
       <div class="card" style="height: 100%;">
         <div class="card-user" style=" background: white;">
@@ -72,6 +72,38 @@
             <app-rating currentRate = {{org.rating}} readFlag="true"></app-rating>
             <p>Цена: {{org.price}} р.</p>
             <p>Продолжительность: {{org.time}} минут</p>
+            <p class="text-left">
+              {{org.description}}
+            </p>
+          </div>
+          <hr>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row" *ngIf="userId == 0">
+    <div class="col-md-3 pr-1" style="padding-bottom: 50px;" *ngFor="let org of list">
+      <div class="card" style="height: 100%;">
+        <div class="card-user" style=" background: white;">
+          <div class="image">
+            <img src="../assets/img/123.jpg" alt="...">
+          </div>
+          <div class="card-body" style="height: 300px;" >
+            <div class="author">
+              <div class="btn btn-neutral">
+                <a (click)="navigate( org.id )">
+                  <img class="avatar " src="../assets/img/avatar1.png" alt="..." style="border: solid gold 3px;">
+                  <div>
+                    <h5 class="title text-center text-danger">{{org.name}}</h5>
+                  </div>
+                </a>
+              </div>
+              <p class="text-left">
+                Адрес: {{org.address}}
+              </p>
+            </div>
+            <app-rating currentRate = {{org.rating}} readFlag="true"></app-rating>
             <p class="text-left">
               {{org.description}}
             </p>

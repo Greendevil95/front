@@ -17,5 +17,8 @@ export class AppComponent implements OnInit {
     if (localStorage.getItem('email') === null) {
       localStorage.setItem('email', 'Войти');
     }
+	if (localStorage.getItem('id') === null) {
+		localStorage.setItem('id', '0');
+	}
   }
 }

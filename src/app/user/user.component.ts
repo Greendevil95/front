@@ -10,6 +10,7 @@ import {Router} from '@angular/router';
 export class UserComponent implements OnInit {
   reservations: Array<any>;
   user: any;
+  
   organizations: Array<any>;
   orgPagesCount: number;
   selectedOrgPage: string;
@@ -48,7 +49,13 @@ export class UserComponent implements OnInit {
     return localStorage.getItem('password');
   }
 
-
+	buyVIP(): void {
+		this.httpService.post('/users/auth/vip', null).subscribe(
+		data => {},
+		error => {
+			this.ngOnInit();
+		});
+	}
 
   changeProfile(name1: string, email1: string, phone1: string): void {
     console.log(name1 + ' ' + email1 + ' ' + phone1);

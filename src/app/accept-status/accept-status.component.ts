@@ -25,6 +25,14 @@ export class AcceptStatusComponent implements OnInit {
       }
     );
   }
+  
+  getDate(date:string): string {
+	  console.log(date);
+	  var res = date.split('T', 2);
+	  var data = res[0].split('-', 3);
+	  var time = res[1].split(':', 2);
+	  return data[2].toString() + '.' + data[1].toString() + '.' + data[0].toString() + ' ' + time[0].toString() + ':' + time[1].toString();
+  }
 
   createRange(count: number): number[] {
     var array: number[] = [];

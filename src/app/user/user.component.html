@@ -79,7 +79,27 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4" *ngIf="user.vip == true">
+      <div class="card card-user" style="border: solid gold 4px; height: 100%;">
+        <div class="image">
+          <img src="../assets/img/header.jpg" alt="...">
+        </div>
+        <div class="card-body" style=" background: white;">
+          <div class="author">
+              <img class="avatar border-gray" src="../assets/img/avatar1.png" alt="..." style="border: solid gold 3px;">
+            <p class="description">
+              Телефон: {{user.phone}}
+            </p>
+              <h5 class="title text-primary">{{user.email}}</h5>
+          </div>
+          <div style="text-align: center;">
+            <span class="btn btn-primary" (click)="buyVIP()">Приобрести VIP подписку</span>
+          </div>
+        </div>
+      </div>
+    </div>
+	
+	<div class="col-md-4" *ngIf="user.vip == false">
       <div class="card card-user">
         <div class="image">
           <img src="../assets/img/header.jpg" alt="...">
@@ -93,7 +113,7 @@
               <h5 class="title text-primary">{{user.email}}</h5>
           </div>
           <div style="text-align: center;">
-            <span class="btn btn-primary">Приобрести VIP подписку</span>
+            <span class="btn btn-primary" (click)="buyVIP()">Приобрести VIP подписку</span>
           </div>
         </div>
       </div>

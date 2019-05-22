@@ -43,13 +43,14 @@ export class NavbarComponent implements OnInit {
 
 
   exit(): void {
+	localStorage.setItem('id', '0');
     localStorage.setItem('email', 'Войти');
     localStorage.setItem('password', '');
     this.router.navigateByUrl('/log');
   }
 
   ngOnInit() {
-    this.httpService.get('organizations/' + localStorage.getItem('orgId') + '/services/statuscount').subscribe(
+    this.httpService.get('users/' + localStorage.getItem('id') + '/reservations/status/count?status=inprocess').subscribe(
       data => {
         this.count = Number(data);
         console.log(this.count);
