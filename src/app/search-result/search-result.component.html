@@ -23,7 +23,7 @@
             <table class="table">
               <tr *ngFor="let result of results">
                 <td>
-                  <div (click)="navigate( result.id )">Название: {{result.name}}</div><br>
+                  <div (click)="navigate( result.organization.id )">Название: {{result.name}}</div><br>
                   <div>Название организации: {{result.organization.name}}</div><br>
                   <app-rating currentRate = {{result.rating}} readFlag="true"></app-rating>
                   <div>Цена: {{result.price}} p.</div><br>

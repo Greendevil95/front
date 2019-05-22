@@ -9,17 +9,25 @@ import {Router} from '@angular/router';
 })
 export class AddServiceComponent implements OnInit {
   private error = false;
+  category: Array<any>;
 
   constructor(private httpService: HttpService, private router: Router) { }
 
   ngOnInit() {
+    this.httpService.get('/other/category').subscribe(
+      data => {
+        this.category = data;
+      }
+    );
   }
 
-  create(name1, price1, description1): void {
+  create(name1, price1, description1, category1, time1): void {
     this.error = false;
     this.httpService.post('/services', {
       name: name1,
       price: price1,
+      time: time1,
+      category: category1,
       description: description1,
       organization: {
         id: localStorage.getItem('orgId')

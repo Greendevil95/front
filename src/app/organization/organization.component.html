@@ -6,19 +6,19 @@
         <div class="card-header">
           <h5 class="title">Организация</h5>
         </div>
-        <div class="card-body">
-          <form>
+        <form>
+          <div class="card-body" *ngIf="organization.user.id != userId">
             <div class="row">
               <div class="col-md-9">
                 <div class="form-group">
                   <label>Название </label>
-                  <input type="text" class="form-control" placeholder="Username" value="{{organization.name}}">
+                  <input type="text" class="form-control" style="background-color: #ffffff; color: #212529;" placeholder="Username" value="{{organization.name}}" disabled>
                 </div>
               </div>
               <div class="col-md-3">
                 <div class="form-group">
                   <label>Рейтинг </label>
-                  <input class="form-control" type="text" value="{{organization.rating}}">
+                  <input class="form-control" style="background-color: #ffffff; color: #212529;" disabled type="text" value="{{organization.rating}}">
                 </div>
               </div>
             </div>
@@ -26,13 +26,13 @@
               <div class="col-md-6 pr-1">
                 <div class="form-group">
                   <label for="address">Адрес </label>
-                  <input name="address" id="address" type="text" class="form-control" value="{{organization.address}}">
+                  <input name="address" id="address" type="text" class="form-control" style="background-color: #ffffff; color: #212529;" disabled value="{{organization.address}}">
                 </div>
               </div>
               <div class="col-md-6 pl-1">
                 <div class="form-group">
                   <label>Номер телефона</label>
-                  <input type="text" class="form-control" value="{{organization.phoneNumber}}">
+                  <input type="text" class="form-control" style="background-color: #ffffff; color: #212529;" disabled value="{{organization.phoneNumber}}">
                 </div>
               </div>
             </div>
@@ -40,12 +40,56 @@
               <div class="col-md-10">
                 <div class="form-group">
                   <label>Описание</label>
-                  <textarea rows="4" cols="80" class="form-control">{{organization.description}}</textarea>
+                  <textarea rows="4" cols="80" class="form-control" style="background-color: #ffffff; color: #212529;" disabled>{{organization.description}}</textarea>
                 </div>
               </div>
             </div>
-          </form>
-        </div>
+          </div>
+
+          <div class="card-body" *ngIf="organization.user.id == userId">
+            <div class="row">
+              <div class="col-md-9">
+                <div class="form-group">
+                  <label>Название </label>
+                  <input type="text" class="form-control" placeholder="Username" [(ngModel)]="name1" name="name1" value="{{organization.name}}">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>Рейтинг </label>
+                  <input class="form-control" style="background-color: #ffffff; color: #212529;" disabled type="text" value="{{organization.rating}}">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label for="address1">Адрес </label>
+                  <input id="address1" type="text" class="form-control" [(ngModel)]="address1" name="address1" value="{{organization.address}}">
+                </div>
+              </div>
+              <div class="col-md-6 pl-1">
+                <div class="form-group">
+                  <label>Номер телефона</label>
+                  <input type="text" class="form-control" [(ngModel)]="phoneNumber" name="phoneNumber" value="{{organization.phoneNumber}}">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label>Описание</label>
+                  <textarea rows="4" cols="80" class="form-control" [(ngModel)]="description">{{organization.description}}</textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 pl-1" style="text-align: center">
+                <button class="btn btn-neutral btn-lg" (click)="changeOrg(name1, address1, phoneNumber, description)">Изменить данные</button>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
     <div class="col-md-4">
       <div class="card card-user">

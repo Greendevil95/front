@@ -23,6 +23,54 @@ export class OrganizationComponent implements OnInit {
       });
   }
 
+  changeOrg(name1: string, address1: string, phoneNumber1: string, description1: string): void {
+    console.log('id:' +  Number(localStorage.getItem('orgId')),
+      'name:' + name1,
+      'address:' + address1,
+      'phoneNumber:' + phoneNumber1,
+      'description:' + description1,
+      'startTime:' + this.organization.startTime,
+      'finishTime:' + this.organization.finishTime,
+      'rating:' + this.organization.rating);
+    if (name1 == null) {
+      name1 = this.organization.name;
+    }
+    if (address1 == null) {
+      address1 = this.organization.address;
+    }
+    if (phoneNumber1 == null) {
+      phoneNumber1 = this.organization.phoneNumber;
+    }
+    if (description1 == null) {
+      description1 = this.organization.description;
+    }
+    console.log('id:' +  Number(localStorage.getItem('orgId')),
+      'name:' + name1,
+      'address:' + address1,
+      'phoneNumber:' + phoneNumber1,
+      'description:' + description1,
+      'startTime:' + this.organization.startTime,
+      'finishTime:' + this.organization.finishTime,
+      'rating:' + this.organization.rating);
+    this.httpService.put('/organizations/' + localStorage.getItem('orgId'), {
+      id: Number(localStorage.getItem('orgId')),
+      name: name1,
+      address: address1,
+      phoneNumber: phoneNumber1,
+      description: description1,
+      startTime: this.organization.startTime,
+      finishTime: this.organization.finishTime,
+      rating: this.organization.rating
+    }).subscribe(
+      data => {
+      },
+      error => {
+        if (error.status === 200) {
+          this.ngOnInit();
+        }
+      });
+  }
+
   addService(): void {
     this.router.navigateByUrl('/add-service');
   }
