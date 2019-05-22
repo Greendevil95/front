@@ -23,11 +23,11 @@
             <table class="table">
               <tr *ngFor="let result of results">
                 <td>
-                  <div (click)="navigate( result.id )">Название: {{result.name}}</div><br>
-                  <div>Название организации: {{result.organization.name}}</div><br>
+                  <div class="btn btn-neutral" style="padding:0; font-size: 16px; margin-bottom: 10px;" (click)="navigate( result.organization.id )">{{result.name}}</div>
+                  <p>Название организации: {{result.organization.name}}</p>
                   <app-rating currentRate = {{result.rating}} readFlag="true"></app-rating>
-                  <div>Цена: {{result.price}} p.</div><br>
-                  <div>Описание: {{result.description}}</div><br>
+                  <p>Цена: {{result.price}} p.</p>
+                  <p>Описание: {{result.description}}</p>
                 </td>
               </tr>
             </table>
