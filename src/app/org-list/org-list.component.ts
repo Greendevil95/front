@@ -19,26 +19,20 @@ export class OrgListComponent implements OnInit {
   ngOnInit(): void {
     if (localStorage.getItem('category') === '0') {
       localStorage.setItem('category', 'name.asc');
-      console.log('tut');
     }
-    this.httpService.getAll('users/interests/services?field=organization.' + localStorage.getItem('category')
-      + '&page=', Number(localStorage.getItem('orgPage'))).subscribe(
-      data => {
-        console.log(data.content);
-        this.selectedPage = data.number;
-        this.pagesCount = data.totalPages;
-        this.primaryList = data.content;
-      }
-    );
     this.httpService.getAll('/organizations?field='
       + localStorage.getItem('category')
       + '&page=', Number(localStorage.getItem('orgPage'))).subscribe(
       data => {
-        console.log(data.content);
-        this.selectedPage = data.number;
-        this.pagesCount = data.totalPages;
-        this.list = data.content;
+        this.primaryList = data.content;
       });
+    this.httpService.getAll('users/interests/services?field=' + localStorage.getItem('category')
+        + '&page=', Number(localStorage.getItem('orgPage'))).subscribe(
+        data => {
+          this.selectedPage = data.number;
+          this.pagesCount = data.totalPages;
+          this.list = data.content;
+        });
   }
 
   createRange(count: number): number[] {

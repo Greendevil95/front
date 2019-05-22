@@ -20,6 +20,25 @@
             <div class="row justify-content-center align-items-center">
               <div class="col-md-10">
                 <div class="form-group">
+                  <label for="name">Выберите категорию услуги </label>
+                  <select class="browser-default custom-select" [(ngModel)]="categories" name="categories" required>
+                    <option disabled selected value="null">---</option>
+                    <option *ngFor="let interest of category" [value]=interest>{{interest}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label for="time">Введите продолжительность (в минутах)</label>
+                  <input name="time" id="time" type="text" [(ngModel)]="time" class="form-control" placeholder="60">
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+              <div class="col-md-10">
+                <div class="form-group">
                   <label for="price">Введите цену (в рублях)</label>
                   <input name="price" id="price" type="text" [(ngModel)]="price" class="form-control" placeholder="2500">
                 </div>
@@ -41,7 +60,7 @@
             <div class="row justify-content-center align-items-center">
               <div class="col-md-12">
                 <div class="button-container justify-content-center align-items-center">
-                  <button (click)="create(name, price, description)" class="btn btn-neutral btn-lg">
+                  <button (click)="create(name, price, description, categories, time)" class="btn btn-neutral btn-lg">
                     Добавить
                   </button>
                 </div>

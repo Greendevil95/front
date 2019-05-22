@@ -36,6 +36,18 @@
             <div class="row justify-content-center align-items-center">
               <div class="col-md-10">
                 <div class="form-group">
+                  <label for="startTime">Введите время работы организации</label>
+                  <div style="display:flex">
+                  <input name="startTime" id="startTime" type="text" [(ngModel)]="startTime" class="form-control" style="width: 50%;" placeholder="8:00">
+                  &nbsp;&mdash;&nbsp;
+                  <input name="endTime" id="endTime" type="text" [(ngModel)]="endTime" class="form-control" style="width: 50%;" placeholder="18:00">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-center align-items-center">
+              <div class="col-md-10">
+                <div class="form-group">
                   <label for="description">Описание организации</label>
                   <textarea rows="4" cols="80" name="description" id="description" [(ngModel)]="description" class="form-control" placeholder="Описание..."></textarea>
                 </div>
@@ -49,7 +61,7 @@
             <div class="row justify-content-center align-items-center">
               <div class="col-md-12">
                 <div class="button-container justify-content-center align-items-center">
-                  <button (click)="create(name, address, phone, description)" class="btn btn-neutral btn-lg">
+                  <button (click)="create(name, address, phone, description, startTime, endTime)" class="btn btn-neutral btn-lg">
                     Создать
                   </button>
                 </div>
