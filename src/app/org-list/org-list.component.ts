@@ -23,7 +23,7 @@ export class OrgListComponent implements OnInit {
     }
 	if (localStorage.getItem('id') !== '0') {
 	this.userId = Number(localStorage.getItem('id'));
-    this.httpService.getAll('/organizations?search=user.vip:true&field=' 
+    this.httpService.getAll('/organizations?search=user.vip:true&field='
       + localStorage.getItem('category')
       + '&page=', Number(localStorage.getItem('orgPage'))).subscribe(
       data => {

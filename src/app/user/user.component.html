@@ -179,14 +179,14 @@
                     </span>
                   </ng-template>
 
-                  <span>Оценка: </span><ngb-rating [(rate)]="rating" [starTemplate]="star" [readonly]="false" max="5"></ngb-rating><br>
+                  <span>Оценка: </span><ngb-rating [rate]="rating" (rateChange)="rating = $event" [starTemplate]="star" [readonly]="false" max="5"></ngb-rating><br>
                   <p>Цена: {{res.service.price}} р.</p>
 
                     <!---<div class="form-check">
                       <input  class="form-control" name="{{res.id}}" type="text"  [(ngModel)]="rating" placeholder="5.0">
                     </div>--->
                   <p>Отзыв:</p>
-                  <textarea style="font-size: 11pt;" rows="4" cols="60" class="form-control" name="comment" id="res.id" [(ngModel)]="comment" placeholder="Мой отзыв..."></textarea>
+                  <textarea style="font-size: 11pt;" rows="4" cols="60" class="form-control" name="comment" id="res.id" [ngModel]="comment" placeholder="Мой отзыв..." (input)="comment = $event.target.value"></textarea>
                 </td>
                 <td class="td-actions text-right" *ngIf="res.rating == 0 && (res.comment == '' || res.comment == null)">
                   <button type="button" rel="tooltip" title="Изменить" (click)="updateRez(res.id, res.service.id, comment, rating,res.dateTime)" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">

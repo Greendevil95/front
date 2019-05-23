@@ -8,12 +8,17 @@
           <h5 class="title">Регистрация</h5>
         </div>
         <div class="card-body">
-          <form>
+          <form >
             <div class="row justify-content-center align-items-center">
               <div class="col-md-10">
                 <div class="form-group">
                   <label for="email">Введите еmail</label>
-                  <input name="email" id="email" type="email" [(ngModel)]="email" class="form-control" placeholder="admin@mail.ru">
+                  <input name="email" id="email" type="email" #mail="ngModel" [(ngModel)]="email" class="form-control" placeholder="admin@mail.ru" email>
+                  <div class="row justify-content-center align-items-center" [hidden]="mail.valid || mail.pristine">
+                    <div class="col-md-10">
+                      <font size="3" color="red">Email введен некорректно!</font>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -21,7 +26,7 @@
               <div class="col-md-10">
                 <div class="form-group">
                   <label for="name">Введите ФИО</label>
-                  <input name="name" id="name" type="text" [(ngModel)]="name" class="form-control" placeholder="Иванов Иван Иванович">
+                  <input  name="name" id="name" type="text" [(ngModel)]="name" class="form-control" placeholder="Иванов Иван Иванович" maxlength="80">
                 </div>
               </div>
             </div>
@@ -29,7 +34,12 @@
               <div class="col-md-10">
                 <div class="form-group">
                   <label for="phone">Введите телефон</label>
-                  <input name="phone" id="phone" type="text" [(ngModel)]="phone" class="form-control" placeholder="89004508677">
+                  <input name="phone" id="phone" type="text" #phone1="ngModel" [(ngModel)]="phone" class="form-control" placeholder="89004508677" pattern="^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$">
+                  <div class="row justify-content-center align-items-center" [hidden]="phone1.valid || phone1.pristine">
+                    <div class="col-md-10">
+                      <font size="3" color="red">Неверный формат номера!</font>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -37,7 +47,12 @@
               <div class="col-md-10">
                 <div class="form-group">
                   <label>Введите пароль</label>
-                  <input type="password" name="password" [(ngModel)]="password" class="form-control" placeholder="password">
+                  <input type="password" name="password" #pass="ngModel" [(ngModel)]="password" class="form-control" placeholder="password" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$">
+                  <div class="row justify-content-center align-items-center" [hidden]="pass.valid || pass.pristine">
+                    <div class="col-md-10">
+                      <font size="3" color="red">Недостаточная сложность пароля!</font>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -45,11 +60,11 @@
               <div class="col-md-10">
                 <div class="form-group">
                   <label>Повторите пароль</label>
-                  <input type="password" name="repeatPassword" [(ngModel)]="repeatPassword" class="form-control" placeholder="password">
+                  <input type="password" name="repeatPassword" [(ngModel)]="repeatPassword" class="form-control" placeholder="password" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$">
                 </div>
               </div>
             </div>
-            <div class="row justify-content-center align-items-center" *ngIf=" password != repeatPassword ">
+            <div class="row justify-content-center align-items-center" *ngIf=" password != repeatPassword && repeatPassword != null">
               <div class="col-md-10">
                 <font size="3" color="red">Введеные пароли не совпадают</font>
               </div>

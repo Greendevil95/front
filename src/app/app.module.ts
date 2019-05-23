@@ -1,6 +1,6 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -89,6 +89,8 @@ import { UserCalendarComponent } from './user-calendar/user-calendar.component';
 import { AcceptStatusComponent } from './accept-status/accept-status.component';
 import {SearchResultComponent} from './search-result/search-result.component';
 import {AboutUsComponent} from './about-us/about-us.component';
+import { OrgCalendarComponent } from './org-calendar/org-calendar.component';
+
 
 
 registerLocaleData(localeRu);
@@ -114,7 +116,8 @@ registerLocaleData(localeRu);
     FormsModule,
     HttpClientModule,
     MatNativeDateModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    ReactiveFormsModule
 
   ],exports: [
     A11yModule,
@@ -189,7 +192,8 @@ registerLocaleData(localeRu);
     RatingComponent,
     DeleteReservation,
     UserCalendarComponent,
-    AcceptStatusComponent
+    AcceptStatusComponent,
+    OrgCalendarComponent
 
 
   ],

@@ -80,4 +80,10 @@ export class OrganizationComponent implements OnInit {
     this.router.navigateByUrl('/user');
   }
 
+  navigate(id: string): void {
+    localStorage.setItem('orgId', id);
+    localStorage.setItem('servPage', '0');
+    this.router.navigateByUrl('/org-calendar');
+  }
+
 }

@@ -22,8 +22,8 @@ export class AddOrganizationComponent implements OnInit {
       address: address1,
       phoneNumber: phone1,
       description: description1,
-      /*startTime: startTime1, пока не работает, хз поч
-      finishTime: finishTime1*/
+      /*startTime: new Date(startTime1),
+      finishTime: new Date(finishTime1)*/
     }).subscribe(data => {},
       error => {
         if (error.status === 200) {

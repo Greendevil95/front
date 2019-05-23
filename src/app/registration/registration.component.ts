@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpService} from '../http/http.service';
 import {Router} from '@angular/router';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+
 
 @Component({
   selector: 'app-registration',
@@ -8,24 +10,28 @@ import {Router} from '@angular/router';
   styleUrls: ['./registration.component.scss']
 })
 export class RegistrationComponent implements OnInit {
+  email: any;
+  name: any;
+  phone: any;
+  password: any;
+  repeatPassword: any;
+  authForm: FormGroup;
 
   constructor(private httpService: HttpService, private router: Router) {}
 
   ngOnInit(): void {
+     this.authForm = new FormGroup({
+       name: new FormControl(null,Validators.required)
+     });
   }
+
 
   registration(email1, password1, name1, phone1): void {
     this.httpService.post('/users', {
       email: email1,
       password: password1,
       name: name1,
-      phone: phone1,
-      states: [
-        'ACTIVE'
-      ],
-      roles: [
-        'USER'
-      ]
+      phone: phone1
     }).subscribe(data => { },
       error => {
         if (error.status === 200) {

@@ -71,8 +71,13 @@
   </div>
   <div class="row" *ngIf="organization.user.id == userId">
     <div class=" col-md-8 card">
-      <div class="card-header">
+      <div class="card-header row">
+        <div class="col-md-11">
         <h5 class="title">Организация</h5>
+        </div>
+        <div class="col btn btn-neutral" style="padding: 0;">
+          <i class="now-ui-icons ui-1_calendar-60 text-primary cal" (click)="navigate(organization.id)"></i>
+        </div>
       </div>
       <form><div class="card-body">
         <div class="row">

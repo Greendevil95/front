@@ -25,6 +25,7 @@ import {CalendarComponent} from './calendar/calendar.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import {UserCalendarComponent} from "./user-calendar/user-calendar.component";
 import {AcceptStatusComponent} from './accept-status/accept-status.component';
+import {OrgCalendarComponent} from "./org-calendar/org-calendar.component";
 
 
 
@@ -51,7 +52,8 @@ export const routes: Routes = [
   { path: 'about-us', component: AboutUsComponent },
   { path: 'calendar', component: CalendarComponent},
   { path: 'user-calendar', component: UserCalendarComponent},
-  { path: 'status', component: AcceptStatusComponent}
+  { path: 'status', component: AcceptStatusComponent},
+  {path:'org-calendar',component:OrgCalendarComponent}
 
 ];
 /*const routes: Routes =[

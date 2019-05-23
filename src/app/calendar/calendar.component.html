@@ -1,111 +1,111 @@
 <div class="panel-header panel-header-sm">
 </div>
 <div class="main-content calendar">
-<div class="row text-center">
-  <div class="col-md-4">
-    <div class="btn-group">
-      <div
-        class="btn btn-primary"
-        mwlCalendarPreviousView
-        [view]="view"
-        [(viewDate)]="viewDate"
+  <div class="row text-center">
+    <div class="col-md-4">
+      <div class="btn-group">
+        <div
+          class="btn btn-primary"
+          mwlCalendarPreviousView
+          [view]="view"
+          [(viewDate)]="viewDate"
         >
-        Previous
+          Предыдущий
+        </div>
+        <div
+          class="btn btn-outline-secondary"
+          mwlCalendarToday
+          [(viewDate)]="viewDate"
+        >
+          Сегодня
+        </div>
+        <div
+          class="btn btn-primary"
+          mwlCalendarNextView
+          [view]="view"
+          [(viewDate)]="viewDate"
+        >
+          Следующий
+        </div>
       </div>
-      <div
-        class="btn btn-outline-secondary"
-        mwlCalendarToday
-        [(viewDate)]="viewDate"
-      >
-        Today
-      </div>
-      <div
-        class="btn btn-primary"
-        mwlCalendarNextView
-        [view]="view"
-        [(viewDate)]="viewDate"
-
-      >
-        Next
+    </div>
+    <div class="col-md-4">
+      <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'ru'}}</h3>
+    </div>
+    <div class="col-md-4">
+      <div class="btn-group">
+        <div
+          class="btn btn-primary"
+          (click)="setView(CalendarView.Month)"
+          [class.active]="view === CalendarView.Month"
+        >
+          Месяц
+        </div>
+        <div
+          class="btn btn-primary"
+          (click)="setView(CalendarView.Week)"
+          [class.active]="view === CalendarView.Week"
+        >
+          Неделя
+        </div>
+        <div
+          class="btn btn-primary"
+          (click)="setView(CalendarView.Day)"
+          [class.active]="view === CalendarView.Day"
+        >
+          День
+        </div>
       </div>
     </div>
   </div>
-  <div class="col-md-4">
-    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en'}}</h3>
-  </div>
-  <div class="col-md-4">
-    <div class="btn-group">
-      <div
-        class="btn btn-primary"
-        (click)="setView(CalendarView.Month)"
-        [class.active]="view === CalendarView.Month"
-      >
-        Month
-      </div>
-      <div
-        class="btn btn-primary"
-        (click)="setView(CalendarView.Week)"
-        [class.active]="view === CalendarView.Week"
-      >
-        Week
-      </div>
-      <div
-        class="btn btn-primary"
-        (click)="setView(CalendarView.Day)"
-        [class.active]="view === CalendarView.Day"
-      >
-        Day
-      </div>
-    </div>
-  </div>
-</div>
-<br />
+  <br />
   <div>
-<div  [ngSwitch]="view">
-  <mwl-calendar-month-view
-    *ngSwitchCase="CalendarView.Month"
-    [viewDate]="viewDate"
-    (dayClicked)="viewDate = $event.day.date; view = CalendarView.Day"
-    [locale]="locale"
-    [events]="events"
-    [weekStartsOn]="weekStartsOn"
-    [refresh]="refresh"
-  >
-  </mwl-calendar-month-view>
-  <mwl-calendar-week-view
-    *ngSwitchCase="CalendarView.Week"
-    [viewDate]="viewDate"
-    (eventClicked)="deleteReservation($event.event.id,$event.event)"
-    [locale]="locale"
-    [events]="events"
-    (hourSegmentClicked)="reserve(service.id,$event.date)"
-    [weekStartsOn]="weekStartsOn"
-    [dayStartHour]="startOfDay"
-    [dayEndHour]="endOfDay"
-    [hourSegmentHeight]="hourSegmentHeight"
-    [hourSegments]="serviceDuration"
-    [refresh]="refresh"
+    <div  [ngSwitch]="view">
+      <mwl-calendar-month-view
+        *ngSwitchCase="CalendarView.Month"
+        [viewDate]="viewDate"
+        (dayClicked)="viewDate = $event.day.date; view = CalendarView.Day"
+        [locale]="locale"
+        [events]="events"
+        [weekStartsOn]="weekStartsOn"
+        [refresh]="refresh"
+      >
+      </mwl-calendar-month-view>
+      <mwl-calendar-week-view
+        *ngSwitchCase="CalendarView.Week"
+        [viewDate]="viewDate"
+        (eventClicked)="deleteReservation($event.event.id,$event.event)"
+        (hourSegmentClicked)="reserve(service.id,$event.date)"
+        [locale]="locale"
+        [events]="events"
+        [weekStartsOn]="weekStartsOn"
+        [dayStartHour]="startOfDay"
+        [dayEndHour]="endOfDay"
+        [hourSegmentHeight]="hourSegmentHeight"
+        [hourSegments]="serviceDuration"
+        [refresh]="refresh"
 
-  >
-  </mwl-calendar-week-view>
-  <mwl-calendar-day-view
-    *ngSwitchCase="CalendarView.Day"
-    [viewDate]="viewDate"
-    [events]="events"
-    (eventClicked)="deleteReservation($event.event.id,$event.event)"
-    [locale]="locale"
-    [dayStartHour]="startOfDay"
-    [dayEndHour]="endOfDay"
-    [hourSegments]="serviceDuration"
-    [hourSegmentHeight]="hourSegmentHeight"
-    (hourSegmentClicked)="reserve(service.id,$event.date)"
-    [refresh]="refresh"
-    [eventWidth]="eventWidth"
-  >
-  </mwl-calendar-day-view >
+      >
+      </mwl-calendar-week-view>
+      <mwl-calendar-day-view
+        *ngSwitchCase="CalendarView.Day"
+        [viewDate]="viewDate"
+        [events]="events"
+        (eventClicked)="deleteReservation($event.event.id,$event.event)"
+        (hourSegmentClicked)="reserve(service.id,$event.date)"
+        [locale]="locale"
+        [dayStartHour]="startOfDay"
+        [dayEndHour]="endOfDay"
+        [hourSegments]="serviceDuration"
+        [hourSegmentHeight]="hourSegmentHeight"
+        [refresh]="refresh"
+        [eventWidth]="eventWidth"
+      >
+      </mwl-calendar-day-view >
+    </div>
   </div>
 </div>
-</div>
+
 
 
 
