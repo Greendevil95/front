@@ -69,7 +69,7 @@
                 <font size="3" color="red">Введеные пароли не совпадают</font>
               </div>
             </div>
-            <div class="row justify-content-center align-items-center" *ngIf=" password != repeatPassword || password == null || email == null || name == null || phone == null">
+            <div class="row justify-content-center align-items-center" *ngIf=" password != repeatPassword || password == null || email == null || name == null || phone == null || pass.invalid || mail.invalid || phone1.invalid">
               <div class="col-md-12">
                 <div class="button-container justify-content-center align-items-center">
                   <button (click)="registration(email, password, name, phone)" class="btn btn-neutral btn-lg" disabled>
@@ -78,7 +78,7 @@
                 </div>
               </div>
             </div>
-            <div class="row justify-content-center align-items-center" *ngIf=" password == repeatPassword && password != null && email != null && name != null && phone != null">
+            <div class="row justify-content-center align-items-center" *ngIf=" password == repeatPassword && password != null && email != null && name != null && phone != null && pass.valid && mail.valid && phone1.valid">
               <div class="col-md-12">
                 <div class="button-container justify-content-center align-items-center">
                   <button (click)="registration(email, password, name, phone)" class="btn btn-neutral btn-lg">
