@@ -6,11 +6,13 @@ import {MatDialog} from "@angular/material";
 import {Subject} from "rxjs";
 import {endOfHour, startOfHour} from "date-fns";
 import {DeleteReservation} from "../calendar/calendar.component";
-import {CalendarDateFormatter,
+import {
+  CalendarDateFormatter,
   CalendarEvent,
   CalendarEventAction,
-  CalendarEventTimesChangedEvent,
-  CalendarView} from 'angular-calendar';
+  CalendarEventTimesChangedEvent, CalendarMonthViewBeforeRenderEvent,
+  CalendarView
+} from 'angular-calendar';
 import {ViewEncapsulation} from "@angular/cli/lib/config/schema";
 
 interface User{
@@ -155,6 +157,18 @@ export class OrgCalendarComponent implements OnInit {
           this.ngOnInit();
         }
       });
+  }
+
+  beforeMonthViewRender(renderEvent: CalendarMonthViewBeforeRenderEvent): void {
+    renderEvent.body.forEach(day => {
+      const eventTitle = day.events.length;
+      if (eventTitle == this.endOfDay-this.startOfDay+1) {
+        day.cssClass = 'bg-red';
+      } else if (eventTitle >= (this.endOfDay-this.startOfDay+1)/2){
+        day.cssClass = 'bg-yellow';}
+      else if (eventTitle > 0 && eventTitle < (this.endOfDay-this.startOfDay+1)/2)
+      {day.cssClass = 'bg-green'}
+    });
   }
 
 
