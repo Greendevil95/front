@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
     localStorage.setItem('resPage', '0');
     localStorage.setItem('servPage', '0');
     localStorage.setItem('category', '0');
+	localStorage.setItem('service', '');
     localStorage.setItem('params', '');
     if (localStorage.getItem('email') === null) {
       localStorage.setItem('email', 'Войти');

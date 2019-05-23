@@ -34,15 +34,24 @@
       <div class="col-md-3" style="padding-bottom: 50px;">
         <div class="list-group">
           <div class="list-group-item">
-            <h3>Сортировать:</h3>
+			<!--<div class="checkbox-radios">
+			<h5>Категории услуг:</h5>
+			  	<a *ngIf="category == 'all'" style="color: red;">ВСЕ</a>
+				<a *ngIf="category != 'all'" (click)="selectService('all')" style="color: black;">ВСЕ</a>	
+			  <div *ngFor="let it of categories">
+				<a *ngIf="it == category" style="color: red;">{{it}}</a>
+				<a *ngIf="it != category" (click)="selectService(it)" style="color: black;">{{it}}</a>
+			  </div>
+			</div>-->
+            <h5>Сортировать:</h5>
             <div class="checkbox">
+			  <div class="checkbox-radios">
+                <input type="radio" id="nameCategory" (click)="sort('name')" name="category">
+                <label for="ratingCategory">по алфавиту</label>
+              </div>
               <div class="checkbox-radios">
                 <input type="radio" id="ratingCategory" (click)="sort('rating')" name="category">
                 <label for="ratingCategory">по рейтингу</label>
-              </div>
-              <div class="checkbox-radios">
-                <input type="radio" id="nameCategory" (click)="sort('name')" name="category">
-                <label for="ratingCategory">по алфавиту</label>
               </div>
             </div>
           </div>

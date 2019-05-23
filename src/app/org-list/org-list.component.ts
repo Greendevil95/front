@@ -13,6 +13,8 @@ export class OrgListComponent implements OnInit {
   userId: number;
   pagesCount: number;
   selectedPage: string = '1';
+  category: string = 'all';
+  categories: Array<any>;
 
   constructor(private httpService: HttpService, private router: Router) {
   }
@@ -21,6 +23,10 @@ export class OrgListComponent implements OnInit {
     if (localStorage.getItem('category') === '0') {
       localStorage.setItem('category', 'name.asc');
     }
+	this.httpService.get('/other/category').subscribe(
+	data => {
+		this.categories = data;
+	});
 	if (localStorage.getItem('id') !== '0') {
 	this.userId = Number(localStorage.getItem('id'));
     this.httpService.getAll('/organizations?search=user.vip:true&field='
@@ -30,6 +36,7 @@ export class OrgListComponent implements OnInit {
         this.primaryList = data.content;
       });
     this.httpService.getAll('users/interests/services?field=' + localStorage.getItem('category')
+		+ localStorage.getItem('service')
         + '&page=', Number(localStorage.getItem('orgPage'))).subscribe(
         data => {
           this.selectedPage = data.number;
@@ -68,6 +75,17 @@ export class OrgListComponent implements OnInit {
       array.push(i);
     }
     return array;
+  }
+  
+  selectService(category: string): void {
+	  this.category = category;
+	  console.log('category');
+	  if (this.category === 'all') {
+		localStorage.setItem('service', '');  
+	  } else {
+		localStorage.setItem('service', '&search=category:' + category);
+	  }
+	  this.ngOnInit();
   }
 
   sort(category: string): void {

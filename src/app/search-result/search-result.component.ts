@@ -12,18 +12,31 @@ export class SearchResultComponent implements OnInit {
   results: any;
   searchString: string;
   resCount: number;
-  rating: number;
+  rating: number = 0;
+  minPrice: number = 0;
+  maxPrice: number = 9999999;
+  category: string = 'all';
+  categories: Array<any>;
 
   constructor(private router: Router, private httpService: HttpService) { }
 
   ngOnInit() {
-    this.rating = 0;
+	//this.rating = 0;
     this.pages = 0;
     this.searchString = localStorage.getItem('searchString');
-    this.httpService.getAll('/services?search=name:' + this.searchString
+	this.httpService.get('/other/category').subscribe(
+	data => {
+		this.categories = data;
+	});
+	if (this.rating > 0) {
+		this.httpService.getAll('/services?search=name:' + this.searchString
       + ',ororganization.name:' + this.searchString
       + ',ordescription:' + this.searchString
-      + localStorage.getItem('params')
+	  + ',orcategory:' + this.searchString
+	  + localStorage.getItem('service')
+	  + ',andrating>' + this.rating
+	  + ',andprice>' + this.minPrice
+	  + ',andprice<' + this.maxPrice
       + '&page=', Number(localStorage.getItem('resPage'))).subscribe(
       data => {
         if (Number(data.totalPages) > 1) {
@@ -34,6 +47,25 @@ export class SearchResultComponent implements OnInit {
         this.pages += data.totalPages;
         this.results = data.content;
       });
+	} else {
+		this.httpService.getAll('/services?search=name:' + this.searchString
+      + ',ororganization.name:' + this.searchString
+      + ',ordescription:' + this.searchString
+	  + ',orcategory:' + this.searchString
+	  + localStorage.getItem('service')
+	  + ',andprice>' + this.minPrice
+	  + ',andprice<' + this.maxPrice
+      + '&page=', Number(localStorage.getItem('resPage'))).subscribe(
+      data => {
+        if (Number(data.totalPages) > 1) {
+          this.resCount = (Number(data.totalPages) - 1) * Number(data.size) + Number(data.numberOfElements);
+        } else {
+          this.resCount = Number(data.numberOfElements);
+        }
+        this.pages += data.totalPages;
+        this.results = data.content;
+      });
+	}    
   }
 
   createRange(count: number): number[] {
@@ -62,18 +94,36 @@ export class SearchResultComponent implements OnInit {
     localStorage.setItem('searchString', findString);
     this.ngOnInit();
   }
+  
+  selectService(category: string): void {
+	  this.category = category;
+	  console.log('category');
+	  if (this.category === 'all') {
+		localStorage.setItem('service', '');  
+	  } else {
+		localStorage.setItem('service', ',andcategory:' + category);
+	  }
+	  this.ngOnInit();
+  }
 
   wideSearch(rating: string, price1: string, price2: string): void {
-    var str;
-    str = '';
-    console.log(rating + ' ' + price1 + '' + price2);
-    if (Number(rating) != 0) {
-      str += ',andrating>' + rating;
-    }
-    if (price1 != null && price2 != null) {
-      str += ',andprice>' + price1 + ',andprice<' + price2;
-    }
-    localStorage.setItem('params', str);
+    var str = '';
+	console.log(rating + ' ' + price1 + '' + price2);
+    if (rating != null) {
+		this.rating = Number(rating);
+    } else {
+		this.rating = 0;
+	}
+	if (price1 != null) {
+		this.minPrice = Number(price1);
+	} else {
+		this.minPrice = 0;
+	}
+	if (price2 != null) {
+		this.maxPrice = Number(price2);
+	} else {
+		this.maxPrice = 9999999;
+	}
     this.ngOnInit();
   }
 

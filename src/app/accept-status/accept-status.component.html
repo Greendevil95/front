@@ -14,17 +14,16 @@
                   <p>Организация: {{res.service.organization.name}}</p>
                   <p>Заказчик: {{res.user.name}}</p>
                   <p>Статус: {{res.status}} </p>
-                  <!--<p>Дата: {{getDate(res.date)}}</p>-->
-                  <p>Цена: {{res.service.price}} р.</p>
                   <p>Дата: {{res.dateTime}}</p>
-                  <div *ngIf="res.status == 'ASSEPTED' && (res.rating > 0 || res.comment != null)">
+                  <p>Цена: {{res.service.price}} р.</p>                  
+                  <div *ngIf="res.status == 'Выполнено' && (res.rating > 0 || res.comment != null)">
                     <span>Оценка: </span><app-rating  currentRate={{res.rating}} readFlag="true"></app-rating><br>
                     <span>Отзыв: {{res.comment}}</span>
                   </div>
                 </td>
-				        <td style="padding-bottom: inherit" class="td-actions text-right" *ngIf="res.status == 'INPROCESS'">
-                  <button type="button" rel="tooltip" title="Одобрить" (click)="assept(res.id)" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
-                    <i class="now-ui-icons ui-1_check"></i>
+				        <td style="padding-bottom: inherit" class="td-actions text-right" *ngIf="res.status == 'В ожидании'">
+                  <button type="button" rel="tooltip" title="Одобрить" (click)="assept(res.id, res.dateTime)" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
+                    <i class="now-ui-icons ui-1_check" inline="true"></i>
                   </button>
                   <button type="button" rel="tooltip" title="Отказать" (click)="deny(res.id)" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
                     <i class="now-ui-icons ui-1_simple-remove"></i>

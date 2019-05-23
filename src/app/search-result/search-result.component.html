@@ -26,6 +26,7 @@
                   <div class="btn btn-neutral" style="padding:0; font-size: 16px; margin-bottom: 10px;" (click)="navigate( result.organization.id )">{{result.name}}</div>
                   <p>Название организации: {{result.organization.name}}</p>
                   <app-rating currentRate = {{result.rating}} readFlag="true"></app-rating>
+				  <p>Категория: {{result.category}}</p>
                   <p>Цена: {{result.price}} p.</p>
                   <p>Описание: {{result.description}}</p>
                 </td>
@@ -54,9 +55,18 @@
     <div class="col-md-4">
         <div class="list-group">
           <div class="list-group-item">
-            <h3>Критерии поиска:</h3>
             <div class="checkbox">
+				<div class="checkbox-radios">
+				 <h5>Категории услуг:</h5>
+					<a *ngIf="category == 'all'" style="color: red;">ВСЕ</a>
+					<a *ngIf="category != 'all'" (click)="selectService('all')" style="color: black;">ВСЕ</a>	
+				  <div *ngFor="let it of categories">
+					<a *ngIf="it == category" style="color: red;">{{it}}</a>
+					<a *ngIf="it != category" (click)="selectService(it)" style="color: black;">{{it}}</a>
+				  </div>
+				</div>
               <div class="checkbox-radios">
+			  <h5>Критерии поиска:</h5>
                 <label>Минимальный рейтинг</label>
                 <ng-template #star let-fill="fill">
                     <span class="star" [class.full]="fill === 100">

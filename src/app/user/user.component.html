@@ -92,7 +92,7 @@
             </p>
               <h5 class="title text-primary">{{user.email}}</h5>
           </div>
-          <div style="text-align: center;">
+          <div style="text-align: center;" *ngIf="user.vip == false">
             <span class="btn btn-primary" (click)="buyVIP()">Приобрести VIP подписку</span>
           </div>
         </div>
