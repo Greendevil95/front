@@ -180,6 +180,8 @@
                   </ng-template>
 
                   <span>Оценка: </span><ngb-rating [rate]="rating" (rateChange)="rating = $event" [starTemplate]="star" [readonly]="false" max="5"></ngb-rating><br>
+				  <p>Статус: {{res.status}} </p>
+                  <p>Дата: {{res.dateTime}}</p>
                   <p>Цена: {{res.service.price}} р.</p>
 
                     <!---<div class="form-check">
@@ -202,6 +204,8 @@
                   <p style="font-size: 16px;"class="text-primary ">{{res.service.organization.name}}</p>
                   <span>Услуга: {{res.service.name}}</span><br>
                   <span>Оценка: </span><app-rating  currentRate={{res.rating}} readFlag="true"></app-rating><br>
+				  <p>Статус: {{res.status}} </p>
+                  <p>Дата: {{res.dateTime}}</p>
                   <p>Цена: {{res.service.price}} р.</p>
                   <p>Отзыв</p>
                   <textarea rows="4" cols="60" class="form-control" style="font-size: 11pt;">{{res.comment}}</textarea>

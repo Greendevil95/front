@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./service-list.component.scss']
 })
 export class ServiceListComponent implements OnInit {
+	reportFlag = false;
   organization: any;
   userId: string;
   list: Array<any>;
@@ -30,6 +31,16 @@ export class ServiceListComponent implements OnInit {
         this.selectedPage = data.number;
         this.list = data.content;
       });
+  }
+  
+  report(report1: string) {
+	  if (this.reportFlag === false) {
+		  this.reportFlag = true;
+	  }
+	  else {
+		  //сама жалоба
+		  this.reportFlag = false;
+	  }
   }
 
   createReservation(id1: string) {

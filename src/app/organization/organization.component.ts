@@ -22,6 +22,10 @@ export class OrganizationComponent implements OnInit {
         this.organization = data;
       });
   }
+  
+  ban():void {
+	  
+  }
 
   changeOrg(name1: string, address1: string, phoneNumber1: string, description1: string): void {
     console.log('id:' +  Number(localStorage.getItem('orgId')),

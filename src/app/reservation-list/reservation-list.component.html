@@ -1,5 +1,4 @@
 <div class="panel-header panel-header-sm">
-  <h4 class="card-title">Мои записи</h4>
 </div>
 <div class="main-content">
   <div class="row">
@@ -20,6 +19,8 @@
                 </ng-template>
 
                 <span>Оценка: </span><ngb-rating [(rate)]="rating" [starTemplate]="star" [readonly]="false" max="5"></ngb-rating><br>
+				<p>Статус: {{res.status}} </p>
+                <p>Дата: {{res.dateTime}}</p>
                 <span>Цена: {{res.service.price}} р.</span><br>
 
                 <!---<div class="form-check">
@@ -42,6 +43,8 @@
                 <span style="font-size: 16px;"class="text-primary">{{res.service.organization.name}}</span><br>
                 <span>Услуга:{{res.service.name}}</span><br>
                 <span>Оценка: </span><app-rating  currentRate={{res.rating}} readFlag="true"></app-rating><br>
+				<p>Статус: {{res.status}} </p>
+                <p>Дата: {{res.dateTime}}</p>
                 <span>Цена: {{res.service.price}} р.</span><br>
                 <span>Отзыв</span>
                 <textarea rows="4" cols="60" class="form-control">{{res.comment}}</textarea>

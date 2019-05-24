@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
 export class UserComponent implements OnInit {
   reservations: Array<any>;
   user: any;
-  
+  count: number;
   organizations: Array<any>;
   orgPagesCount: number;
   selectedOrgPage: string;
@@ -20,6 +20,42 @@ export class UserComponent implements OnInit {
   public rating: number;
 
   constructor(private httpService: HttpService, private router: Router) {
+  }
+  
+  translateStatus(status: string): string {
+	  switch(status) {
+		  case 'ACCEPTED': {
+			  return 'Одобрено';
+			  break;
+		  }
+		  case 'INPROCESS': {
+			  return 'В ожидании';
+			  break;
+		  }
+		  case 'FINISHED': {
+			  return 'Выполнено';
+			  break;
+		  }
+		  case 'CUSTOMERREJECT': {
+			  return 'Клиент отказал';
+			  break;
+		  }
+		  case 'OWNERREJECT': {
+			  return 'Предприниматель отказался';
+			  break;
+		  }
+	  } 
+  }
+  
+  getDate(reservations: Array<any>): void {
+	  var i: number;
+	  for (i = 0; i < this.count; i++) {
+		  this.reservations[i].status = this.translateStatus(reservations[i].status);
+		  var res = reservations[i].dateTime.split('T', 2);
+		  var data = res[0].split('-', 3);
+		  var time = res[1].split(':', 2);
+		  this.reservations[i].dateTime = data[2].toString() + '.' + data[1].toString() + '.' + data[0].toString() + ' ' + time[0].toString() + ':' + time[1].toString(); 
+		}
   }
 
   ngOnInit(): void {
@@ -38,9 +74,11 @@ export class UserComponent implements OnInit {
       });
     this.httpService.getAll('/users/reservations' + '?page=', Number(localStorage.getItem('resPage'))).subscribe(
       data => {
+		this.count = data.numberOfElements;
         this.resPagesCount = data.totalPages;
         this.selectedResPage = data.number;
         this.reservations = data.content;
+		this.getDate(data.content);
       });
 
   }

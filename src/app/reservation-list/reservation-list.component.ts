@@ -13,16 +13,55 @@ export class ReservationListComponent implements OnInit {
   selectedPage: string;
   rating: any;
   comment: any;
+  count: number;
 
   constructor(private httpService: HttpService, private router: Router) { }
 
   ngOnInit() {
     this.httpService.getAll('/users/reservations' + '?page=', Number(localStorage.getItem('resPage'))).subscribe(
       data => {
+        this.count = data.numberOfElements;
         this.resPagesCount = data.totalPages;
-        this.reservations = data.content;
         this.selectedPage = data.number;
+        this.reservations = data.content;
+		this.getDate(data.content);
       });
+  }
+  
+  translateStatus(status: string): string {
+	  switch(status) {
+		  case 'ACCEPTED': {
+			  return 'Одобрено';
+			  break;
+		  }
+		  case 'INPROCESS': {
+			  return 'В ожидании';
+			  break;
+		  }
+		  case 'FINISHED': {
+			  return 'Выполнено';
+			  break;
+		  }
+		  case 'CUSTOMERREJECT': {
+			  return 'Клиент отказал';
+			  break;
+		  }
+		  case 'OWNERREJECT': {
+			  return 'Предприниматель отказался';
+			  break;
+		  }
+	  } 
+  }
+  
+  getDate(reservations: Array<any>): void {
+	  var i: number;
+	  for (i = 0; i < this.count; i++) {
+		  this.reservations[i].status = this.translateStatus(reservations[i].status);
+		  var res = reservations[i].dateTime.split('T', 2);
+		  var data = res[0].split('-', 3);
+		  var time = res[1].split(':', 2);
+		  this.reservations[i].dateTime = data[2].toString() + '.' + data[1].toString() + '.' + data[0].toString() + ' ' + time[0].toString() + ':' + time[1].toString(); 
+		}
   }
 
   createRange(count: number): number[] {

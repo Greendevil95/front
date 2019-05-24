@@ -90,6 +90,7 @@ import { AcceptStatusComponent } from './accept-status/accept-status.component';
 import {SearchResultComponent} from './search-result/search-result.component';
 import {AboutUsComponent} from './about-us/about-us.component';
 import { OrgCalendarComponent } from './org-calendar/org-calendar.component';
+import { AdminPageComponent } from './admin-page/admin-page.component';
 
 
 
@@ -193,7 +194,8 @@ registerLocaleData(localeRu);
     DeleteReservation,
     UserCalendarComponent,
     AcceptStatusComponent,
-    OrgCalendarComponent
+    OrgCalendarComponent,
+    AdminPageComponent
 
 
   ],
