@@ -83,6 +83,7 @@
         [hourSegmentHeight]="hourSegmentHeight"
         [hourSegments]="serviceDuration"
         [refresh]="refresh"
+        (dayHeaderClicked)="viewDate = $event.day.date; view = CalendarView.Day"
 
       >
       </mwl-calendar-week-view>

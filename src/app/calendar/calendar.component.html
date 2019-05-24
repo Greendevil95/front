@@ -69,6 +69,7 @@
         [events]="events"
         [weekStartsOn]="weekStartsOn"
         [refresh]="refresh"
+        (beforeViewRender)="beforeMonthViewRender($event)"
       >
       </mwl-calendar-month-view>
       <mwl-calendar-week-view
@@ -84,6 +85,7 @@
         [hourSegmentHeight]="hourSegmentHeight"
         [hourSegments]="serviceDuration"
         [refresh]="refresh"
+        (dayHeaderClicked)="viewDate = $event.day.date; view = CalendarView.Day"
 
       >
       </mwl-calendar-week-view>

@@ -1,10 +1,12 @@
-import {AfterContentInit, ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
+import {AfterContentInit, ChangeDetectionStrategy, Component, Inject, OnChanges, OnInit} from '@angular/core';
 
-import {CalendarDateFormatter,
+import {
+  CalendarDateFormatter,
   CalendarEvent,
   CalendarEventAction,
-  CalendarEventTimesChangedEvent,
-  CalendarView} from 'angular-calendar';
+  CalendarEventTimesChangedEvent, CalendarMonthViewBeforeRenderEvent,
+  CalendarView
+} from 'angular-calendar';
 import { CustomDateFormatter } from './custom-date-formatter.provider';
 import {
   startOfDay,
@@ -80,6 +82,21 @@ interface Organization {
         color: #000000 !important;
         font-size: 10.5pt;
       }
+
+      .bg-red {
+        background-color: #ff624c !important;
+      }
+
+      .bg-green {
+        background-color: #b7fda8 !important;
+
+      }
+
+      .bg-yellow {
+        background-color: #fff66d !important;
+      }
+
+      .
     `
   ]
 })
@@ -154,7 +171,6 @@ export class CalendarComponent implements OnInit{
 
 
 
-
   updateRez(id1: string, servId: string, comment1: string, rating1: string): void {
     this.httpService.put('/reservations', {
       id: id1,
@@ -175,6 +191,18 @@ export class CalendarComponent implements OnInit{
           this.ngOnInit();
         }
       });
+  }
+
+  beforeMonthViewRender(renderEvent: CalendarMonthViewBeforeRenderEvent): void {
+    renderEvent.body.forEach(day => {
+      const eventTitle = day.events.length;
+      if (eventTitle == this.endOfDay-this.startOfDay+1) {
+        day.cssClass = 'bg-red';
+      } else if (eventTitle >= (this.endOfDay-this.startOfDay+1)/2){
+        day.cssClass = 'bg-yellow';}
+      else if (eventTitle > 0 && eventTitle < (this.endOfDay-this.startOfDay+1)/2)
+      {day.cssClass = 'bg-green'}
+    });
   }
 
 
