@@ -54,7 +54,7 @@ export class AcceptStatusComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.httpService.get('organizations/reservations/auth?field=dateTime.asc&page=' + localStorage.getItem('orgPage')).subscribe(
+    this.httpService.get('organizations/reservations/auth?field=dateTime.desc&page=' + localStorage.getItem('orgPage')).subscribe(
       data => {
 		this.count = data.numberOfElements;
         this.selectedPage = data.number;

@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
 })
 export class UserComponent implements OnInit {
   reservations: Array<any>;
+  dates: Array<any>;
   user: any;
   count: number;
   organizations: Array<any>;
@@ -48,9 +49,11 @@ export class UserComponent implements OnInit {
   }
   
   getDate(reservations: Array<any>): void {
+	  this.dates = Array<any>(this.count);
 	  var i: number;
 	  for (i = 0; i < this.count; i++) {
 		  this.reservations[i].status = this.translateStatus(reservations[i].status);
+		  this.dates[i] = reservations[i].dateTime;
 		  var res = reservations[i].dateTime.split('T', 2);
 		  var data = res[0].split('-', 3);
 		  var time = res[1].split(':', 2);
@@ -78,7 +81,9 @@ export class UserComponent implements OnInit {
         this.resPagesCount = data.totalPages;
         this.selectedResPage = data.number;
         this.reservations = data.content;
+		console.log(data.content);
 		this.getDate(data.content);
+		console.log(data.content);
       });
 
   }
@@ -196,8 +201,15 @@ export class UserComponent implements OnInit {
     this.router.navigateByUrl('/organization');
   }
 
-  updateRez(id1: string, servId: string, comment1: string, rating1: string, date1: any): void {
-    this.httpService.put('/reservations', {
+  updateRez(id1: string, servId: string, comment1: string, rating1: string): void {
+	var date: string;
+	for (var i: number = 0; i < this.count; i++) {
+		if (this.reservations[i].id == id1) {
+			date = this.dates[i];
+			console.log(date);
+		}
+	}
+	this.httpService.put('/reservations', {
       id: id1,
       service: {
         id: servId
@@ -205,7 +217,7 @@ export class UserComponent implements OnInit {
       user: {
         id: localStorage.getItem('id')
       },
-      dateTime: date1,
+      dateTime: date,
       rating: rating1,
       comment: comment1
     }).subscribe(

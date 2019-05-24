@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
 })
 export class ReservationListComponent implements OnInit {
   reservations: any;
+  dates: Array<any>;
   resPagesCount: number;
   selectedPage: string;
   rating: any;
@@ -54,9 +55,11 @@ export class ReservationListComponent implements OnInit {
   }
   
   getDate(reservations: Array<any>): void {
+	  this.dates = Array<any>(this.count);
 	  var i: number;
 	  for (i = 0; i < this.count; i++) {
 		  this.reservations[i].status = this.translateStatus(reservations[i].status);
+		  this.dates[i] = reservations[i].dateTime;
 		  var res = reservations[i].dateTime.split('T', 2);
 		  var data = res[0].split('-', 3);
 		  var time = res[1].split(':', 2);
@@ -93,7 +96,14 @@ export class ReservationListComponent implements OnInit {
   }*/
 
   updateRez(id1: string, servId: string, comment1: string, rating1: string): void {
-    this.httpService.put('/reservations', {
+    var date: string;
+	for (var i: number = 0; i < this.count; i++) {
+		if (this.reservations[i].id == id1) {
+			date = this.dates[i];
+			console.log(date);
+		}
+	}
+	this.httpService.put('/reservations', {
       id: id1,
       service: {
         id: servId
@@ -101,10 +111,12 @@ export class ReservationListComponent implements OnInit {
       user: {
         id: localStorage.getItem('id')
       },
+      dateTime: date,
       rating: rating1,
       comment: comment1
     }).subscribe(
-      data => {},
+      data => {
+      },
       error => {
         if (error.status === 200) {
           console.log(error);
