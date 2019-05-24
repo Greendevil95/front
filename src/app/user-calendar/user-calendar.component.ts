@@ -32,7 +32,8 @@ interface Reservation {
   comment:string;
   status:string;
   service:[
-    {name:string}
+    {name:string;
+    time:any;}
     ]
   user:[
     {id:number}
@@ -109,7 +110,7 @@ export class UserCalendarComponent implements OnInit {
             this.reservations=<Reservation[]>data.content;
             console.log(this.reservations);
             for(let i = 0;i<this.reservations.length;i++) {
-              this.addEvent2(new Date(this.reservations[i].dateTime), this.reservations[i].status, this.reservations[i].id,this.reservations[i].user.id,this.reservations[i].service.name);
+              this.addEvent2(new Date(this.reservations[i].dateTime), this.reservations[i].status, this.reservations[i].id, this.reservations[i].service.time,this.reservations[i].user.id,this.reservations[i].service.name);
             }
           });
       });
@@ -118,7 +119,7 @@ export class UserCalendarComponent implements OnInit {
     this.httpService.get('/services/' + localStorage.getItem('servId')).subscribe(
       data => {
         this.service = <Service>data;
-        this.serviceDuration = this.service.time/60;
+        this.serviceDuration = 60/this.service.time;
         this.hourSegmentHeight=60/this.serviceDuration;
 
       });
@@ -208,16 +209,16 @@ export class UserCalendarComponent implements OnInit {
     ];
   }
 
-  addEvent2(hourDate: Date,status:string, id:number, userId?: any, servName?: any): void {
-    console.log(servName);
+  addEvent2(hourDate: Date,status:string, id:number, resCount: any, userId?: any, servName?: any): void {
+    console.log(resCount);
     if (status == 'INPROCESS'){
       if (this.user.id == userId) {
         this.events = [
           ...this.events,
           {
             title: servName,
-            start: startOfHour(hourDate),
-            end: endOfHour(hourDate),
+            start: hourDate,
+            end: new Date(hourDate.getTime() + (resCount* 60 * 1000-1)),
             color: colors.blue,
             id: id,
             cssClass: 'my-custom-class'
@@ -228,8 +229,8 @@ export class UserCalendarComponent implements OnInit {
           ...this.events,
           {
             title: "Подтверждается",
-            start: startOfHour(hourDate),
-            end: endOfHour(hourDate),
+            start: hourDate,
+            end: new Date(hourDate.getTime() + (resCount* 60 * 1000-1)),
             color: colors.yellow,
             id: id,
             cssClass: 'my-custom-class'
@@ -237,14 +238,14 @@ export class UserCalendarComponent implements OnInit {
           }
         ];}
     }
-    else if (status == 'ASSEPTED'){
+    else if (status == 'ACCEPTED'){
       if (this.user.id == userId) {
         this.events = [
           ...this.events,
           {
             title: servName,
-            start: startOfHour(hourDate),
-            end: endOfHour(hourDate),
+            start: hourDate,
+            end: new Date(hourDate.getTime() + (resCount* 60 * 1000-1)),
             color: colors.green,
             id: id,
             cssClass: 'my-custom-class'
@@ -255,8 +256,8 @@ export class UserCalendarComponent implements OnInit {
           ...this.events,
           {
             title: "Забронировано",
-            start: startOfHour(hourDate),
-            end: endOfHour(hourDate),
+            start: hourDate,
+            end: new Date(hourDate.getTime() + (resCount* 60 * 1000-1)),
             color: colors.red,
             id: id,
             cssClass: 'my-custom-class'
@@ -310,14 +311,15 @@ export class UserCalendarComponent implements OnInit {
     let res = this.reservations.find(Reservation => Reservation.id  == eventId);
     if (this.org.user.id == this.user.id || res.user.id == this.user.id || res.id == null){
       this.events = this.events.filter(event => event !== eventToDelete);
-      this.httpService.delete('/reservations/' + eventId).subscribe(
-        data => {
-        },
+      this.httpService.put('reservations/' + eventId + '/status?status=CUSTOMERREJECT', null).subscribe(
+        data => {},
         error => {
           if (error.status === 200) {
-            console.log(error);
           }
         });
+      this.events.length = 0;
+      console.log('успешно отменил');
+      this.ngOnInit();
     }
   }
 

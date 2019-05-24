@@ -88,7 +88,7 @@ interface Organization {
       }
 
       .bg-green {
-        background-color: #b7fda8 !important;
+        background-color: #dcfdda !important;
 
       }
 
@@ -96,7 +96,6 @@ interface Organization {
         background-color: #fff66d !important;
       }
 
-      .
     `
   ]
 })
@@ -155,7 +154,8 @@ export class CalendarComponent implements OnInit{
     this.httpService.get('/services/' + localStorage.getItem('servId')).subscribe(
       data => {
         this.service = <Service>data;
-         this.serviceDuration = this.service.time/60;
+        console.log(this.service.time);
+         this.serviceDuration = 60/this.service.time;
         this.hourSegmentHeight=60/this.serviceDuration;
 
       });
@@ -200,7 +200,7 @@ export class CalendarComponent implements OnInit{
         day.cssClass = 'bg-red';
       } else if (eventTitle >= (this.endOfDay-this.startOfDay+1)/2){
         day.cssClass = 'bg-yellow';}
-      else if (eventTitle > 0 && eventTitle < (this.endOfDay-this.startOfDay+1)/2)
+      else /*if (eventTitle > 0 && eventTitle < (this.endOfDay-this.startOfDay+1)/2)*/
       {day.cssClass = 'bg-green'}
     });
   }
@@ -262,8 +262,8 @@ export class CalendarComponent implements OnInit{
           ...this.events,
           {
             title: "Ожидает подтверждения...",
-            start: startOfHour(hourDate),
-            end: endOfHour(hourDate),
+            start: hourDate,
+            end: new Date(hourDate.getTime() + (this.service.time* 60 * 1000-1)),
             color: colors.blue,
             cssClass: 'my-custom-class',
             id: id,
@@ -274,8 +274,8 @@ export class CalendarComponent implements OnInit{
         ...this.events,
         {
           title: "Подтверждается",
-          start: startOfHour(hourDate),
-          end: endOfHour(hourDate),
+          start: hourDate,
+          end: new Date(hourDate.getTime() + (this.service.time* 60 * 1000-1)),
           color: colors.yellow,
           cssClass: 'my-custom-class',
           id: id,
@@ -283,14 +283,14 @@ export class CalendarComponent implements OnInit{
         }
       ];}
     }
-    else if (status == 'ASSEPTED'){
+    else if (status == 'ACCEPTED'){
       if (this.user.id == userId) {
         this.events = [
           ...this.events,
           {
             title: "Запись подтверждена!",
-            start: startOfHour(hourDate),
-            end: endOfHour(hourDate),
+            start: hourDate,
+            end: new Date(hourDate.getTime() + (this.service.time* 60 * 1000-1)),
             color: colors.green,
             id: id,
             cssClass: 'my-custom-class'
@@ -301,8 +301,8 @@ export class CalendarComponent implements OnInit{
           ...this.events,
           {
             title: "Забронировано",
-            start: startOfHour(hourDate),
-            end: endOfHour(hourDate),
+            start: hourDate,
+            end: new Date(hourDate.getTime() + (this.service.time* 60 * 1000-1)),
             color: colors.red,
             id: id,
             cssClass: 'my-custom-class'
@@ -317,7 +317,7 @@ export class CalendarComponent implements OnInit{
   }
 
   reserve(id1: string,eventDate: Date) {
-    if (this.org.user.id != this.user.id) {
+    if (this.org.user.id != this.user.id && eventDate >= new Date()) {
       eventDate.setUTCHours(eventDate.getHours());
       this.httpService.post('/reservations', {
         comment: "",
@@ -334,11 +334,12 @@ export class CalendarComponent implements OnInit{
         error => {
           if (error.status === 200) {
             console.log(error);
-            //this.router.navigateByUrl('/organization');
+            this.events.length = 0;
+            this.ngOnInit();
           }
         });
-      eventDate.setHours(eventDate.getHours() - 3);
-     this.addEvent(eventDate);
+      /*eventDate.setHours(eventDate.getHours() - 3);
+     this.addEvent(eventDate);*/
     } else console.log('Try reserv in own organisation!')
   }
 
@@ -358,14 +359,15 @@ export class CalendarComponent implements OnInit{
     if (res != undefined) {
       if (this.org.user.id == this.user.id || res.user.id == this.user.id) {
         this.events = this.events.filter(event => event !== eventToDelete);
-        this.httpService.delete('/reservations/' + eventId).subscribe(
-          data => {
-          },
+        this.httpService.put('reservations/' + eventId + '/status?status=CUSTOMERREJECT', null).subscribe(
+          data => {},
           error => {
             if (error.status === 200) {
-              console.log(error);
             }
           });
+        this.events.length = 0;
+        console.log('успешно отменил');
+        this.ngOnInit();
       }
     } else  this.events = this.events.filter(event => event !== eventToDelete);
 

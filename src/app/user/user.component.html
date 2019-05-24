@@ -79,7 +79,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4" *ngIf="user.vip == true">
+    <div class="col-md-4" *ngIf="user.vip == true" style="padding-bottom: 20px;">
       <div class="card card-user" style="border: solid gold 4px; height: 100%;">
         <div class="image">
           <img src="../assets/img/header.jpg" alt="...">
@@ -179,20 +179,29 @@
                     </span>
                   </ng-template>
 
-                  <span>Оценка: </span><ngb-rating [rate]="rating" (rateChange)="rating = $event" [starTemplate]="star" [readonly]="false" max="5"></ngb-rating><br>
+                  <span>Оценка: </span><ngb-rating (rate)="rating" (rateChange)="rating = $event" [starTemplate]="star" [readonly]="false" max="5"></ngb-rating><br>
 				  <p>Статус: {{res.status}} </p>
                   <p>Дата: {{res.dateTime}}</p>
                   <p>Цена: {{res.service.price}} р.</p>
-				  <p>Отзыв:</p>
-                  <textarea style="font-size: 11pt;" rows="4" cols="60" class="form-control" name="comment" id="res.id" [ngModel]="comment" placeholder="Мой отзыв..." (input)="comment = $event.target.value"></textarea>
+
+                    <!---<div class="form-check">
+                      <input  class="form-control" name="{{res.id}}" type="text"  [(ngModel)]="rating" placeholder="5.0">
+                    </div>--->
+                  <p>Отзыв:</p>
+                  <textarea style="font-size: 11pt;" rows="4" cols="60" class="form-control" name="comment" id="res.id" (ngModel)="comment" placeholder="Мой отзыв..." (input)="comment = $event.target.value"></textarea>
                 </td>
                 <td class="td-actions text-right" *ngIf="res.rating == 0 && (res.comment == '' || res.comment == null)">
-                  <button type="button" rel="tooltip" title="Изменить" (click)="updateRez(res.id, res.service.id, comment, rating)" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
+                  <button type="button" rel="tooltip" title="Изменить" (click)="updateRez(res.id, res.service.id, comment, rating,res.dateTime)" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
                     <i class="now-ui-icons ui-1_check"></i>
                   </button>
                 </td>
                 <td *ngIf="res.rating != 0 && res.comment != ''">
-				  <p style="font-size: 16px;"class="text-primary ">{{res.service.organization.name}}</p>
+
+                    <!--<div class="form-check">
+                      <input class="form-control" type="text" value="{{res.rating}}">
+                    </div>-->
+
+                  <p style="font-size: 16px;"class="text-primary ">{{res.service.organization.name}}</p>
                   <span>Услуга: {{res.service.name}}</span><br>
                   <span>Оценка: </span><app-rating  currentRate={{res.rating}} readFlag="true"></app-rating><br>
 				  <p>Статус: {{res.status}} </p>

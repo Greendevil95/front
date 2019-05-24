@@ -34,7 +34,8 @@ interface Reservation {
   comment:string;
   status:string;
   service:[
-    {name:string}
+    {name:string;
+    time:any;}
     ]
   user:[
     {id:number}
@@ -66,6 +67,18 @@ interface Organization {
       .my-custom-class span {
         color: #000000 !important;
         font-size: 10.5pt;
+      }
+      .bg-red {
+        background-color: #ff624c !important;
+      }
+
+      .bg-green {
+        background-color: #dcfdda !important;
+
+      }
+
+      .bg-yellow {
+        background-color: #fff66d !important;
       }
     `
   ]
@@ -111,7 +124,7 @@ export class OrgCalendarComponent implements OnInit {
             this.reservations=<Reservation[]>data.content;
             console.log(this.reservations);
             for(let i = 0;i<this.reservations.length;i++) {
-              this.addEvent2(new Date(this.reservations[i].dateTime), this.reservations[i].status, this.reservations[i].id,this.reservations[i].user.id,this.reservations[i].service.name);
+              this.addEvent2(new Date(this.reservations[i].dateTime), this.reservations[i].status, this.reservations[i].id, this.reservations[i].service.time, this.reservations[i].user.id,this.reservations[i].service.name);
             }
           });
       });
@@ -120,7 +133,7 @@ export class OrgCalendarComponent implements OnInit {
     this.httpService.get('/services/' + localStorage.getItem('servId')).subscribe(
       data => {
         this.service = <Service>data;
-        this.serviceDuration = this.service.time/60;
+        this.serviceDuration = 60/this.service.time;
         this.hourSegmentHeight=60/this.serviceDuration;
 
       });
@@ -166,7 +179,7 @@ export class OrgCalendarComponent implements OnInit {
         day.cssClass = 'bg-red';
       } else if (eventTitle >= (this.endOfDay-this.startOfDay+1)/2){
         day.cssClass = 'bg-yellow';}
-      else if (eventTitle > 0 && eventTitle < (this.endOfDay-this.startOfDay+1)/2)
+      else /*if (eventTitle > 0 && eventTitle < (this.endOfDay-this.startOfDay+1)/2)*/
       {day.cssClass = 'bg-green'}
     });
   }
@@ -222,7 +235,7 @@ export class OrgCalendarComponent implements OnInit {
     ];
   }
 
-  addEvent2(hourDate: Date,status:string, id:number, userId?: any, servName?: any): void {
+  addEvent2(hourDate: Date,status:string, id:number, resCount: any, userId?: any, servName?: any): void {
     console.log(servName);
     if (status == 'INPROCESS'){
       if (this.user.id == userId) {
@@ -230,8 +243,8 @@ export class OrgCalendarComponent implements OnInit {
           ...this.events,
           {
             title: servName,
-            start: startOfHour(hourDate),
-            end: endOfHour(hourDate),
+            start: hourDate,
+            end: new Date(hourDate.getTime() + (resCount* 60 * 1000-1)),
             color: colors.blue,
             id: id,
             cssClass: 'my-custom-class'
@@ -242,8 +255,8 @@ export class OrgCalendarComponent implements OnInit {
           ...this.events,
           {
             title: servName,
-            start: startOfHour(hourDate),
-            end: endOfHour(hourDate),
+            start: hourDate,
+            end: new Date(hourDate.getTime() + (resCount* 60 * 1000-1)),
             color: colors.yellow,
             id: id,
             cssClass: 'my-custom-class'
@@ -251,14 +264,14 @@ export class OrgCalendarComponent implements OnInit {
           }
         ];}
     }
-    else if (status == 'ASSEPTED'){
+    else if (status == 'ACCEPTED'){
       if (this.user.id == userId) {
         this.events = [
           ...this.events,
           {
             title: servName,
-            start: startOfHour(hourDate),
-            end: endOfHour(hourDate),
+            start: hourDate,
+            end: new Date(hourDate.getTime() + (resCount* 60 * 1000-1)),
             color: colors.green,
             id: id,
             cssClass: 'my-custom-class'
@@ -269,8 +282,8 @@ export class OrgCalendarComponent implements OnInit {
           ...this.events,
           {
             title: servName,
-            start: startOfHour(hourDate),
-            end: endOfHour(hourDate),
+            start: hourDate,
+            end: new Date(hourDate.getTime() + (resCount* 60 * 1000-1)),
             color: colors.red,
             id: id,
             cssClass: 'my-custom-class'
