@@ -17,7 +17,7 @@
       <div>Описание: {{serv.description}}</div>
 	  <div *ngIf="reportFlag == true"><br>
 	  <p style="color:red;">Введите жалобу:</p>
-	  <textarea style="font-size: 11pt;" rows="4" cols="60" class="form-control" name="text" id="serv.id" [ngModel]="text" placeholder="Моя жалоба..." (input)="comment = $event.target.value"></textarea>
+	  <textarea style="font-size: 11pt;" rows="4" cols="60" class="form-control" name="text" id="serv.id" [(ngModel)]="text" placeholder="Моя жалоба..." (input)="comment = $event.target.value"></textarea>
 	  </div>
     </td>
     <td class="td-actions text-right" *ngIf="userId == organization.user.id">
@@ -32,7 +32,7 @@
         </div>
       </div>
 	  <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6 btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
-        <div class="font-icon-detail" (click)="report(text)">
+        <div class="font-icon-detail" (click)="report(serv.id, text)">
 			<i class="now-ui-icons ui-1_send text-primary"></i>
         </div>
       </div>

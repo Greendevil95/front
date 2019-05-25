@@ -9,15 +9,56 @@ import {Router} from '@angular/router';
 })
 export class AdminPageComponent implements OnInit {
 	user: any;
+	PagesCount: number;
+	selectedPage: number = 0;
 	changedPass: boolean = false;
+	reports: Array<any>;
 
   constructor(private httpService: HttpService, private router: Router) { }
 
   ngOnInit() {
+	  this.httpService.get('/users/auth').subscribe(
+      data => {
+        this.user = data;
+      });
+	  this.httpService.getAll('/reports?field=status.asc&page=', this.selectedPage).subscribe(
+	  data => {
+        this.PagesCount = data.totalPages;
+        this.selectedPage = data.number;
+        this.reports = data.content;
+      });
+  }
+  
+  accept(id: string):void {
+	  this.httpService.put('/reports/' + id + '/status?status=true', null).subscribe(
+	  data => {},
+	  error => {
+		  if (error.status === 200) {
+			  this.ngOnInit();
+		  }
+	  });
+  }
+  
+  ban(id: string, userId: string):void {
+	  this.httpService.put('/users/' + userId + '/ban', null).subscribe(
+	  data => {},
+	  error => {
+		  if (error.status === 200) {
+			  console.log('успешно забанен');
+			  this.accept(id);
+		  }
+	  });
   }
   
   getPass(): string {
     return localStorage.getItem('password');
+  }
+  
+  navigate(id: string): void {
+    if (Number(id) > -1) {
+      localStorage.setItem('orgId', id);
+      this.router.navigateByUrl('/organization');
+    } 
   }
   
   changeProfile(name1: string, email1: string, phone1: string): void {
@@ -87,15 +128,15 @@ export class AdminPageComponent implements OnInit {
   }
 
   goToPage(index: number, key: string) {
-    localStorage.setItem(key, (Number(index.toString()) - 1).toString());
+    this.selectedPage = index - 1;
     this.ngOnInit();
   }
 
   changePage(page: number, key: string) {
-    if (localStorage.getItem(key) === '0' && page === -1) {
+    if (this.selectedPage === 0 && page === -1) {
       return;
     } else {
-      localStorage.setItem(key, (page - 1).toString());
+      this.selectedPage += page;
     }
     this.ngOnInit();
   }

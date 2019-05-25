@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
     localStorage.setItem('category', '0');
 	localStorage.setItem('service', '');
     localStorage.setItem('params', '');
+	localStorage.setItem('admin', 'false');
     if (localStorage.getItem('email') === null) {
       localStorage.setItem('email', 'Войти');
     }

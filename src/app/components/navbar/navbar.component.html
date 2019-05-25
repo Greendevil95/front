@@ -29,7 +29,7 @@
             </div>
           </form>
           <ul class="navbar-nav">
-            <li class="nav-item">
+            <li class="nav-item" *ngIf="isAuth() == false">
               <a class="nav-link" (click)="router.navigateByUrl('status')">
                 <i class="now-ui-icons ui-1_bell-53">
                   <p>{{count}}</p>
@@ -59,7 +59,7 @@
                 </p>
               </a>
               <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu aria-labelledby="dropdownBasic2">
-                <a class="dropdown-item" href="/user">Моя страница</a>
+                <a class="dropdown-item" (click)="navigate()">Моя страница</a>
                 <a class="dropdown-item" (click)="exit()">Выйти</a>
               </div>
             </li>

@@ -81,9 +81,7 @@ export class UserComponent implements OnInit {
         this.resPagesCount = data.totalPages;
         this.selectedResPage = data.number;
         this.reservations = data.content;
-		console.log(data.content);
 		this.getDate(data.content);
-		console.log(data.content);
       });
 
   }
@@ -101,7 +99,6 @@ export class UserComponent implements OnInit {
 	}
 
   changeProfile(name1: string, email1: string, phone1: string): void {
-    console.log(name1 + ' ' + email1 + ' ' + phone1);
     if (email1 != null) {
       // localStorage.setItem('email', email1);
     } else {
@@ -175,7 +172,12 @@ export class UserComponent implements OnInit {
     if (localStorage.getItem(key) === '0' && page === -1) {
       return;
     } else {
-      localStorage.setItem(key, (page - 1).toString());
+		if (page === -1) {
+			localStorage.setItem(key, (page - 1).toString());
+		} else {
+			localStorage.setItem(key, (page + 1).toString());
+		}
+      
     }
     this.ngOnInit();
   }

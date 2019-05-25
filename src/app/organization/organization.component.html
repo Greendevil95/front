@@ -65,11 +65,11 @@
           <p class="description text-center">
             {{organization.description}}
           </p>
-		  <div style="text-align: center;" *ngIf="organization.user.roles[0] == ADMIN && organization.user.states == ACTIVE"> <!--Тут мб роль по-другому будет называться-->
-            <span class="btn btn-primary" (click)="ban()">Заморозить страницу</span>
+		  <div style="text-align: center;" *ngIf="isAdmin() && organization.user.states == 'ACTIVE'"> <!--Тут мб роль по-другому будет называться-->
+            <span class="btn btn-primary" (click)="ban(organization.user.id)">Заморозить страницу</span>
           </div>
-		  <div style="text-align: center;" *ngIf="organization.user.roles[0] == ADMIN && organization.user.states != ACTIVE"> <!--Тут мб роль по-другому будет называться-->
-            <span class="btn btn-primary" (click)="ban()">Разморозить страницу</span>
+		  <div style="text-align: center;" *ngIf="isAdmin() && organization.user.states == 'BANNED'"> <!--Тут мб роль по-другому будет называться-->
+            <span class="btn btn-primary" (click)="razban(organization.user.id)">Разморозить страницу</span>
           </div>
         </div>
       </div>

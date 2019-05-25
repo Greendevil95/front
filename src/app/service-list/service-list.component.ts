@@ -33,13 +33,23 @@ export class ServiceListComponent implements OnInit {
       });
   }
   
-  report(report1: string) {
+  report(id1:string, report1: string) {
 	  if (this.reportFlag === false) {
 		  this.reportFlag = true;
 	  }
-	  else {
-		  //сама жалоба
-		  this.reportFlag = false;
+	  else {		  
+		  this.httpService.post('/reports', {
+			  service: {
+				  id: id1
+			  },
+			  description: report1
+		  }).subscribe(
+		  data => {},
+		  error => {
+			if (error.status == 200) {
+				this.reportFlag = false;
+			}  
+		  });
 	  }
   }
 

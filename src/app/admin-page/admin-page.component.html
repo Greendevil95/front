@@ -81,31 +81,41 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6" style="padding-bottom:20px;">
+    <div class="col-md-12" style="padding-bottom:20px;">
       <div class="card" style="height:100%;">
         <div class="card-header">
-          <h5 class="card-title">Заявки</h5>
+          <h5 class="card-title">Жалобы</h5>
         </div>
         <div class="card-body">
           <div class="table-responsive no-scroll">
             <table class="table">
-              <tr *ngFor="let org of organizations">
+              <tr *ngFor="let report of reports">
                 <td>
-                  <div class="btn btn-neutral" style="font-size: medium;    padding: 0;"(click)="navigate( org.id )">{{org.name}}</div><br>
-                  <div>Адрес: {{org.address}}</div><br>
-                  <div>Описание: {{org.description}}</div><br>
+                  <!--<div class="btn btn-neutral" style="font-size: medium;    padding: 0;"(click)="navigate( report.service.organization.id )">Неустроившая услуга: {{report.service.name}}</div><br>-->
+                  <div (click)="navigate( report.service.organization.id )">Неустроившая услуга: {{report.service.name}}</div><br>
+				  <div>Владелец организации: {{report.service.organization.user.name}}</div><br>
+				  <div>Недовольный клиент: {{report.user.name}}</div><br>
+                  <div>Причина: {{report.description}}</div><br>
                 </td>
+				<td>
+				  <button mat-button class="btn btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Обработать" rel="tooltip" (click)="accept(report.id)" title="Обработать" type="button">
+					<i class="nc-icon ui-1_check"></i>
+				  </button>
+				  <button mat-button class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove" rel="tooltip" (click)="ban(report.id, report.service.organization.user.id)" title="Заморозить" type="button">
+					<i class="nc-icon nc-simple-remove"></i>
+				  </button>
+				</td>
               </tr>
             </table>
             <div class="row">
-              <button type="button" rel="tooltip" title="На предыдущую" (click)="changePage(-1, 'orgPage')" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
+              <button type="button" rel="tooltip" title="На предыдущую" (click)="changePage(-1)" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
                 <i class="now-ui-icons arrows-1_minimal-left"></i>
               </button>
-              <div class="form-check btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" *ngFor="let index of createRange(orgPagesCount)">
-                <input *ngIf="index - 1 == selectedOrgPage" class="form-control" type="button" value="{{index}}" (click)="goToPage(index, 'orgPage')" style="border-color:#fd7e14">
-                <input *ngIf="index - 1 != selectedOrgPage" class="form-control" type="button" value="{{index}}" (click)="goToPage(index, 'orgPage')">
+              <div class="form-check btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" *ngFor="let index of createRange(PagesCount)">
+                <input *ngIf="index - 1 == selectedPage" class="form-control" type="button" value="{{index}}" (click)="goToPage(index)" style="border-color:#fd7e14">
+                <input *ngIf="index - 1 != selectedPage" class="form-control" type="button" value="{{index}}" (click)="goToPage(index)">
               </div>
-              <button type="button" rel="tooltip" title="На следующую" (click)="changePage(1, 'orgPage')" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
+              <button type="button" rel="tooltip" title="На следующую" (click)="changePage(1)" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
                 <i class="now-ui-icons arrows-1_minimal-right"></i>
               </button>
             </div>

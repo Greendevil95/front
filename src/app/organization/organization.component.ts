@@ -18,13 +18,38 @@ export class OrganizationComponent implements OnInit {
     this.userId = localStorage.getItem('id');
     this.httpService.get('organizations/' + localStorage.getItem('orgId')).subscribe(
       data => {
-        console.log(localStorage.getItem('orgId'));
         this.organization = data;
       });
   }
   
-  ban():void {
-	  
+  isAdmin(): boolean {
+	  if (localStorage.getItem('admin') === 'true') {
+		  return true;
+	  } else {
+		  return false;
+	  }
+  }
+  
+  ban(id: string):void {
+	  this.httpService.put('/users/' + id + '/ban', null).subscribe(
+	  data => {},
+	  error => {
+		  if (error.status === 200) {
+			  console.log('успешно забанен');
+			  this.ngOnInit();
+		  }
+	  });
+  }
+  
+  razban(id: string):void {
+	  this.httpService.put('/users/' + id + '/active', null).subscribe(
+	  data => {},
+	  error => {
+		  if (error.status === 200) {
+			  console.log('успешно разбанен');
+			  this.ngOnInit();
+		  }
+	  });
   }
 
   changeOrg(name1: string, address1: string, phoneNumber1: string, description1: string): void {

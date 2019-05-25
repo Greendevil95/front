@@ -29,10 +29,18 @@ export class NavbarComponent implements OnInit {
   isAuth(): boolean {
     this.account = localStorage.getItem('email');
     if (this.account === 'Войти') {
-      return true;
+	  return true;
     } else {
       return false;
     }
+  }
+  
+  navigate(): void {
+	  if (localStorage.getItem('admin') === 'true') {
+		  this.router.navigateByUrl('admin');
+	  } else {
+		  this.router.navigateByUrl('user');
+	  }
   }
 
   search(findString: string): void {
@@ -40,21 +48,21 @@ export class NavbarComponent implements OnInit {
     this.router.navigateByUrl('search_result');
   }
 
-
-
   exit(): void {
 	localStorage.setItem('id', '0');
     localStorage.setItem('email', 'Войти');
     localStorage.setItem('password', '');
+	localStorage.setItem('admin', 'false');
     this.router.navigateByUrl('/log');
   }
 
   ngOnInit() {
-    this.httpService.get('users/' + localStorage.getItem('id') + '/reservations/status/count?status=inprocess').subscribe(
+	if (this.isAuth() === false) {
+		this.httpService.get('users/' + localStorage.getItem('id') + '/reservations/status/count?status=inprocess').subscribe(
       data => {
         this.count = Number(data);
-        console.log(this.count);
       });
+	}
     this.account = localStorage.getItem('username');
     this.listTitles = ROUTES.filter(listTitle => listTitle);
     const navbar: HTMLElement = this.element.nativeElement;
@@ -72,7 +80,6 @@ export class NavbarComponent implements OnInit {
   collapse() {
     this.isCollapsed = !this.isCollapsed;
     const navbar = document.getElementsByTagName('nav')[0];
-    console.log(navbar);
     if (!this.isCollapsed) {
       navbar.classList.remove('navbar-transparent');
       navbar.classList.add('bg-white');

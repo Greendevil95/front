@@ -9,8 +9,7 @@ export class MyInterceptor implements HttpInterceptor {
     if ((req.url === '/users' && req.method === 'POST') || localStorage.getItem('email') === 'Войти') {
       return next.handle(req);
     } else {
-      console.log(localStorage.getItem('email') + ' ' + localStorage.getItem('password'));
-      const email = localStorage.getItem('email');
+	  const email = localStorage.getItem('email');
       const password = localStorage.getItem('password');
       const authReq = req.clone({
         headers: req.headers.append('Authorization', 'Basic ' + btoa(email.toString() + ':' + password.toString()))

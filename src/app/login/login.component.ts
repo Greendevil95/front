@@ -25,7 +25,12 @@ export class LoginComponent implements OnInit {
     this.httpService.get('/users/auth').subscribe(data => {
       localStorage.setItem('id', data.id);
       localStorage.setItem('username', data.email);
-      this.router.navigateByUrl('');
+	  if (data.roles[0] == 'ADMIN') {
+		localStorage.setItem('admin', 'true');
+		this.router.navigateByUrl('admin');
+	  } else {
+	  this.router.navigateByUrl('');
+	  }
     }, err => {
       this.error = false;
       console.log('User authentication failed!');
