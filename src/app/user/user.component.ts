@@ -209,8 +209,8 @@ export class UserComponent implements OnInit {
     this.router.navigateByUrl('/organization');
   }
 
-  updateRez(id1: string, servId: string, comment1: string, rating1: string, date: string): void {
-
+  updateRez(id1: string, servId: string, comment1: string, rating1: string): void {
+   let date: string;
 	for (var i: number = 0; i < this.count; i++) {
 		if (this.reservations[i].id == id1) {
 			date = this.dates[i];

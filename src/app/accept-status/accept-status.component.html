@@ -23,12 +23,14 @@
                 </td>
 				<td style="padding-bottom: inherit" class="td-actions text-right text-top" *ngIf="res.status == 'Одобрено' || res.status == 'В ожидании'">
 					<div class="nav-item" ngbDropdown>
+            <div class="btn btn-neutral" style="padding: 0px; font-size: 20px; ">
 					  <a class="nav-link" id="dropdownBasic" ngbDropdownToggle>
 						<i class="now-ui-icons ui-1_settings-gear-63"></i>
 						<p>
 						  <span class="d-lg-none d-md-block">Действия</span>
 						</p>
 					  </a>
+            </div>
 					  <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu aria-labelledby="dropdownBasic2">
 						<a *ngIf="res.status == 'В ожидании'" class="dropdown-item" style="color: blue;" (click)="assept(res.id, res.dateTime)">
 							<i class="now-ui-icons ui-1_check"></i>
