@@ -36,6 +36,77 @@
                 </div>
               </div>
             </div>
+            <div class="row justify-content-center align-items-center">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="startTime">Введите работы</label>
+                  <div style="display:flex">
+                    <input  disabled #stime1="ngModel" [(ngModel)]="startTime" class="form-control" style="width: 50%;background-color: #ffffff; color: #212529;" value="{{org.startTime}}" >
+                    <div style="align-self: center;">&nbsp;&mdash;&nbsp;</div>
+                    <input  disabled  #ftime1="ngModel" [(ngModel)]="endTime" class="form-control" style="width: 50%;background-color: #ffffff; color: #212529;" value="{{org.finishTime}}" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <label>Рабочие дни</label>
+            <div class="row" style="justify-content: center;">
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input *ngIf="!week.includes('1')" class="form-check-input" type="checkbox" value="mon" name="monday" disabled checked #monday >
+                  <input *ngIf="week.includes('1')" class="form-check-input" type="checkbox" value="monday" disabled  #monday >
+                  Понедельник
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input *ngIf="!week.includes('2')" class="form-check-input" type="checkbox" value="tuesday" disabled checked #tuesday>
+                  <input *ngIf="week.includes('2')"  class="form-check-input" type="checkbox" value="tuesday" disabled #tuesday1>
+                  Вторник
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input *ngIf="!week.includes('3')" class="form-check-input" type="checkbox" value="2" disabled checked #wednesday>
+                  <input *ngIf="week.includes('3')"  class="form-check-input" type="checkbox" value="2"  disabled #wednesday1>
+                  Среда
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input *ngIf="!week.includes('4')" class="form-check-input" type="checkbox" value="thursday" disabled checked #thursday>
+                  <input *ngIf="week.includes('4')" class="form-check-input" type="checkbox" value="thursday" disabled  #thursday1>
+                  Четверг
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input *ngIf="!week.includes('5')" class="form-check-input" type="checkbox" value="friday" disabled checked #friday>
+                  <input *ngIf="week.includes('5')" class="form-check-input" type="checkbox" value="friday" disabled  #friday1>
+                  Пятница
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input *ngIf="!week.includes('6')" class="form-check-input" type="checkbox" value="saturday" disabled checked #saturday>
+                  <input *ngIf="week.includes('6')" class="form-check-input" type="checkbox" value="saturday" disabled #saturday1>
+                  Суббота
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input *ngIf="!week.includes('0')" class="form-check-input" type="checkbox" value="sunday" disabled checked #sunday>
+                  <input  *ngIf="week.includes('0')" class="form-check-input" type="checkbox" value="sunday" disabled #sunday1>
+                  Воскресенье
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+            </div>
             <div class="row">
               <div class="col-md-10">
                 <div class="form-group">
@@ -47,8 +118,8 @@
           </div>
         </form>
       </div>
-    <div class="col-md-4"  >
-      <div class="card card-user">
+    <div class="col-md-4" style="margin-bottom: 20px;" >
+      <div class="card card-user" style="height: 100%;">
         <div class="image">
           <img src="../assets/img/123.jpg" alt="...">
         </div>
@@ -206,7 +277,7 @@
       </div>
       </form>
     </div>
-    <div class="col-md-4"  style="height: 411px">
+    <div class="col-md-4"  style="margin-bottom: 20px;">
       <div class="card card-user" style="height: 100%">
         <div class="image">
           <img src="../assets/img/123.jpg" alt="...">

@@ -75,7 +75,6 @@
       <mwl-calendar-week-view
         *ngSwitchCase="CalendarView.Week"
         [viewDate]="viewDate"
-        (eventClicked)="deleteReservation($event.event.id,$event.event)"
         [locale]="locale"
         [events]="events"
         [weekStartsOn]="weekStartsOn"
@@ -92,7 +91,6 @@
         *ngSwitchCase="CalendarView.Day"
         [viewDate]="viewDate"
         [events]="events"
-        (eventClicked)="deleteReservation($event.event.id,$event.event)"
         [locale]="locale"
         [dayStartHour]="startOfDay"
         [dayEndHour]="endOfDay"
