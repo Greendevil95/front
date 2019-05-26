@@ -47,7 +47,7 @@
             </div>
           </div>
         </div><hr>
-		<div class="card  card-tasks" *ngIf="userId != 0">
+		<div class="card  card-tasks" *ngIf="userId != 0 && reservation != null">
         <div class="card-header calendar-icon-head">
           <div class="col-md-11">
 			  <h6 class="card-title">Мои записи</h6>
@@ -58,31 +58,7 @@
             <table class="table">
               <tbody>
               <tr>
-                <td *ngIf="reservation.status == 'Выполнено'">
-                  <p style="font-size: 16px;"class="text-primary "> {{reservation.service.organization.name}}</p>
-                  <span>Услуга: {{reservation.service.name}}</span><br>
-                  <ng-template #star let-fill="fill">
-                    <span class="star" [class.full]="fill === 100">
-                      <span class="half" [style.width.%]="fill">&#9733;</span>
-                      &#9733;
-                    </span>
-                  </ng-template>
-
-                  <span>Оценка: </span><ngb-rating (rate)="rating" (rateChange)="rating = $event" [starTemplate]="star" [readonly]="false" max="5"></ngb-rating><br>
-				  <p>Статус: {{reservation.status}} </p>
-                  <p>Дата: {{reservation.dateTime}}</p>
-                  <p>Цена: {{reservation.service.price}} р.</p>
-				  <p>Отзыв:</p>
-                  <textarea style="font-size: 11pt;" rows="4" cols="60" class="form-control" name="comment" id="reservation.id" (ngModel)="comment" placeholder="Мой отзыв..." (input)="comment = $event.target.value"></textarea>
-                </td>
-				
-			  <hr>
-                <td class="td-actions text-right" *ngIf="reservation.status == 'Выполнено'">
-                  <button type="button" rel="tooltip" title="Изменить" (click)="updateRez(reservation.id, reservation.service.id, comment, rating, reservation.dateTime)" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
-                    <i class="now-ui-icons ui-1_check"></i>
-                  </button>
-                </td>
-                <td *ngIf="reservation.status != 'Выполнено'">
+                <td>
 				  <p style="font-size: 16px;"class="text-primary ">{{reservation.service.organization.name}}</p>
                   <span>Услуга: {{reservation.service.name}}</span><br>
                   <p>Статус: {{reservation.status}} </p>
@@ -94,14 +70,14 @@
               </tbody>
             </table>
 			<div class="row">              
-			  <button type="button" rel="tooltip" title="На предыдущую" (click)="changePage(-1, 'resPage')" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
+			  <button type="button" rel="tooltip" title="На предыдущую" (click)="changePage1(-1, 'resPage')" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
 				<i class="now-ui-icons arrows-1_minimal-left"></i>
 			  </button>
               <!--<div class="form-check btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" *ngFor="let index of createRange(resPagesCount)">
                 <input *ngIf="index - 1 == selectedResPage" class="form-control" type="button" value="{{index}}" (click)="goToPage(index, 'resPage')" style="border-color:#fd7e14">
                 <input *ngIf="index - 1 != selectedResPage" class="form-control" type="button" value="{{index}}" (click)="goToPage(index, 'resPage')">
               </div>-->  
-			  <button type="button" rel="tooltip" title="На следующую" (click)="changePage(1, 'resPage')" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
+			  <button type="button" rel="tooltip" title="На следующую" (click)="changePage1(1, 'resPage')" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
 				<i class="now-ui-icons arrows-1_minimal-right"></i>
 			  </button>              
             </div>

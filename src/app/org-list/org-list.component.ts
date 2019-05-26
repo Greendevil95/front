@@ -22,6 +22,7 @@ export class OrgListComponent implements OnInit {
   selectedPage: string = '1';
   category: string = 'all';
   categories: Array<any>;
+  index:number = 0;
 
   constructor(private httpService: HttpService, private router: Router) {
   }
@@ -30,14 +31,14 @@ export class OrgListComponent implements OnInit {
     if (localStorage.getItem('category') === '0') {
       localStorage.setItem('category', 'name.asc');
     }
-	this.httpService.getAll('/users/reservations?field=dateTime.desc&pagesize=1&page=', Number(localStorage.getItem('resPage'))).subscribe(
+	this.httpService.getAll('/users/reservations?field=dateTime.desc&page=', Number(localStorage.getItem('resPage'))).subscribe(
       data => {
 		this.count = data.numberOfElements;
 		this.resPagesCount = data.totalPages;
         this.selectedResPage = data.number;
         this.reservations = data.content;
 		this.getDate(data.content);
-		this.reservation = this.reservations[0];
+		this.reservation = this.reservations[this.index];
 		//this.reservs = [this.reservations[1], this.reservations[2]];
 		
     });
@@ -92,6 +93,14 @@ export class OrgListComponent implements OnInit {
 	}
   }
   
+isFinish(status: string): boolean {
+	if (status === 'Выполнено') {
+		return true;
+	} else {
+		return false;
+	}
+}
+  
   getDate(reservations: Array<any>): void {
 	  this.dates = Array<any>(this.count);
 	  var i: number;
@@ -129,6 +138,36 @@ export class OrgListComponent implements OnInit {
 		  }
 	  } 
   }
+  
+  updateRez(id1: string, servId: string, comment1: string, rating1: string): void {
+	var date: string;
+	for (var i: number = 0; i < this.count; i++) {
+		if (this.reservations[i].id == id1) {
+			date = this.dates[i];
+			console.log(date);
+		}
+	}
+	this.httpService.put('/reservations', {
+      id: id1,
+      service: {
+        id: servId
+      },
+      user: {
+        id: localStorage.getItem('id')
+      },
+      dateTime: date,
+      rating: rating1,
+      comment: comment1
+    }).subscribe(
+      data => {
+      },
+      error => {
+        if (error.status === 200) {
+          console.log(error);
+          this.ngOnInit();
+        }
+      });
+  }
 
   createRange(count: number): number[] {
     var array: number[] = [];
@@ -161,12 +200,31 @@ export class OrgListComponent implements OnInit {
     localStorage.setItem(key, (index - 1).toString());
     this.ngOnInit();
   }
+  
+  changePage1(page: number, key: string) {
+	if (this.index === 2 && page === 1) {
+		this.index = 0;
+		localStorage.setItem(key, (Number(localStorage.getItem(key)) + page).toString());
+	}  else {
+		if (this.index === 0 && page === -1) {
+			if (localStorage.getItem(key) === '0') {
+				return;
+			} else {
+				this.index = 0;
+				localStorage.setItem(key, (Number(localStorage.getItem(key)) + page).toString());
+			}
+		} else {
+			this.index += page;
+		}
+	}
+	this.ngOnInit();
+  }
 
   changePage(page: number, key: string) {
 	if (localStorage.getItem(key) === '0' && page === -1) {
       return;
     } else {
-		localStorage.setItem(key, (page + 1).toString());      
+		localStorage.setItem(key, (Number(localStorage.getItem(key)) + page).toString());      
     }
     this.ngOnInit();
   }

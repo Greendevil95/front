@@ -29,7 +29,7 @@
             </div>
           </form>
           <ul class="navbar-nav">
-            <li class="nav-item" *ngIf="isAuth() == false">
+            <li class="nav-item" *ngIf="isAuth() == false && isAdmin() == false">
               <a class="nav-link" (click)="router.navigateByUrl('status')">
                 <i class="now-ui-icons ui-1_bell-53">
                   <p>{{count}}</p>

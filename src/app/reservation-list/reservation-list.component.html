@@ -8,8 +8,9 @@
           <table class="table">
             <tbody>
             <tr>
-              <td *ngIf="res.rating == 0 && (res.comment == '' || res.comment == null)">
-                <span style="font-size: 16px;"class="text-primary">{{res.service.organization.name}}</span><br>
+              <!--<td *ngIf="res.rating == 0 && (res.comment == '' || res.comment == null)">-->
+			  <td *ngIf="res.status == 'Выполнено' && res.rating == 0 && (res.comment == '' || res.comment == null)">
+                <span style="font-size: 16px;" class="text-primary">{{res.service.organization.name}}</span><br>
                 <span>Услуга: {{res.service.name}}</span><br>
                 <ng-template #star let-fill="fill">
                     <span class="star" [class.full]="fill === 100">
@@ -17,30 +18,21 @@
                       &#9733;
                     </span>
                 </ng-template>
-
-                <span>Оценка: </span><ngb-rating [(rate)]="rating" [starTemplate]="star" [readonly]="false" max="5"></ngb-rating><br>
+				<span>Оценка: </span><ngb-rating [(rate)]="rating" [starTemplate]="star" [readonly]="false" max="5"></ngb-rating><br>
 				<p>Статус: {{res.status}} </p>
                 <p>Дата: {{res.dateTime}}</p>
                 <span>Цена: {{res.service.price}} р.</span><br>
-
-                <!---<div class="form-check">
-                  <input  class="form-control" name="{{res.id}}" type="text"  [(ngModel)]="rating" placeholder="5.0">
-                </div>--->
-                <span>Отзыв:</span>
+				<span>Отзыв:</span>
                 <textarea rows="4" cols="60" class="form-control" id="res.id" name="comment"  [(ngModel)]="comment" placeholder="Мой отзыв..."></textarea>
               </td>
-              <td class="td-actions text-right" *ngIf="res.rating == 0 && (res.comment == '' || res.comment == null)">
+              <td class="td-actions text-right" *ngIf="res.status == 'Выполнено' && res.rating == 0 && (res.comment == '' || res.comment == null)">
                 <button type="button" rel="tooltip" title="Изменить" (click)="updateRez(res.id, res.service.id, comment, rating)" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
                   <i class="now-ui-icons ui-1_check"></i>
                 </button>
               </td>
-              <td *ngIf="res.rating != 0 && res.comment != ''">
-
-                <!--<div class="form-check">
-                  <input class="form-control" type="text" value="{{res.rating}}">
-                </div>-->
-
-                <span style="font-size: 16px;"class="text-primary">{{res.service.organization.name}}</span><br>
+              <!--<td *ngIf="res.rating != 0 || (res.comment != '' && res.comment != null)">-->
+			  <td *ngIf="res.status != 'Выполнено' || res.rating != 0 || (res.comment != '' && res.comment != null)">
+				<span style="font-size: 16px;"class="text-primary">{{res.service.organization.name}}</span><br>
                 <span>Услуга:{{res.service.name}}</span><br>
                 <span>Оценка: </span><app-rating  currentRate={{res.rating}} readFlag="true"></app-rating><br>
 				<p>Статус: {{res.status}} </p>

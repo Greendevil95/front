@@ -97,12 +97,12 @@
 				  <div>Недовольный клиент: {{report.user.name}}</div><br>
                   <div>Причина: {{report.description}}</div><br>
                 </td>
-				<td>
-				  <button mat-button class="btn btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Обработать" rel="tooltip" (click)="accept(report.id)" title="Обработать" type="button">
-					<i class="nc-icon ui-1_check"></i>
+				<td class="td-actions text-right">
+				  <button *ngIf="report.status == false" mat-button class="btn btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Accept" rel="tooltip" (click)="accept(report.id)" title="Обработать" type="button">
+					<i class="now-ui-icons ui-1_check text-primary"></i>
 				  </button>
 				  <button mat-button class="btn btn-danger btn-round btn-icon btn-icon-mini btn-neutral" data-original-title="Remove" rel="tooltip" (click)="ban(report.id, report.service.organization.user.id)" title="Заморозить" type="button">
-					<i class="nc-icon nc-simple-remove"></i>
+					<i class="now-ui-icons ui-1_simple-remove text-primary"></i>
 				  </button>
 				</td>
               </tr>
