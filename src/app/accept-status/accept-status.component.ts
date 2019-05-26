@@ -88,6 +88,16 @@ export class AcceptStatusComponent implements OnInit {
     this.ngOnInit();
   }
   
+  finish(id: string): void {
+	  this.httpService.put('reservations/' + id + '/status?status=finished', null).subscribe(
+	  data => {},
+      error => {
+        if (error.status === 200) {
+          this.ngOnInit();
+        }
+    });
+  }
+  
   assept(id: string, date: string): void {
 	  for (var i: number = 0; i < this.count; i++) {
 		  if (this.reservations[i].dateTime === date && this.reservations[i].id !== id && this.reservations[i].status === 'В ожидании') {
@@ -98,7 +108,6 @@ export class AcceptStatusComponent implements OnInit {
 	  data => {},
         error => {
           if (error.status === 200) {
-            console.log('успешно одобрил');
             this.ngOnInit();
           }
     });
@@ -109,7 +118,6 @@ export class AcceptStatusComponent implements OnInit {
 	  data => {},
       error => {
         if (error.status === 200) {
-          console.log('успешно отклонил');
           this.ngOnInit();
         }
     });

@@ -21,13 +21,46 @@
                     <span>Отзыв: {{res.comment}}</span>
                   </div>
                 </td>
-				        <td style="padding-bottom: inherit" class="td-actions text-right" *ngIf="res.status == 'В ожидании'">
-                  <button type="button" rel="tooltip" title="Одобрить" (click)="assept(res.id, res.dateTime)" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
+				<td style="padding-bottom: inherit" class="td-actions text-right text-top" *ngIf="res.status == 'Одобрено' || res.status == 'В ожидании'">
+					<div class="nav-item" ngbDropdown>
+					  <a class="nav-link" id="dropdownBasic" ngbDropdownToggle>
+						<i class="now-ui-icons ui-1_settings-gear-63"></i>
+						<p>
+						  <span class="d-lg-none d-md-block">Действия</span>
+						</p>
+					  </a>
+					  <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu aria-labelledby="dropdownBasic2">
+						<a *ngIf="res.status == 'В ожидании'" class="dropdown-item" style="color: blue;" (click)="assept(res.id, res.dateTime)">
+							<i class="now-ui-icons ui-1_check"></i>
+							<p>
+							  <span style="color: blue;">Одобрить</span>
+							</p>
+						</a>
+						<a *ngIf="res.status == 'В ожидании'" class="dropdown-item" style="color: red;" (click)="deny(res.id)">
+							<i class="now-ui-icons ui-1_simple-remove"></i>
+							<p>
+							  <span style="color: red;">Отказать</span>
+							</p>
+						</a>
+						<a *ngIf="res.status == 'Одобрено'" class="dropdown-item" style="color: green;" (click)="finish(res.id)">
+							<i class="now-ui-icons ui-1_check"></i>
+							<p>
+							  <span style="color: green;">Выполнено</span>
+							</p>
+						</a>
+					  </div>
+					</div>
+			
+			
+                  <!--<button type="button" rel="tooltip" title="Одобрить" (click)="assept(res.id, res.dateTime)" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
                     <i class="now-ui-icons ui-1_check" inline="true"></i>
                   </button>
                   <button type="button" rel="tooltip" title="Отказать" (click)="deny(res.id)" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
                     <i class="now-ui-icons ui-1_simple-remove"></i>
                   </button>
+				  <button type="button" style="color:green;" rel="tooltip" title="Выполнено" (click)="finish()" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
+                    <i class="now-ui-icons ui-1_check" inline="true"></i>
+                  </button>-->
                 </td>
               </tr>
               </tbody>
