@@ -26,6 +26,7 @@ export class ReservationListComponent implements OnInit {
         this.selectedPage = data.number;
         this.reservations = data.content;
 		this.getDate(data.content);
+		console.log(data.content);
       });
   }
   

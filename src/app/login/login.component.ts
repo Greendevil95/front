@@ -19,7 +19,6 @@ export class LoginComponent implements OnInit {
 
   Enter(email1, password1): void {
     this.error = true;
-    console.log(password1);
     localStorage.setItem('email', email1);
     localStorage.setItem('password', password1);
     this.httpService.get('/users/auth').subscribe(data => {

@@ -35,6 +35,14 @@ export class NavbarComponent implements OnInit {
     }
   }
   
+  isAdmin(): boolean {
+	  if (localStorage.getItem('admin') === 'true') {
+		return true;  
+	  } else {
+		return false;  
+	  }
+  }
+  
   navigate(): void {
 	  if (localStorage.getItem('admin') === 'true') {
 		  this.router.navigateByUrl('admin');
