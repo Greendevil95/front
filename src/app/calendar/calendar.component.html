@@ -9,6 +9,7 @@
           mwlCalendarPreviousView
           [view]="view"
           [(viewDate)]="viewDate"
+          [excludeDays]="weekends"
         >
           Предыдущий
         </div>
@@ -24,13 +25,14 @@
           mwlCalendarNextView
           [view]="view"
           [(viewDate)]="viewDate"
+          [excludeDays]="weekends"
         >
           Следующий
         </div>
       </div>
     </div>
     <div class="col-md-4">
-      <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'ru'}}</h3>
+      <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'ru':weekStartsOn:weekends}}</h3>
     </div>
     <div class="col-md-4">
       <div class="btn-group">
@@ -70,6 +72,8 @@
         [weekStartsOn]="weekStartsOn"
         [refresh]="refresh"
         (beforeViewRender)="beforeMonthViewRender($event)"
+        [excludeDays]="weekends"
+
       >
       </mwl-calendar-month-view>
       <mwl-calendar-week-view
@@ -86,6 +90,8 @@
         [hourSegments]="serviceDuration"
         [refresh]="refresh"
         (dayHeaderClicked)="viewDate = $event.day.date; view = CalendarView.Day"
+        [excludeDays]="weekends"
+
 
       >
       </mwl-calendar-week-view>
@@ -106,6 +112,7 @@
       </mwl-calendar-day-view >
     </div>
   </div>
+  <div *ngIf="week.includes('0')">fffff</div>
 </div>
 
 

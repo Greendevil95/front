@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import {HttpService} from '../http/http.service';
 import {Router} from '@angular/router';
 
+
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
+
+
 export class UserComponent implements OnInit {
   reservations: Array<any>;
   dates: Array<any>;
@@ -19,6 +23,7 @@ export class UserComponent implements OnInit {
   selectedResPage: string;
   changedPass: boolean;
   public rating: number;
+
 
   constructor(private httpService: HttpService, private router: Router) {
   }
@@ -83,6 +88,7 @@ export class UserComponent implements OnInit {
         this.reservations = data.content;
 		this.getDate(data.content);
       });
+
 
   }
 
@@ -203,8 +209,8 @@ export class UserComponent implements OnInit {
     this.router.navigateByUrl('/organization');
   }
 
-  updateRez(id1: string, servId: string, comment1: string, rating1: string): void {
-	var date: string;
+  updateRez(id1: string, servId: string, comment1: string, rating1: string, date: string): void {
+
 	for (var i: number = 0; i < this.count; i++) {
 		if (this.reservations[i].id == id1) {
 			date = this.dates[i];

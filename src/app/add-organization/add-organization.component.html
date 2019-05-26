@@ -12,15 +12,15 @@
             <div class="row justify-content-center align-items-center">
               <div class="col-md-10">
                 <div class="form-group">
-                  <label for="name">Введите название организации</label>
-                  <input name="name" id="name" type="text" [(ngModel)]="name" class="form-control" placeholder="ОАО Организация">
+                  <span for="name">Введите название организации</span>
+                  <input name="name" id="name" type="text" [(ngModel)]="name" class="form-control" placeholder="ОАО Организация" >
                 </div>
               </div>
             </div>
             <div class="row justify-content-center align-items-center">
               <div class="col-md-10">
                 <div class="form-group">
-                  <label for="address">Введите адрес</label>
+                  <span for="address">Введите адрес</span>
                   <input name="address" id="address" type="text" [(ngModel)]="address" class="form-control" placeholder="г.Москва ул.Ворошилова д.16">
                 </div>
               </div>
@@ -28,21 +28,87 @@
             <div class="row justify-content-center align-items-center">
               <div class="col-md-10">
                 <div class="form-group">
-                  <label for="phone">Введите контактный номер телефона</label>
-                  <input name="phone" id="phone" type="text" [(ngModel)]="phone" class="form-control" placeholder="89004508677">
+                  <span for="phone">Введите контактный номер телефона</span>
+                  <input name="phone" id="phone" type="text" [(ngModel)]="phone" #mphone="ngModel" class="form-control" placeholder="89004508677" pattern="^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$">
+                  <div class="row justify-content-center align-items-center" [hidden]="mphone.valid || mphone.pristine">
+                    <div class="col-md-10">
+                      <font size="3" color="red">Неверный формат номера!</font>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="row justify-content-center align-items-center">
               <div class="col-md-10">
                 <div class="form-group">
-                  <label for="startTime">Введите время работы организации</label>
+                  <span for="startTime">Введите время работы организации</span>
                   <div style="display:flex">
-                  <input name="startTime" id="startTime" type="text" [(ngModel)]="startTime" class="form-control" style="width: 50%;" placeholder="8:00">
+                  <input name="startTime" id="startTime" type="text" #stime="ngModel" [(ngModel)]="startTime" class="form-control" style="width: 50%;" placeholder="8:00" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]">
                   &nbsp;&mdash;&nbsp;
-                  <input name="endTime" id="endTime" type="text" [(ngModel)]="endTime" class="form-control" style="width: 50%;" placeholder="18:00">
+                  <input name="endTime" id="endTime" type="text" #ftime="ngModel" [(ngModel)]="endTime" class="form-control" style="width: 50%;" placeholder="18:00" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]">
+                  </div>
+                  <div class="row justify-content-center align-items-center" [hidden]="(stime.valid || stime.pristine) && (ftime.valid || ftime.pristine)">
+                    <div class="col-md-10">
+                      <font size="3" color="red">Неверный формат времени!</font>
+                    </div>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div style="margin: 20px 0;">
+              <span>Рабочие дни:</span>
+              <div class="row" style="justify-content: center;">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="0" checked #monday>
+                Понедельник
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="1" checked #tuesday>
+                Вторник
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="2" checked #wednesday>
+                Среда
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="thursday" checked #thursday>
+                Четверг
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
+              </div>
+              <div class="row" style="justify-content: center;">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="friday" checked #friday>
+                Пятница
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="saturday" checked #saturday>
+                Суббота
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="sunday" checked #sunday>
+                Воскресенье
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
               </div>
             </div>
             <div class="row justify-content-center align-items-center">
@@ -61,7 +127,7 @@
             <div class="row justify-content-center align-items-center">
               <div class="col-md-12">
                 <div class="button-container justify-content-center align-items-center">
-                  <button (click)="create(name, address, phone, description, startTime, endTime)" class="btn btn-neutral btn-lg">
+                  <button (click)="create(name, address, phone, description, startTime, endTime,monday.checked,tuesday.checked,wednesday.checked,thursday.checked,friday.checked,saturday.checked,sunday.checked)" class="btn btn-neutral btn-lg">
                     Создать
                   </button>
                 </div>

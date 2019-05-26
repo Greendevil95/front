@@ -58,15 +58,17 @@
             <div class="checkbox">
 				<div class="checkbox-radios">
 				 <h5>Категории услуг:</h5>
-					<a *ngIf="category == 'all'" style="color: red;">ВСЕ</a>
-					<a *ngIf="category != 'all'" (click)="selectService('all')" style="color: black;">ВСЕ</a>	
-				  <div *ngFor="let it of categories">
+          <div class="btn btn-neutral" style="padding: 0; margin: 0; width: 100%; text-align: left; font-size: medium;">
+					<span *ngIf="category == 'all'" style="color: red;">ВСЕ</span>
+            <a *ngIf="category != 'all'" (click)="selectService('all')" style="color: black;">ВСЕ</a>
+          </div>
+				  <div class="btn btn-neutral" style="padding: 0; margin: 0; width: 100%; text-align: left; font-size: medium;" *ngFor="let it of categories">
 					<a *ngIf="it == category" style="color: red;">{{it}}</a>
 					<a *ngIf="it != category" (click)="selectService(it)" style="color: black;">{{it}}</a>
 				  </div>
 				</div>
               <div class="checkbox-radios">
-			  <h5>Критерии поиска:</h5>
+			  <h5 style="padding-top: 10px;">Критерии поиска:</h5>
                 <label>Минимальный рейтинг</label>
                 <ng-template #star let-fill="fill">
                     <span class="star" [class.full]="fill === 100">

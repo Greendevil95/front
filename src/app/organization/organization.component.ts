@@ -2,6 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import {HttpService} from '../http/http.service';
 import {Router} from '@angular/router';
 
+interface Organization {
+  id: number;
+  startTime: string;
+  finishTime:string;
+  weekend:any;
+  user:[
+    {id:number}
+    ]
+}
+
 @Component({
   selector: 'app-organization',
   templateUrl: './organization.component.html',
@@ -10,6 +20,11 @@ import {Router} from '@angular/router';
 export class OrganizationComponent implements OnInit {
   userId: string;
   organization: any;
+  org: any;
+  startOfDay:number;
+  endOfDay:number;
+  weekends: Array<any> = [];
+  week: string;
 
   constructor(private httpService: HttpService, private router: Router) {
   }
@@ -18,7 +33,13 @@ export class OrganizationComponent implements OnInit {
     this.userId = localStorage.getItem('id');
     this.httpService.get('organizations/' + localStorage.getItem('orgId')).subscribe(
       data => {
+        console.log(localStorage.getItem('orgId'));
         this.organization = data;
+        this.org = <Organization>data;
+        this.startOfDay = parseInt(this.org.startTime.toString(),10);
+        this.endOfDay = parseInt(this.org.finishTime.toString(),10);
+        this.week = this.org.weekend;
+        console.log(this.week);
       });
   }
   
@@ -29,7 +50,7 @@ export class OrganizationComponent implements OnInit {
 		  return false;
 	  }
   }
-  
+
   ban(id: string):void {
 	  this.httpService.put('/users/' + id + '/ban', null).subscribe(
 	  data => {},
@@ -40,7 +61,7 @@ export class OrganizationComponent implements OnInit {
 		  }
 	  });
   }
-  
+
   razban(id: string):void {
 	  this.httpService.put('/users/' + id + '/active', null).subscribe(
 	  data => {},
@@ -52,7 +73,8 @@ export class OrganizationComponent implements OnInit {
 	  });
   }
 
-  changeOrg(name1: string, address1: string, phoneNumber1: string, description1: string): void {
+  changeOrg(name1: string, address1: string, phoneNumber1: string, description1: string,startTime1?, finishTime1?, monday?,tuesday?,wednesday?,thursday?,friday?,saturday?,sunday?): void {
+    //this.createMass(monday,tuesday,wednesday,thursday,friday,saturday,sunday);
     console.log('id:' +  Number(localStorage.getItem('orgId')),
       'name:' + name1,
       'address:' + address1,
@@ -73,6 +95,12 @@ export class OrganizationComponent implements OnInit {
     if (description1 == null) {
       description1 = this.organization.description;
     }
+    if (startTime1 == null){
+      startTime1 = this.org.startTime
+    }
+    if (finishTime1 == null){
+      finishTime1 = this.org.finishTime
+    }
     console.log('id:' +  Number(localStorage.getItem('orgId')),
       'name:' + name1,
       'address:' + address1,
@@ -87,9 +115,10 @@ export class OrganizationComponent implements OnInit {
       address: address1,
       phoneNumber: phoneNumber1,
       description: description1,
-      startTime: this.organization.startTime,
-      finishTime: this.organization.finishTime,
-      rating: this.organization.rating
+      startTime: this.org.startTime,
+      finishTime: this.org.finishTime,
+      rating: this.organization.rating,
+      weekend:this.week
     }).subscribe(
       data => {
       },

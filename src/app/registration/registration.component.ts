@@ -15,14 +15,12 @@ export class RegistrationComponent implements OnInit {
   phone: any;
   password: any;
   repeatPassword: any;
-  authForm: FormGroup;
+
 
   constructor(private httpService: HttpService, private router: Router) {}
 
   ngOnInit(): void {
-     this.authForm = new FormGroup({
-       name: new FormControl(null,Validators.required)
-     });
+
   }
 
 

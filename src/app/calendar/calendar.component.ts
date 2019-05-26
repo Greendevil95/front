@@ -1,33 +1,11 @@
-import {AfterContentInit, ChangeDetectionStrategy, Component, Inject, OnChanges, OnInit} from '@angular/core';
+import {AfterContentInit, AfterViewChecked, AfterViewInit, Component, OnInit} from '@angular/core';
 
-import {
-  CalendarDateFormatter,
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent, CalendarMonthViewBeforeRenderEvent,
-  CalendarView
-} from 'angular-calendar';
-import { CustomDateFormatter } from './custom-date-formatter.provider';
-import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours, startOfWeek, startOfMonth, endOfWeek, format, startOfHour, endOfHour
-} from 'date-fns';
+import {CalendarDateFormatter, CalendarEvent, CalendarMonthViewBeforeRenderEvent, CalendarView} from 'angular-calendar';
+import {CustomDateFormatter} from './custom-date-formatter.provider';
+import {endOfHour, startOfHour} from 'date-fns';
 import {HttpService} from "../http/http.service";
 import {Router} from "@angular/router";
-import {Observable, of, Subject} from "rxjs";
-import {HttpParams,HttpClient} from "@angular/common/http";
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import {AboutUsComponent} from "../about-us/about-us.component";
-import {LoginComponent} from "../login/login.component";
-import {OrgListComponent} from "../org-list/org-list.component";
-import {UserComponent} from "../user/user.component";
-import {map} from "rxjs/operators";
+import {Subject} from "rxjs";
 import {ViewEncapsulation} from "@angular/cli/lib/config/schema";
 
 
@@ -58,6 +36,7 @@ interface Organization {
   id: number;
   startTime: Date;
   finishTime:Date;
+  weekend:any;
   user:[
     {id:number}
   ]
@@ -126,14 +105,13 @@ export class CalendarComponent implements OnInit{
   user: any;
   events: CalendarEvent[] = [];
   activeDayIsOpen: boolean = true;
+  weekends: Array<any> = [];
+  week: string;
 
 
 
-
-
-  constructor(private httpService: HttpService, private router: Router, public dialog: MatDialog) { }
+  constructor(private httpService: HttpService, private router: Router) { }
   //constructor(private http: HttpClient) {}
-
 
 
 
@@ -165,10 +143,13 @@ export class CalendarComponent implements OnInit{
         this.org = <Organization>data;
         this.startOfDay = parseInt(this.org.startTime.toString(),10);
         this.endOfDay = parseInt(this.org.finishTime.toString(),10);
+        this.week = this.org.weekend;
+        for (let i = 0;i <this.week.length; i++){
+          this.weekends.push(Number(this.week.charAt(i)));
+        }
       });
 
   }
-
 
 
   updateRez(id1: string, servId: string, comment1: string, rating1: string): void {
@@ -216,9 +197,13 @@ export class CalendarComponent implements OnInit{
     );
   }
 
-  openDialog(): void {
-    this.dialog.open(DeleteReservation)
+  getWeekend(){
+    return this.weekends;
   }
+
+  /*openDialog(): void {
+    this.dialog.open(DeleteReservation)
+  }*/
 
   refresh: Subject<any> = new Subject();
 
@@ -231,6 +216,7 @@ export class CalendarComponent implements OnInit{
 
   weekStartsOn = 1;
 
+  excludeDays: number[] = this.weekends;
 
 
   eventClicked({ event }: { event: CalendarEvent }): void {
