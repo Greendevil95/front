@@ -61,7 +61,7 @@ export class AddOrganizationComponent implements OnInit {
       description: description1,
       weekend:this.week,
       startTime: startTime1,
-      //finishTime: finishTime1
+      finishTime: finishTime1
     }).subscribe(data => {},
       error => {
         if (error.status === 200) {
