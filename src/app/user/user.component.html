@@ -131,7 +131,7 @@
               <tr *ngFor="let org of organizations">
                 <td>
                   <div class="btn btn-neutral" style="font-size: medium;    padding: 0;"(click)="navigate( org.id )">{{org.name}}</div><br>
-                  <app-rating currentRate = {{org.rating}} readFlag="true"></app-rating><br>
+                  <app-rating  currentRate = {{org.rating}} readFlag="true"></app-rating><br>
                   <div>Адрес: {{org.address}}</div><br>
                   <div>Описание: {{org.description}}</div><br>
                 </td>
@@ -194,7 +194,7 @@
               <!--<td *ngIf="res.rating != 0 || (res.comment != '' && res.comment != null)">-->
 			  <td *ngIf="res.status != 'Выполнено' || res.rating != 0 || (res.comment != '' && res.comment != null)">
 				<span style="font-size: 16px;"class="text-primary">{{res.service.organization.name}}</span><br>
-                <span>Услуга:{{res.service.name}}</span><br>
+                <span>Услуга: {{res.service.name}}</span><br>
                 <span>Оценка: </span><app-rating  currentRate={{res.rating}} readFlag="true"></app-rating><br>
 				<p>Статус: {{res.status}} </p>
                 <p>Дата: {{res.dateTime}}</p>

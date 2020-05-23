@@ -10,6 +10,11 @@ import {Router} from '@angular/router';
 export class AddServiceComponent implements OnInit {
   private error = false;
   category: Array<any>;
+  name: any;
+  categories: any;
+  time: any;
+  price: any;
+  description: any;
 
   constructor(private httpService: HttpService, private router: Router) { }
 
@@ -21,10 +26,10 @@ export class AddServiceComponent implements OnInit {
     );
   }
 
-  create(name1, price1, description1, category1, time1): void {
+  create(name, price1, description1, category1, time1): void {
     this.error = false;
     this.httpService.post('/services', {
-      name: name1,
+      name: name,
       price: price1,
       time: time1,
       category: category1,

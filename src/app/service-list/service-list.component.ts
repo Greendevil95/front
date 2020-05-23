@@ -14,6 +14,8 @@ export class ServiceListComponent implements OnInit {
   list: Array<any>;
   pagesCount: number;
   selectedPage: string;
+  text: any;
+  comment: any;
 
   constructor(private httpService: HttpService, private router: Router) {
   }
@@ -81,6 +83,11 @@ export class ServiceListComponent implements OnInit {
         this.router.navigateByUrl('/organization');
       }
     );
+  }
+
+  goToPage(index: number) {
+    localStorage.setItem('servPage', (Number(index.toString()) - 1).toString());
+    this.ngOnInit();
   }
 
   createRange(count: number): number[] {

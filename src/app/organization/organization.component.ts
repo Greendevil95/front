@@ -25,6 +25,12 @@ export class OrganizationComponent implements OnInit {
   endOfDay:number;
   weekends: Array<any> = [];
   week: string;
+  startTime: any;
+  endTime: any;
+  description: any;
+  phoneNumber: string;
+  name1: any;
+  address1: any;
 
   constructor(private httpService: HttpService, private router: Router) {
   }

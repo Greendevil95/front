@@ -23,10 +23,20 @@ export class UserComponent implements OnInit {
   selectedResPage: string;
   changedPass: boolean;
   public rating: number;
+  comment: any;
+  name1: any;
+  email1: any;
+  phone: any;
+  oldPass: any;
+  newPass: any;
+  newPass1: any;
+  reservation: any;
+  check: boolean;
 
 
   constructor(private httpService: HttpService, private router: Router) {
   }
+
   
   translateStatus(status: string): string {
 	  switch(status) {
@@ -88,8 +98,6 @@ export class UserComponent implements OnInit {
         this.reservations = data.content;
 		this.getDate(data.content);
       });
-
-
   }
 
   getPass(): string {
@@ -103,6 +111,7 @@ export class UserComponent implements OnInit {
 			this.ngOnInit();
 		});
 	}
+
 
   changeProfile(name1: string, email1: string, phone1: string): void {
     if (email1 != null) {
@@ -161,6 +170,8 @@ export class UserComponent implements OnInit {
     }
   }
 
+
+
   createRange(count: number): number[] {
     let array: number[] = [];
     for (let i = 1; i <= count; i++) {
@@ -209,7 +220,24 @@ export class UserComponent implements OnInit {
     this.router.navigateByUrl('/organization');
   }
 
-  updateRez(id1: string, servId: string, comment1: string, rating1: string): void {
+  checkReservation(id: number): any{
+      this.httpService.get('/reservations' + '?id=' + id + '/checkReservation').subscribe(
+        data => {
+          this.reservation = data;
+          console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+          return data;
+        },
+        error1 => {
+          console.log(error1);
+          return null;
+        }
+      );
+
+    console.log(this.check);
+    return this.reservation
+  };
+
+  updateRez(id1: string, servId: string, comment1: string, rating1: number): void {
    let date: string;
 	for (var i: number = 0; i < this.count; i++) {
 		if (this.reservations[i].id == id1) {

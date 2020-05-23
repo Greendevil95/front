@@ -17,6 +17,9 @@ export class SearchResultComponent implements OnInit {
   maxPrice: number = 9999999;
   category: string = 'all';
   categories: Array<any>;
+  searchString1: any;
+  price1: any;
+  price2: any;
 
   constructor(private router: Router, private httpService: HttpService) { }
 
@@ -106,7 +109,7 @@ export class SearchResultComponent implements OnInit {
 	  this.ngOnInit();
   }
 
-  wideSearch(rating: string, price1: string, price2: string): void {
+  wideSearch(rating: number, price1: string, price2: string): void {
     var str = '';
 	console.log(rating + ' ' + price1 + '' + price2);
     if (rating != null) {

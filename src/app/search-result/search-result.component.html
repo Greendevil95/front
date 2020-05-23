@@ -35,19 +35,19 @@
           </div>
         </div>
         <div class="card-body" *ngIf="pages == 0">
-          <div class="text-danger text-lg-center">
+          <div class="text-lg-center text-primary">
             <h5>По запросу "{{searchString}}" ничего не найдено</h5>
           </div>
         </div>
       </div>
       <div *ngIf="pages != 0">
-        <button type="button" rel="tooltip" title="На предыдущую" (click)="changePage(-1, 'resPage')" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
+        <button type="button" rel="tooltip" title="На предыдущую" (click)="changePage(-1)" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
           <i class="now-ui-icons arrows-1_minimal-left"></i>
         </button>
         <div class="form-check btn btn-info btn-round btn-icon btn-icon-mini btn-neutral" *ngFor="let index of createRange(pages)">
           <input class="form-control" type="button" value="{{index}}" (click)="goToPage(index, 'resPage')">
         </div>
-        <button type="button" rel="tooltip" title="На следующую" (click)="changePage(1, 'resPage')" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
+        <button type="button" rel="tooltip" title="На следующую" (click)="changePage(1)" class="btn btn-info btn-round btn-icon btn-icon-mini btn-neutral">
           <i class="now-ui-icons arrows-1_minimal-right"></i>
         </button>
       </div>
@@ -59,11 +59,11 @@
 				<div class="checkbox-radios">
 				 <h5>Категории услуг:</h5>
           <div class="btn btn-neutral" style="padding: 0; margin: 0; width: 100%; text-align: left; font-size: medium;">
-					<span *ngIf="category == 'all'" style="color: red;">ВСЕ</span>
+					<span *ngIf="category == 'all'" class="text-primary" >ВСЕ</span>
             <a *ngIf="category != 'all'" (click)="selectService('all')" style="color: black;">ВСЕ</a>
           </div>
 				  <div class="btn btn-neutral" style="padding: 0; margin: 0; width: 100%; text-align: left; font-size: medium;" *ngFor="let it of categories">
-					<a *ngIf="it == category" style="color: red;">{{it}}</a>
+					<a *ngIf="it == category" class="text-primary">{{it}}</a>
 					<a *ngIf="it != category" (click)="selectService(it)" style="color: black;">{{it}}</a>
 				  </div>
 				</div>
@@ -88,7 +88,7 @@
                 </div>
               </div>
               <div style="text-align:center">
-                <button (click)="wideSearch(rating, price1, price2)" class="btn btn-neutral btn-icon btn-round btn-lg">
+                <button (click)="wideSearch(rating, price1, price2)" class="btn btn-neutral  btn-lg">
                   Искать
                 </button>
               </div>

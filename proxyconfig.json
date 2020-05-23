@@ -1,62 +1,62 @@
 {
   "/login": {
-    "target": "http://localhost:8080",
+    "target": "http://localhost:6666",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
 
   "/users": {
-    "target": "http://localhost:8080",
+    "target": "http://localhost:6666",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
 
   "/auth": {
-    "target": "http://localhost:8080/users",
+    "target": "http://localhost:6666/users",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
 
   "/organizations": {
-    "target": "http://localhost:8080",
+    "target": "http://localhost:6666",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
 
   "/organizations/*": {
-    "target": "http://localhost:8080",
+    "target": "http://localhost:6666",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
 
   "/reservations": {
-    "target": "http://localhost:8080",
+    "target": "http://localhost:6666",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
 
   "/services": {
-    "target": "http://localhost:8080",
+    "target": "http://localhost:6666",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
 
   "/other": {
-    "target": "http://localhost:8080",
+    "target": "http://localhost:6666",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true
   },
 
   "/reports": {
-    "target": "http://localhost:8080",
+    "target": "http://localhost:6666",
     "secure": false,
     "logLevel": "debug",
     "changeOrigin": true

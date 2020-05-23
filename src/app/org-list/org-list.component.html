@@ -1,7 +1,7 @@
 <div class="panel-header panel-header-sm">
 </div>
 <div class="main-content">
-  <div class="row">
+  <div class="row" id="listOfVIP">
     <div class="col-md-3 pr-1" style="padding-bottom: 50px;" *ngFor="let org of primaryList">
       <div class="card" style="border: solid gold 4px; height: 100%;">
         <div class="card-user" style=" background: white;">
@@ -14,7 +14,7 @@
                 <a (click)="navigate( org.id )">
                   <img class="avatar " src="../assets/img/avatar1.png" alt="..." style="border: solid gold 3px;">
                   <div>
-                    <h5 class="title text-center text-danger">{{org.name}}</h5>
+                    <h5 class="title text-center">{{org.name}}</h5>
                   </div>
                 </a>
               </div>
@@ -100,7 +100,7 @@
                 <a (click)="navigate(org.organization.id)">
                   <img class="avatar " src="../assets/img/avatar1.png" alt="...">
                   <div>
-                    <h5 class="title text-center text-danger">{{org.name}}</h5>
+                    <h5 class="title text-center">{{org.name}}</h5>
                   </div>
                 </a>
               </div>
@@ -178,7 +178,7 @@
                 <a (click)="navigate( org.id )">
                   <img class="avatar " src="../assets/img/avatar1.png" alt="..." style="border: solid gold 3px;">
                   <div>
-                    <h5 class="title text-center text-danger">{{org.name}}</h5>
+                    <h5 class="title text-center">{{org.name}}</h5>
                   </div>
                 </a>
               </div>

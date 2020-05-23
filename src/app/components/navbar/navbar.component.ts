@@ -20,6 +20,7 @@ export class NavbarComponent implements OnInit {
   count: number;
 
   public isCollapsed = true;
+  searchString: any;
 
   constructor(location: Location, private element: ElementRef, private router: Router, private httpService: HttpService) {
     this.location = location;

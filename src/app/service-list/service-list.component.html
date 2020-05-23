@@ -4,8 +4,7 @@
   <tbody>
   <tr *ngFor="let serv of list" class="organization-body" border="4" color ="black">
     <td class="text-left" style="padding-bottom: inherit;">
-      <div class="btn btn-neutral" style="padding: 0; font-size: 16px" (click)="navigate( serv.id )">{{serv.name}}
-      </div>
+      <div class="btn btn-neutral" style="padding: 0; font-size: 16px; cursor: default">{{serv.name}}</div>
       <br>
       <app-rating  currentRate={{serv.rating}} readFlag="true"></app-rating>
       <br>

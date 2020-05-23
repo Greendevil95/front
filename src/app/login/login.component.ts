@@ -10,6 +10,8 @@ import {NavbarComponent} from '../components/navbar/navbar.component';
 })
 export class LoginComponent implements OnInit {
   error = true;
+  email: any;
+  password: any;
 
   constructor(private httpService: HttpService, private router: Router) {
   }
